@@ -71,9 +71,6 @@ enum SearchOrder {
 }
 
 type User {
-  avatar: String
-  email: String!
   id: ID!
   name: String!
-  role: Role!
 }

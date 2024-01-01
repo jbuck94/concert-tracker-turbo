@@ -10,15 +10,17 @@ datasource db {
   // sqlite is a very limited database, only used for demostration purposes
   provider = "sqlite"
   url      = "file:./dev.db"
-  
 }
 
 model User {
-  id       String    @id @default(cuid())
-  avatar   String?
-  name     String
-  email    String
-  articles Article[]
+  id        String    @id @default(cuid())
+  avatar    String?
+  name      String
+  email     String
+  articles  Article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  pictures  Picture[]
 }
 
 model Article {
@@ -32,4 +34,12 @@ model Article {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
   author      User     @relation(fields: [authorId], references: [id])
+}
+
+model Picture {
+  id             String   @id @default(cuid())
+  photohrapherId String
+  photographer   User     @relation(fields: [photohrapherId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
 }

@@ -20,14 +20,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
     "eslint-config-custom": "latest",
     "prettier": "latest",
     "turbo": "latest"
-  },
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
-  },
-  "dependencies": {},
-  "packageManager": "yarn@1.22.18"
+  }
 }

@@ -11,9 +11,8 @@ builder.prismaObject('User', {
   fields: (t) => ({
     id: t.exposeID('id'),
     name: t.exposeString('name'),
-    email: t.exposeString('email'),
-    role: t.expose('role', { type: Role }),
-    avatar: t.exposeString('avatar', { nullable: true }),
+    // email: t.exposeString('email'),
+    // avatar: t.exposeString('avatar', { nullable: true }),
   }),
 });
 

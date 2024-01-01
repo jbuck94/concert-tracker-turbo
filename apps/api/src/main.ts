@@ -12,7 +12,7 @@ import { Context } from './context';
 const PORT = Number(process.env.PORT) || 8080;
 
 // Add production app url here
-const ALLOWED_ORIGINS = ['http://localhost:3000'];
+const ALLOWED_ORIGINS = ['http://localhost:3002', 'http://localhost:3003'];
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -37,6 +37,7 @@ server.start().then(async () => {
 
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
   app.use(express.json({ type: 'application/json', limit: '50mb' }));
+
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: PORT }, resolve)
   );

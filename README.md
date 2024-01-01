@@ -17,9 +17,9 @@
 
 - ### General
 
-  - **Yarn**
+  - **NPM**
 
-  This repository uses [Yarn](https://classic.yarnpkg.com/lang/en/) as a package manager.
+  This repository uses npm as a package manager.
 
   - **Enviroment Variables**
 
@@ -34,25 +34,25 @@
 - To install project deps, run
 
   ```
-  yarn install
+  npm run install
   ```
 
 - Initialize the database or sync the database schema
 
   ```
-  yarn db:push
+  npm run db:push
   ```
 
 - Generate the pr the prismas client and types
 
   ```
-  yarn db:generate
+  npm run db:generate
   ```
 
 - Seed the database
 
   ```
-  yarn db:seed
+  npm run db:seed
   ```
 
 - Run app
@@ -60,24 +60,24 @@
   - Start the server
 
     ```
-    yarn dev:api
+    npm run dev:api
     ```
 
   - Start server + web
 
     ```
-    yarn dev:web
+    npm run dev:web
     ```
 
   - Start server + admin
 
     ```
-    yarn dev:admin
+    npm run dev:admin
     ```
 
   - Start server + admin + web
     ```
-    yarn dev
+    npm run dev
     ```
 
 ## Generating GraphQL Hooks
@@ -85,7 +85,7 @@
 - To generate the graphql hooks, run
 
   ```
-  yarn generate:hooks
+  npm run generate:hooks
   ```
 
   This command will detect all the graphql files inside the `apps/web` and `apps/admin` directories and generate the hooks for them.
