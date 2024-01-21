@@ -1,3 +1,10 @@
-export * from './User';
-export * from './Article';
-export * from './Scalars';
+export * from '@/src/schema/Scalars';
+export * from '@/src/schema/Filters';
+
+export * from '@/src/schema/Artist';
+export * from '@/src/schema/Event';
+export * from '@/src/schema/EventArtist';
+export * from '@/src/schema/Scalars';
+export * from '@/src/schema/User';
+export * from '@/src/schema/UserEvent';
+export * from '@/src/schema/Venue';

@@ -1,2 +1,3 @@
-export * from './queries';
-export * from './mutations';
+export * from '@/src/schema/User/user.fields';
+export * from '@/src/schema/User/user.queries';
+export * from '@/src/schema/User/user.mutations';
