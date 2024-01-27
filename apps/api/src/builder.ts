@@ -1,5 +1,6 @@
 import PrismaPlugin from '@pothos/plugin-prisma';
 import SchemaBuilder from '@pothos/core';
+import RelayPlugin from '@pothos/plugin-relay';
 
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 
@@ -26,10 +27,15 @@ const builder = new SchemaBuilder<{
     };
   };
 }>({
-  plugins: [PrismaPlugin],
+  plugins: [PrismaPlugin, RelayPlugin],
   prisma: {
     client: db,
     filterConnectionTotalCount: true,
+  },
+  relayOptions: {
+    // These will become the defaults in the next major version
+    clientMutationId: 'omit',
+    cursorType: 'String',
   },
 });
 
