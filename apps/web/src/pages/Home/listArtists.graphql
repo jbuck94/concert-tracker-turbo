@@ -1,0 +1,17 @@
+query ListArtists {
+  artists {
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    edges {
+      node {
+        spotifyID
+        name
+        id
+      }
+    }
+  }
+}

@@ -9,8 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "dev:web": "turbo run dev --filter=!admin --parallel",
-    "dev:admin": "turbo run dev --filter=!web --parallel",
+    "dev:web": "turbo run dev --filter=web",
     "dev:api": "turbo run dev --filter=api",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push db:generate",
@@ -22,7 +21,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
     "eslint-config-custom": "latest",
-    "prettier": "latest",
+    "prettier": "3.2.4",
     "turbo": "latest"
   }
 }
