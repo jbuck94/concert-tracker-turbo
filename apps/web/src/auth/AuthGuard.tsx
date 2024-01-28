@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
-import LoginPage from '@/pages/login';
 import { useAuthContext } from 'src/auth/useAuthContext';
+import LoginPage from 'src/pages/auth/login';
 
 type AuthGuardProps = {
   children: React.ReactNode;

@@ -1,12 +1,11 @@
-import { Shadows, alpha } from '@mui/material/styles';
+import { alpha, Shadows } from '@mui/material/styles';
+import { palette as themePalette } from 'src/theme/palette';
 
-import palette from 'src/theme/palette';
+const palette = themePalette('dark');
 
-const themeColor = palette('light');
+const LIGHT_MODE = palette.grey[500];
 
-const LIGHT_MODE = themeColor.grey[500];
-
-const DARK_MODE = themeColor.common.black;
+const DARK_MODE = palette.common.black;
 
 function createShadow(color: string): Shadows {
   const transparent1 = alpha(color, 0.2);
@@ -41,8 +40,6 @@ function createShadow(color: string): Shadows {
   ];
 }
 
-export default function shadows(themeMode: 'light' | 'dark') {
-  return themeMode === 'light'
-    ? createShadow(LIGHT_MODE)
-    : createShadow(DARK_MODE);
+export function shadows(mode: 'light' | 'dark') {
+  return mode === 'light' ? createShadow(LIGHT_MODE) : createShadow(DARK_MODE);
 }

@@ -1,4 +1,6 @@
-import { Barlow, Public_Sans } from 'next/font/google';
+import { Public_Sans, Barlow } from 'next/font/google';
+
+// ----------------------------------------------------------------------
 
 export function remToPx(value: string) {
   return Math.round(parseFloat(value) * 16);
@@ -8,15 +10,7 @@ export function pxToRem(value: number) {
   return `${value / 16}rem`;
 }
 
-export function responsiveFontSizes({
-  sm,
-  md,
-  lg,
-}: {
-  sm: number;
-  md: number;
-  lg: number;
-}) {
+export function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg: number }) {
   return {
     '@media (min-width:600px)': {
       fontSize: pxToRem(sm),
@@ -30,6 +24,11 @@ export function responsiveFontSizes({
   };
 }
 
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    fontWeightSemiBold: React.CSSProperties['fontWeight'];
+  }
+}
 export const primaryFont = Public_Sans({
   weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
@@ -44,13 +43,16 @@ export const secondaryFont = Barlow({
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
 });
 
+// ----------------------------------------------------------------------
+
 // LEARN MORE
 // https://nextjs.org/docs/basic-features/font-optimization#google-fonts
 
-const typography = {
+export const typography = {
   fontFamily: primaryFont.style.fontFamily,
   fontWeightRegular: 400,
-  fontWeightMedium: 600,
+  fontWeightMedium: 500,
+  fontWeightSemiBold: 600,
   fontWeightBold: 700,
   h1: {
     fontWeight: 800,
@@ -120,8 +122,6 @@ const typography = {
     fontWeight: 700,
     lineHeight: 24 / 14,
     fontSize: pxToRem(14),
-    textTransform: 'capitalize',
+    textTransform: 'unset',
   },
 } as const;
-
-export default typography;

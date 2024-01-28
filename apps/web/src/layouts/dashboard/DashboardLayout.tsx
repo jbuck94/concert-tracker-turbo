@@ -42,6 +42,5 @@ export default function DashboardLayout({ children }: Props) {
     );
   };
 
-  // return <AuthGuard> {renderContent()} </AuthGuard>;
-  return renderContent();
+  return <AuthGuard> {renderContent()} </AuthGuard>;
 }
