@@ -16,65 +16,125 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  Date: { input: any; output: any; }
+  DateTime: { input: any; output: any; }
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any; }
 };
 
-export type Article = {
-  __typename?: 'Article';
-  author: User;
-  content: Scalars['String']['output'];
-  createdAt: Scalars['Date']['output'];
+export type Artist = {
+  __typename?: 'Artist';
+  events: ArtistEventsConnection;
   id: Scalars['ID']['output'];
-  isPublished: Scalars['Boolean']['output'];
-  lead: Scalars['String']['output'];
-  preview: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-  updatedAt: Scalars['Date']['output'];
+  name: Scalars['String']['output'];
+  spotifyID: Scalars['String']['output'];
 };
 
-/** Articles query input */
-export type ArticlesInput = {
-  cursor?: InputMaybe<Scalars['String']['input']>;
-  order?: InputMaybe<SearchOrder>;
-  orderBy?: InputMaybe<Scalars['String']['input']>;
-  search?: InputMaybe<Scalars['String']['input']>;
+
+export type ArtistEventsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-/** Paginated list of articles */
-export type ArticlesResponse = {
-  __typename?: 'ArticlesResponse';
-  nextCursor?: Maybe<Scalars['String']['output']>;
-  prevCursor?: Maybe<Scalars['String']['output']>;
-  results: Array<Article>;
-  totalCount?: Maybe<Scalars['Int']['output']>;
+export type ArtistEventsConnection = {
+  __typename?: 'ArtistEventsConnection';
+  edges: Array<Maybe<ArtistEventsConnectionEdge>>;
+  pageInfo: PageInfo;
 };
 
-export type CreateArticleInput = {
-  content: Scalars['String']['input'];
-  lead: Scalars['String']['input'];
-  preview: Scalars['String']['input'];
-  title: Scalars['String']['input'];
+export type ArtistEventsConnectionEdge = {
+  __typename?: 'ArtistEventsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: EventArtist;
+};
+
+export type DateTimeFilter = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Event = {
+  __typename?: 'Event';
+  artists: EventArtistsConnection;
+  date: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  venue: Venue;
+};
+
+
+export type EventArtistsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<EventArtistListFilter>;
+};
+
+export type EventArtist = {
+  __typename?: 'EventArtist';
+  artist: Artist;
+  event: Event;
+  id: Scalars['ID']['output'];
+};
+
+export type EventArtistFilter = {
+  id?: InputMaybe<IntFilter>;
+};
+
+export type EventArtistListFilter = {
+  every?: InputMaybe<EventArtistFilter>;
+  none?: InputMaybe<EventArtistFilter>;
+  some?: InputMaybe<EventArtistFilter>;
+};
+
+export type EventArtistsConnection = {
+  __typename?: 'EventArtistsConnection';
+  edges: Array<Maybe<EventArtistsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type EventArtistsConnectionEdge = {
+  __typename?: 'EventArtistsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: EventArtist;
+};
+
+export type EventFilter = {
+  date?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<IntFilter>;
+  name?: InputMaybe<StringFilter>;
+  venue?: InputMaybe<VenueFilter>;
+};
+
+export type EventListFilter = {
+  every?: InputMaybe<EventFilter>;
+  none?: InputMaybe<EventFilter>;
+  some?: InputMaybe<EventFilter>;
+};
+
+export type FloatFilter = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type IntFilter = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  not?: InputMaybe<IntFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createArticle: Article;
-  deleteArticle: Article;
   signUp: User;
-  updateArticle: Article;
-};
-
-
-export type MutationCreateArticleArgs = {
-  input: CreateArticleInput;
-  userId: Scalars['String']['input'];
-};
-
-
-export type MutationDeleteArticleArgs = {
-  articleId: Scalars['String']['input'];
 };
 
 
@@ -84,108 +144,242 @@ export type MutationSignUpArgs = {
   name: Scalars['String']['input'];
 };
 
-
-export type MutationUpdateArticleArgs = {
-  articleId: Scalars['String']['input'];
-  input: CreateArticleInput;
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['String']['output']>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPreviousPage: Scalars['Boolean']['output'];
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  getArticle: Article;
-  getUser: User;
-  getUserArticles: ArticlesResponse;
-  getUsers: Array<User>;
-  searchArticles: ArticlesResponse;
+  artist?: Maybe<Artist>;
+  artists: QueryArtistsConnection;
+  user: User;
+  users: QueryUsersConnection;
 };
 
 
-export type QueryGetArticleArgs = {
-  articleId: Scalars['String']['input'];
+export type QueryArtistArgs = {
+  input: QueryArtistInput;
 };
 
 
-export type QueryGetUserArgs = {
-  userId: Scalars['String']['input'];
+export type QueryArtistsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
-export type QueryGetUserArticlesArgs = {
-  input: ArticlesInput;
-  userId: Scalars['String']['input'];
+export type QueryUserArgs = {
+  userId: Scalars['Int']['input'];
 };
 
 
-export type QuerySearchArticlesArgs = {
-  input?: InputMaybe<ArticlesInput>;
+export type QueryUsersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-/** User role */
-export enum Role {
-  Admin = 'ADMIN',
-  Author = 'AUTHOR'
-}
+export type QueryArtistInput = {
+  id: Scalars['Int']['input'];
+};
 
-/** Search order */
-export enum SearchOrder {
-  Asc = 'asc',
-  Desc = 'desc'
-}
+export type QueryArtistsConnection = {
+  __typename?: 'QueryArtistsConnection';
+  edges: Array<Maybe<QueryArtistsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryArtistsConnectionEdge = {
+  __typename?: 'QueryArtistsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Artist;
+};
+
+export type QueryUsersConnection = {
+  __typename?: 'QueryUsersConnection';
+  edges: Array<Maybe<QueryUsersConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryUsersConnectionEdge = {
+  __typename?: 'QueryUsersConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: User;
+};
+
+export type StringFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  not?: InputMaybe<StringFilter>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type User = {
   __typename?: 'User';
+  email: Scalars['String']['output'];
+  events: UserEventsConnection;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
 };
 
-export type SearchArticlesQueryVariables = Exact<{
-  input?: InputMaybe<ArticlesInput>;
-}>;
+
+export type UserEventsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UserEvent = {
+  __typename?: 'UserEvent';
+  event: Event;
+  id: Scalars['ID']['output'];
+  user: User;
+};
+
+export type UserEventFilter = {
+  event?: InputMaybe<EventFilter>;
+  id?: InputMaybe<IntFilter>;
+};
+
+export type UserEventListFilter = {
+  every?: InputMaybe<UserEventFilter>;
+  none?: InputMaybe<UserEventFilter>;
+  some?: InputMaybe<UserEventFilter>;
+};
+
+export type UserEventsConnection = {
+  __typename?: 'UserEventsConnection';
+  edges: Array<Maybe<UserEventsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type UserEventsConnectionEdge = {
+  __typename?: 'UserEventsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: UserEvent;
+};
+
+export type UserFilter = {
+  email?: InputMaybe<StringFilter>;
+  events?: InputMaybe<UserEventListFilter>;
+  id?: InputMaybe<IntFilter>;
+  name?: InputMaybe<StringFilter>;
+};
+
+export type Venue = {
+  __typename?: 'Venue';
+  address1: Scalars['String']['output'];
+  address2: Scalars['String']['output'];
+  city: Scalars['String']['output'];
+  events: VenueEventsConnection;
+  googlePlacesID: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  lat: Scalars['Float']['output'];
+  long: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+  state: Scalars['String']['output'];
+  zip: Scalars['String']['output'];
+};
 
 
-export type SearchArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticlesResponse', results: Array<{ __typename?: 'Article', id: string, title: string }> } };
+export type VenueEventsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type VenueEventsConnection = {
+  __typename?: 'VenueEventsConnection';
+  edges: Array<Maybe<VenueEventsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type VenueEventsConnectionEdge = {
+  __typename?: 'VenueEventsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Event;
+};
+
+export type VenueFilter = {
+  address1?: InputMaybe<StringFilter>;
+  address2?: InputMaybe<StringFilter>;
+  city?: InputMaybe<StringFilter>;
+  googlePlacesID?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IntFilter>;
+  name?: InputMaybe<StringFilter>;
+  state?: InputMaybe<StringFilter>;
+  zip?: InputMaybe<StringFilter>;
+};
+
+export type VenueListFilter = {
+  every?: InputMaybe<VenueFilter>;
+  none?: InputMaybe<VenueFilter>;
+  some?: InputMaybe<VenueFilter>;
+};
+
+export type ListArtistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const SearchArticlesDocument = gql`
-    query SearchArticles($input: ArticlesInput) {
-  articles: searchArticles(input: $input) {
-    results {
-      id
-      title
+export type ListArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null }, edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', spotifyID: string, name: string, id: string } } | null> } };
+
+
+export const ListArtistsDocument = gql`
+    query ListArtists {
+  artists {
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    edges {
+      node {
+        spotifyID
+        name
+        id
+      }
     }
   }
 }
     `;
 
 /**
- * __useSearchArticlesQuery__
+ * __useListArtistsQuery__
  *
- * To run a query within a React component, call `useSearchArticlesQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListArtistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListArtistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchArticlesQuery({
+ * const { data, loading, error } = useListArtistsQuery({
  *   variables: {
- *      input: // value for 'input'
  *   },
  * });
  */
-export function useSearchArticlesQuery(baseOptions?: Apollo.QueryHookOptions<SearchArticlesQuery, SearchArticlesQueryVariables>) {
+export function useListArtistsQuery(baseOptions?: Apollo.QueryHookOptions<ListArtistsQuery, ListArtistsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchArticlesQuery, SearchArticlesQueryVariables>(SearchArticlesDocument, options);
+        return Apollo.useQuery<ListArtistsQuery, ListArtistsQueryVariables>(ListArtistsDocument, options);
       }
-export function useSearchArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchArticlesQuery, SearchArticlesQueryVariables>) {
+export function useListArtistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListArtistsQuery, ListArtistsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchArticlesQuery, SearchArticlesQueryVariables>(SearchArticlesDocument, options);
+          return Apollo.useLazyQuery<ListArtistsQuery, ListArtistsQueryVariables>(ListArtistsDocument, options);
         }
-export function useSearchArticlesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchArticlesQuery, SearchArticlesQueryVariables>) {
+export function useListArtistsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ListArtistsQuery, ListArtistsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SearchArticlesQuery, SearchArticlesQueryVariables>(SearchArticlesDocument, options);
+          return Apollo.useSuspenseQuery<ListArtistsQuery, ListArtistsQueryVariables>(ListArtistsDocument, options);
         }
-export type SearchArticlesQueryHookResult = ReturnType<typeof useSearchArticlesQuery>;
-export type SearchArticlesLazyQueryHookResult = ReturnType<typeof useSearchArticlesLazyQuery>;
-export type SearchArticlesSuspenseQueryHookResult = ReturnType<typeof useSearchArticlesSuspenseQuery>;
-export type SearchArticlesQueryResult = Apollo.QueryResult<SearchArticlesQuery, SearchArticlesQueryVariables>;
+export type ListArtistsQueryHookResult = ReturnType<typeof useListArtistsQuery>;
+export type ListArtistsLazyQueryHookResult = ReturnType<typeof useListArtistsLazyQuery>;
+export type ListArtistsSuspenseQueryHookResult = ReturnType<typeof useListArtistsSuspenseQuery>;
+export type ListArtistsQueryResult = Apollo.QueryResult<ListArtistsQuery, ListArtistsQueryVariables>;
