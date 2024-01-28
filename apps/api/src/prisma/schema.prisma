@@ -3,33 +3,74 @@ generator client {
 }
 
 generator pothos {
-  provider = "prisma-pothos-types"
+  provider    = "prisma-pothos-types"
+  // Enable prismaUtils feature
+  prismaUtils = true
 }
 
 datasource db {
   // sqlite is a very limited database, only used for demostration purposes
   provider = "sqlite"
   url      = "file:./dev.db"
-  
 }
 
 model User {
-  id       String    @id @default(cuid())
-  avatar   String?
-  name     String
-  email    String
-  articles Article[]
+  id     Int         @id @default(autoincrement())
+  name   String      @default("")
+  email  String      @unique @default("")
+  events UserEvent[] @relation("UserEvent_user")
 }
 
-model Article {
-  id          String   @id @default(cuid())
-  title       String
-  preview     String
-  lead        String
-  authorId    String
-  content     String
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  author      User     @relation(fields: [authorId], references: [id])
+model Artist {
+  id        Int           @id @default(autoincrement())
+  name      String        @unique @default("")
+  spotifyID String        @unique @default("")
+  events    EventArtist[]
+}
+
+model Venue {
+  id             Int     @id @default(autoincrement())
+  name           String  @default("")
+  address1       String  @default("")
+  address2       String  @default("")
+  city           String  @default("")
+  state          String  @default("")
+  zip            String  @default("")
+  lat            Float   @unique
+  long           Float   @unique
+  googlePlacesID String  @unique @default("")
+  events         Event[] @relation("Event_venue")
+}
+
+model Event {
+  id         Int           @id @default(autoincrement())
+  name       String        @unique @default("")
+  date       DateTime
+  artists    EventArtist[]
+  venue      Venue         @relation("Event_venue", fields: [venueId], references: [id])
+  venueId    Int           @map("venue")
+  userEvents UserEvent[]   @relation("UserEvent_event")
+
+  @@index([venueId])
+}
+
+model EventArtist {
+  id       Int    @id @default(autoincrement())
+  event    Event  @relation(fields: [eventId], references: [id])
+  eventId  Int
+  artist   Artist @relation(fields: [artistId], references: [id])
+  artistId Int
+}
+
+model UserEvent {
+  id      Int    @id @default(autoincrement())
+  user    User?  @relation("UserEvent_user", fields: [userId], references: [id])
+  userId  Int?   @map("user")
+  event   Event? @relation("UserEvent_event", fields: [eventId], references: [id])
+  eventId Int?   @map("event")
+  notes   String @default("")
+
+  @@unique([userId, eventId])
+  @@index([userId])
+  @@index([eventId])
 }

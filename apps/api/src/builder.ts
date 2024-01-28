@@ -1,23 +1,17 @@
 import PrismaPlugin from '@pothos/plugin-prisma';
 import SchemaBuilder from '@pothos/core';
 import RelayPlugin from '@pothos/plugin-relay';
+import PrismaUtils from '@pothos/plugin-prisma-utils';
 
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
+import WithInputPlugin from '@pothos/plugin-with-input';
 
 import db from './db';
 
 const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
-  Objects: {
-    ArticlesResponse: {
-      nextCursor: string;
-      prevCursor: string;
-      totalCount: number;
-      results: PrismaTypes['Article']['Shape'][];
-    };
-  };
   Scalars: {
-    Date: {
+    DateTime: {
       Input: Date;
       Output: Date;
     };
@@ -27,7 +21,7 @@ const builder = new SchemaBuilder<{
     };
   };
 }>({
-  plugins: [PrismaPlugin, RelayPlugin],
+  plugins: [PrismaPlugin, RelayPlugin, PrismaUtils, WithInputPlugin],
   prisma: {
     client: db,
     filterConnectionTotalCount: true,
@@ -37,6 +31,17 @@ const builder = new SchemaBuilder<{
     clientMutationId: 'omit',
     cursorType: 'String',
   },
+  withInput: {
+    typeOptions: {
+      // default options for Input object types created by this plugin
+    },
+    argOptions: {
+      // set required: false to override default behavior
+    },
+  },
 });
+
+builder.queryType();
+builder.mutationType();
 
 export default builder;
