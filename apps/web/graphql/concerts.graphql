@@ -1,0 +1,40 @@
+fragment Event on Event {
+  id
+  name
+  venue {
+    id
+    name
+    city
+    state
+  }
+  date
+  artists {
+    edges {
+      node {
+        id
+        artist {
+          id
+          name
+          image
+        }
+      }
+    }
+  }
+}
+
+query Events {
+  events {
+    pageInfo {
+      startCursor
+      hasPreviousPage
+      hasNextPage
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        ...Event
+      }
+    }
+  }
+}

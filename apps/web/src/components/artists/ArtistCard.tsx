@@ -10,32 +10,23 @@ import { fDate } from 'src/utils/formatTime';
 import usePopover from '@/hooks/usePopover';
 import Image from 'src/components/image/Image';
 import CustomPopover from 'src/components/custom-popover/CustomPopover';
-import { EventFragment } from 'apollo-hooks';
+import { ArtistFragment } from 'apollo-hooks';
+import { Chip } from '@mui/material';
 
 type Props = {
-  event: EventFragment;
+  artist: ArtistFragment;
   onView: VoidFunction;
   onEdit: VoidFunction;
   onDelete: VoidFunction;
 };
 
-export default function ConcertCard({
-  event,
+export default function ArtistCard({
+  artist,
   onView,
   onEdit,
   onDelete,
 }: Props) {
   const popover = usePopover();
-
-  const name = event.name;
-
-  const images = event.artists.edges.flatMap(
-    (artist) => artist?.node.artist.image
-  );
-
-  const artists = event.artists.edges.map((artist) => artist?.node.artist.name);
-
-  const destination = `${event.venue.name} (${event.venue.city}, ${event.venue.state})`;
 
   return (
     <>
@@ -49,38 +40,21 @@ export default function ConcertCard({
         >
           <Stack flexGrow={1} sx={{ position: 'relative' }}>
             <Image
-              alt={images[0]}
-              src={images[0]}
               ratio='16/9'
+              alt={artist.image}
+              src={artist.image}
               sx={{ borderRadius: 1, height: 1, width: 1 }}
             />
           </Stack>
-          {/* {artists.length > 1 && (
-            <Stack spacing={0.5}>
-              <Image
-                alt={images[1]}
-                src={images[1]}
-                ratio='1/1'
-                sx={{ borderRadius: 1, width: 80 }}
-              />
-              <Image
-                alt={images[2]}
-                src={images[2]}
-                ratio='1/1'
-                sx={{ borderRadius: 1, width: 80 }}
-              />
-            </Stack>
-          )} */}
         </Stack>
 
         <ListItemText
           sx={{
             p: (theme) => theme.spacing(2.5, 2.5, 2, 2.5),
           }}
-          // primary={`Posted date: ${fDateTime(createdAt)}`}
           secondary={
             <Link component={NextLink} href={'TODO:'} color='inherit'>
-              {name}
+              {artist.name}
             </Link>
           }
           primaryTypographyProps={{
@@ -110,46 +84,16 @@ export default function ConcertCard({
             <Iconify icon='eva:more-vertical-fill' />
           </IconButton>
 
-          {[
-            {
-              label: artists.join(', '),
-              icon: (
-                <Iconify
-                  icon='solar:users-group-rounded-bold'
-                  sx={{ color: 'primary.main' }}
-                />
-              ),
-            },
-            {
-              label: fDate(event.date),
-              icon: (
-                <Iconify
-                  icon='solar:clock-circle-bold'
-                  sx={{ color: 'info.main' }}
-                />
-              ),
-            },
-            {
-              label: destination,
-              icon: (
-                <Iconify
-                  icon='mingcute:location-fill'
-                  sx={{ color: 'error.main' }}
-                />
-              ),
-            },
-          ].map((item) => (
-            <Stack
-              key={item.label}
-              spacing={1}
-              direction='row'
-              alignItems='center'
-              sx={{ typography: 'body2' }}
-            >
-              {item.icon}
-              {item.label}
-            </Stack>
-          ))}
+          <Stack spacing={1} direction='row' alignItems='center'>
+            {artist.genres.slice(0, 2).map((genre) => (
+              <Chip
+                key={genre}
+                label={`#${genre.replaceAll(' ', '-')}`}
+                size='small'
+                onClick={() => {}}
+              />
+            ))}
+          </Stack>
         </Stack>
       </Card>
 

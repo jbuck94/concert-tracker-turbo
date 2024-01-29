@@ -24,7 +24,9 @@ export type Scalars = {
 export type Artist = {
   __typename?: 'Artist';
   events: ArtistEventsConnection;
+  genres: Array<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  image: Scalars['String']['output'];
   name: Scalars['String']['output'];
   spotifyID: Scalars['String']['output'];
 };
@@ -156,8 +158,10 @@ export type Query = {
   __typename?: 'Query';
   artist?: Maybe<Artist>;
   artists: QueryArtistsConnection;
+  events: QueryEventsConnection;
   user: User;
   users: QueryUsersConnection;
+  venues: QueryVenuesConnection;
 };
 
 
@@ -167,6 +171,14 @@ export type QueryArtistArgs = {
 
 
 export type QueryArtistsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryEventsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -186,13 +198,21 @@ export type QueryUsersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
+
+export type QueryVenuesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type QueryArtistInput = {
   id: Scalars['Int']['input'];
 };
 
 export type QueryArtistsConnection = {
   __typename?: 'QueryArtistsConnection';
-  edges: Array<Maybe<QueryArtistsConnectionEdge>>;
+  edges: Array<QueryArtistsConnectionEdge>;
   pageInfo: PageInfo;
 };
 
@@ -200,6 +220,18 @@ export type QueryArtistsConnectionEdge = {
   __typename?: 'QueryArtistsConnectionEdge';
   cursor: Scalars['String']['output'];
   node: Artist;
+};
+
+export type QueryEventsConnection = {
+  __typename?: 'QueryEventsConnection';
+  edges: Array<QueryEventsConnectionEdge>;
+  pageInfo: PageInfo;
+};
+
+export type QueryEventsConnectionEdge = {
+  __typename?: 'QueryEventsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Event;
 };
 
 export type QueryUsersConnection = {
@@ -212,6 +244,18 @@ export type QueryUsersConnectionEdge = {
   __typename?: 'QueryUsersConnectionEdge';
   cursor: Scalars['String']['output'];
   node: User;
+};
+
+export type QueryVenuesConnection = {
+  __typename?: 'QueryVenuesConnection';
+  edges: Array<QueryVenuesConnectionEdge>;
+  pageInfo: PageInfo;
+};
+
+export type QueryVenuesConnectionEdge = {
+  __typename?: 'QueryVenuesConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Venue;
 };
 
 export type StringFilter = {
@@ -326,60 +370,203 @@ export type VenueListFilter = {
   some?: InputMaybe<VenueFilter>;
 };
 
-export type ListArtistsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ArtistFragment = { __typename?: 'Artist', id: string, name: string, image: string, genres: Array<string> };
+
+export type ArtistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null }, edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', spotifyID: string, name: string, id: string } } | null> } };
+export type ArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', id: string, name: string, image: string, genres: Array<string> } }> } };
+
+export type EventFragment = { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image: string } } } | null> } };
+
+export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const ListArtistsDocument = gql`
-    query ListArtists {
+export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'QueryEventsConnectionEdge', cursor: string, node: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image: string } } } | null> } } }> } };
+
+export type VenueFragment = { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number };
+
+export type VenuesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type VenuesQuery = { __typename?: 'Query', venues: { __typename?: 'QueryVenuesConnection', edges: Array<{ __typename?: 'QueryVenuesConnectionEdge', node: { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number } }> } };
+
+export const ArtistFragmentDoc = gql`
+    fragment Artist on Artist {
+  id
+  name
+  image
+  genres
+}
+    `;
+export const EventFragmentDoc = gql`
+    fragment Event on Event {
+  id
+  name
+  venue {
+    id
+    name
+    city
+    state
+  }
+  date
   artists {
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
     edges {
       node {
-        spotifyID
-        name
         id
+        artist {
+          id
+          name
+          image
+        }
       }
     }
   }
 }
     `;
+export const VenueFragmentDoc = gql`
+    fragment Venue on Venue {
+  id
+  name
+  city
+  state
+  long
+  lat
+}
+    `;
+export const ArtistsDocument = gql`
+    query Artists {
+  artists {
+    edges {
+      node {
+        ...Artist
+      }
+    }
+  }
+}
+    ${ArtistFragmentDoc}`;
 
 /**
- * __useListArtistsQuery__
+ * __useArtistsQuery__
  *
- * To run a query within a React component, call `useListArtistsQuery` and pass it any options that fit your needs.
- * When your component renders, `useListArtistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useArtistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useArtistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useListArtistsQuery({
+ * const { data, loading, error } = useArtistsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useListArtistsQuery(baseOptions?: Apollo.QueryHookOptions<ListArtistsQuery, ListArtistsQueryVariables>) {
+export function useArtistsQuery(baseOptions?: Apollo.QueryHookOptions<ArtistsQuery, ArtistsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListArtistsQuery, ListArtistsQueryVariables>(ListArtistsDocument, options);
+        return Apollo.useQuery<ArtistsQuery, ArtistsQueryVariables>(ArtistsDocument, options);
       }
-export function useListArtistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListArtistsQuery, ListArtistsQueryVariables>) {
+export function useArtistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistsQuery, ArtistsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListArtistsQuery, ListArtistsQueryVariables>(ListArtistsDocument, options);
+          return Apollo.useLazyQuery<ArtistsQuery, ArtistsQueryVariables>(ArtistsDocument, options);
         }
-export function useListArtistsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ListArtistsQuery, ListArtistsQueryVariables>) {
+export function useArtistsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ArtistsQuery, ArtistsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ListArtistsQuery, ListArtistsQueryVariables>(ListArtistsDocument, options);
+          return Apollo.useSuspenseQuery<ArtistsQuery, ArtistsQueryVariables>(ArtistsDocument, options);
         }
-export type ListArtistsQueryHookResult = ReturnType<typeof useListArtistsQuery>;
-export type ListArtistsLazyQueryHookResult = ReturnType<typeof useListArtistsLazyQuery>;
-export type ListArtistsSuspenseQueryHookResult = ReturnType<typeof useListArtistsSuspenseQuery>;
-export type ListArtistsQueryResult = Apollo.QueryResult<ListArtistsQuery, ListArtistsQueryVariables>;
+export type ArtistsQueryHookResult = ReturnType<typeof useArtistsQuery>;
+export type ArtistsLazyQueryHookResult = ReturnType<typeof useArtistsLazyQuery>;
+export type ArtistsSuspenseQueryHookResult = ReturnType<typeof useArtistsSuspenseQuery>;
+export type ArtistsQueryResult = Apollo.QueryResult<ArtistsQuery, ArtistsQueryVariables>;
+export const EventsDocument = gql`
+    query Events {
+  events {
+    pageInfo {
+      startCursor
+      hasPreviousPage
+      hasNextPage
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        ...Event
+      }
+    }
+  }
+}
+    ${EventFragmentDoc}`;
+
+/**
+ * __useEventsQuery__
+ *
+ * To run a query within a React component, call `useEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEventsQuery(baseOptions?: Apollo.QueryHookOptions<EventsQuery, EventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EventsQuery, EventsQueryVariables>(EventsDocument, options);
+      }
+export function useEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EventsQuery, EventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EventsQuery, EventsQueryVariables>(EventsDocument, options);
+        }
+export function useEventsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<EventsQuery, EventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<EventsQuery, EventsQueryVariables>(EventsDocument, options);
+        }
+export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
+export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
+export type EventsSuspenseQueryHookResult = ReturnType<typeof useEventsSuspenseQuery>;
+export type EventsQueryResult = Apollo.QueryResult<EventsQuery, EventsQueryVariables>;
+export const VenuesDocument = gql`
+    query Venues {
+  venues {
+    edges {
+      node {
+        ...Venue
+      }
+    }
+  }
+}
+    ${VenueFragmentDoc}`;
+
+/**
+ * __useVenuesQuery__
+ *
+ * To run a query within a React component, call `useVenuesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVenuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVenuesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useVenuesQuery(baseOptions?: Apollo.QueryHookOptions<VenuesQuery, VenuesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VenuesQuery, VenuesQueryVariables>(VenuesDocument, options);
+      }
+export function useVenuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VenuesQuery, VenuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VenuesQuery, VenuesQueryVariables>(VenuesDocument, options);
+        }
+export function useVenuesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<VenuesQuery, VenuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VenuesQuery, VenuesQueryVariables>(VenuesDocument, options);
+        }
+export type VenuesQueryHookResult = ReturnType<typeof useVenuesQuery>;
+export type VenuesLazyQueryHookResult = ReturnType<typeof useVenuesLazyQuery>;
+export type VenuesSuspenseQueryHookResult = ReturnType<typeof useVenuesSuspenseQuery>;
+export type VenuesQueryResult = Apollo.QueryResult<VenuesQuery, VenuesQueryVariables>;

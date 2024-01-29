@@ -19,11 +19,13 @@ builder.queryField('artist', (t) =>
   })
 );
 
-
-builder.queryFields(t => ({
+builder.queryFields((t) => ({
   artists: t.prismaConnection({
     type: 'Artist',
     cursor: 'id',
-    resolve: query => db.artist.findMany(query)
-  })
-}))
+    nullable: false,
+    nodeNullable: false,
+    edgesNullable: false,
+    resolve: (query) => db.artist.findMany(query),
+  }),
+}));

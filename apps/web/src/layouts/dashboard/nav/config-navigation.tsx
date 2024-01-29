@@ -1,23 +1,26 @@
-import SvgColor from 'src/components/svg-color/SvgColor';
 import GroupTwoToneIcon from '@mui/icons-material/GroupTwoTone';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import PlaceIcon from '@mui/icons-material/Place';
 import { PATH_DASHBOARD } from 'src/routes/paths';
 
-const icon = (name: string) => (
-  <SvgColor
-    src={`/assets/icons/navbar/${name}.svg`}
-    sx={{ width: 1, height: 1 }}
-  />
-);
-
 const navConfig = [
-  // GENERAL
   {
     subheader: 'general',
     items: [
       {
-        title: 'app',
-        path: PATH_DASHBOARD.general.app,
+        title: 'artists',
+        path: PATH_DASHBOARD.artist.root,
+        icon: <MusicNoteIcon />,
+      },
+      {
+        title: 'concerts',
+        path: PATH_DASHBOARD.concert.root,
         icon: <GroupTwoToneIcon />,
+      },
+      {
+        title: 'venues',
+        path: PATH_DASHBOARD.venue.root,
+        icon: <PlaceIcon />,
       },
     ],
   },

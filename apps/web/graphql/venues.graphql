@@ -1,0 +1,18 @@
+fragment Venue on Venue {
+  id
+  name
+  city
+  state
+  long
+  lat
+}
+
+query Venues {
+  venues {
+    edges {
+      node {
+        ...Venue
+      }
+    }
+  }
+}

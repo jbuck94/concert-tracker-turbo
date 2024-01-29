@@ -1,4 +1,7 @@
 import builder from '@/src/builder';
+import { spotifyClient } from '@/src/lib/spotify';
+
+console.log('Searching Spotify for The Beatles...');
 
 builder.prismaObject('Artist', {
   fields: (t) => ({
@@ -6,5 +9,22 @@ builder.prismaObject('Artist', {
     name: t.exposeString('name'),
     spotifyID: t.exposeString('spotifyID'),
     events: t.relatedConnection('events', { cursor: 'id' }),
+    genres: t.field({
+      type: ['String'],
+      nullable: false,
+      resolve: async (artist) => {
+        const spotifyArtist = await spotifyClient.artists.get(artist.spotifyID);
+
+        return spotifyArtist.genres;
+      },
+    }),
+    image: t.field({
+      type: 'String',
+      nullable: false,
+      resolve: async (artist) => {
+        const spotifyArtist = await spotifyClient.artists.get(artist.spotifyID);
+        return spotifyArtist.images[0].url;
+      },
+    }),
   }),
 });

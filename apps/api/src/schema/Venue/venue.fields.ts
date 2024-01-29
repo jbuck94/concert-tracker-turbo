@@ -1,4 +1,5 @@
 import builder from '@/src/builder';
+import { googleClient } from '@/src/lib/google';
 import { FloatFilter, IDFilter, StringFilter } from '@/src/schema/Filters';
 
 export const VenueWhere = builder.prismaWhere('Venue', {
@@ -30,6 +31,6 @@ builder.prismaObject('Venue', {
     lat: t.exposeFloat('lat'),
     long: t.exposeFloat('long'),
     googlePlacesID: t.exposeString('googlePlacesID'),
-    events: t.relatedConnection('events', { cursor: 'id' }, {}),
+    events: t.relatedConnection('events', { cursor: 'id' }),
   }),
 });

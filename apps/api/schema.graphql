@@ -1,6 +1,8 @@
 type Artist {
   events(after: String, before: String, first: Int, last: Int): ArtistEventsConnection!
+  genres: [String!]!
   id: ID!
+  image: String!
   name: String!
   spotifyID: String!
 }
@@ -109,8 +111,10 @@ type PageInfo {
 type Query {
   artist(input: QueryArtistInput!): Artist
   artists(after: String, before: String, first: Int, last: Int): QueryArtistsConnection!
+  events(after: String, before: String, first: Int, last: Int): QueryEventsConnection!
   user(userId: Int!): User!
   users(after: String, before: String, first: Int, last: Int): QueryUsersConnection!
+  venues(after: String, before: String, first: Int, last: Int): QueryVenuesConnection!
 }
 
 input QueryArtistInput {
@@ -118,13 +122,23 @@ input QueryArtistInput {
 }
 
 type QueryArtistsConnection {
-  edges: [QueryArtistsConnectionEdge]!
+  edges: [QueryArtistsConnectionEdge!]!
   pageInfo: PageInfo!
 }
 
 type QueryArtistsConnectionEdge {
   cursor: String!
   node: Artist!
+}
+
+type QueryEventsConnection {
+  edges: [QueryEventsConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type QueryEventsConnectionEdge {
+  cursor: String!
+  node: Event!
 }
 
 type QueryUsersConnection {
@@ -135,6 +149,16 @@ type QueryUsersConnection {
 type QueryUsersConnectionEdge {
   cursor: String!
   node: User!
+}
+
+type QueryVenuesConnection {
+  edges: [QueryVenuesConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type QueryVenuesConnectionEdge {
+  cursor: String!
+  node: Venue!
 }
 
 input StringFilter {

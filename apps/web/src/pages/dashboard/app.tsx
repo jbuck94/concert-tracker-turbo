@@ -1,5 +1,5 @@
-import { Box, Container, Button } from '@mui/material';
-import { useListArtistsQuery } from 'apollo-hooks';
+import { Box, Container, Button, Typography } from '@mui/material';
+import { useEventsQuery } from 'apollo-hooks';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,10 +15,10 @@ App.getLayout = (page: React.ReactElement) => (
 );
 
 function App() {
-  const { data, error, loading } = useListArtistsQuery();
-  console.log({ data, error, loading });
-
   const router = useRouter();
+
+  const { data, loading, error } = useEventsQuery();
+  console.log('data: ', data);
 
   const handleView = useCallback(
     (id: string) => {
@@ -44,65 +44,7 @@ function App() {
         <title>Concert Tracker</title>
       </Head>
       <Container maxWidth='xl'>
-        <CustomBreadcrumbs
-          heading='Concerts'
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            {
-              name: 'Concerts',
-              href: 'PATH_DASHBOARD.tour.root',
-            },
-            { name: 'List' },
-          ]}
-          action={
-            <Button
-              component={NextLink}
-              href={'PATH_DASHBOARD.tour.new'}
-              variant='contained'
-              startIcon={<Iconify icon='mingcute:add-line' />}
-            >
-              New Concert
-            </Button>
-          }
-          sx={{
-            mb: { xs: 3, md: 5 },
-          }}
-        />
-        <Box
-          gap={3}
-          display='grid'
-          gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
-          }}
-        >
-          <ConcertCard
-            onView={() => handleView('tour.id')}
-            onEdit={() => handleEdit('tour.id')}
-            onDelete={() => handleDelete('tour.id')}
-          />
-          <ConcertCard
-            onView={() => handleView('tour.id')}
-            onEdit={() => handleEdit('tour.id')}
-            onDelete={() => handleDelete('tour.id')}
-          />
-          <ConcertCard
-            onView={() => handleView('tour.id')}
-            onEdit={() => handleEdit('tour.id')}
-            onDelete={() => handleDelete('tour.id')}
-          />
-          <ConcertCard
-            onView={() => handleView('tour.id')}
-            onEdit={() => handleEdit('tour.id')}
-            onDelete={() => handleDelete('tour.id')}
-          />
-          <ConcertCard
-            onView={() => handleView('tour.id')}
-            onEdit={() => handleEdit('tour.id')}
-            onDelete={() => handleDelete('tour.id')}
-          />
-        </Box>
+        <Typography>Concert Tracker</Typography>
       </Container>
     </>
   );

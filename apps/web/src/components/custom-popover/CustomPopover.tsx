@@ -20,24 +20,22 @@ export default function CustomPopover({
       anchorEl={open}
       anchorOrigin={anchorOrigin as PopoverOrigin}
       transformOrigin={transformOrigin as PopoverOrigin}
-      slotProps={
-        {
-          // paper: {
-          //   sx: {
-          //     width: 'auto',
-          //     overflow: 'inherit',
-          //     ...style,
-          //     [`& .${menuItemClasses.root}`]: {
-          //       '& svg': {
-          //         mr: 2,
-          //         flexShrink: 0,
-          //       },
-          //     },
-          //     ...sx,
-          //   },
-          // },
-        }
-      }
+      slotProps={{
+        paper: {
+          sx: {
+            width: 'auto',
+            overflow: 'inherit',
+            ...style,
+            [`& .${menuItemClasses.root}`]: {
+              '& svg': {
+                mr: 2,
+                flexShrink: 0,
+              },
+            },
+            ...sx,
+          },
+        },
+      }}
       {...other}
     >
       {!hiddenArrow && <StyledArrow arrow={arrow} />}

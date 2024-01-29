@@ -1,0 +1,16 @@
+fragment Artist on Artist {
+  id
+  name
+  image
+  genres
+}
+
+query Artists {
+  artists {
+    edges {
+      node {
+        ...Artist
+      }
+    }
+  }
+}
