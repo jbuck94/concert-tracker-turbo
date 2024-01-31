@@ -2,9 +2,10 @@ import PrismaPlugin from '@pothos/plugin-prisma';
 import SchemaBuilder from '@pothos/core';
 import RelayPlugin from '@pothos/plugin-relay';
 import PrismaUtils from '@pothos/plugin-prisma-utils';
-
-import type PrismaTypes from '@pothos/plugin-prisma/generated';
+import SimpleObjectsPlugin from '@pothos/plugin-simple-objects';
+import ErrorsPlugin from '@pothos/plugin-errors';
 import WithInputPlugin from '@pothos/plugin-with-input';
+import type PrismaTypes from '@pothos/plugin-prisma/generated';
 
 import db from './db';
 
@@ -21,7 +22,14 @@ const builder = new SchemaBuilder<{
     };
   };
 }>({
-  plugins: [PrismaPlugin, RelayPlugin, PrismaUtils, WithInputPlugin],
+  plugins: [
+    ErrorsPlugin,
+    SimpleObjectsPlugin,
+    PrismaPlugin,
+    RelayPlugin,
+    PrismaUtils,
+    WithInputPlugin,
+  ],
   prisma: {
     client: db,
     filterConnectionTotalCount: true,

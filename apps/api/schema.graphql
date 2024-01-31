@@ -17,6 +17,14 @@ type ArtistEventsConnectionEdge {
   node: EventArtist!
 }
 
+input ArtistsAutocompleteInput {
+  name: String!
+}
+
+interface BaseError {
+  message: String!
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -28,6 +36,22 @@ input DateTimeFilter {
   gte: DateTime
   lt: DateTime
   lte: DateTime
+}
+
+type ErrorForbidden implements BaseError {
+  message: String!
+}
+
+type ErrorInvalidRequest implements BaseError {
+  message: String!
+}
+
+type ErrorNotFound implements BaseError {
+  message: String!
+}
+
+type ErrorUniqueConstraint implements BaseError {
+  message: String!
 }
 
 type Event {
@@ -98,7 +122,14 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 scalar JSON
 
 type Mutation {
+  createArtist(spotifyID: String!): MutationCreateArtistResult!
   signUp(avatar: String!, email: String!, name: String!): User!
+}
+
+union MutationCreateArtistResult = ErrorInvalidRequest | ErrorNotFound | ErrorUniqueConstraint | MutationCreateArtistSuccess
+
+type MutationCreateArtistSuccess {
+  data: Artist!
 }
 
 type PageInfo {
@@ -110,11 +141,23 @@ type PageInfo {
 
 type Query {
   artist(input: QueryArtistInput!): Artist
+  artistAutocomplete(after: String, before: String, first: Int, input: ArtistsAutocompleteInput!, last: Int): QueryArtistAutocompleteConnection!
   artists(after: String, before: String, first: Int, last: Int): QueryArtistsConnection!
   events(after: String, before: String, first: Int, last: Int): QueryEventsConnection!
   user(userId: Int!): User!
   users(after: String, before: String, first: Int, last: Int): QueryUsersConnection!
+  venueAutocomplete(after: String, before: String, first: Int, input: VenueAutocompleteInput!, last: Int): QueryVenueAutocompleteConnection!
   venues(after: String, before: String, first: Int, last: Int): QueryVenuesConnection!
+}
+
+type QueryArtistAutocompleteConnection {
+  edges: [QueryArtistAutocompleteConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type QueryArtistAutocompleteConnectionEdge {
+  cursor: String!
+  node: SpotifyArtist!
 }
 
 input QueryArtistInput {
@@ -151,6 +194,16 @@ type QueryUsersConnectionEdge {
   node: User!
 }
 
+type QueryVenueAutocompleteConnection {
+  edges: [QueryVenueAutocompleteConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type QueryVenueAutocompleteConnectionEdge {
+  cursor: String!
+  node: VenueAutocompleteResult!
+}
+
 type QueryVenuesConnection {
   edges: [QueryVenuesConnectionEdge!]!
   pageInfo: PageInfo!
@@ -159,6 +212,11 @@ type QueryVenuesConnection {
 type QueryVenuesConnectionEdge {
   cursor: String!
   node: Venue!
+}
+
+type SpotifyArtist {
+  id: String!
+  name: String!
 }
 
 input StringFilter {
@@ -221,6 +279,16 @@ type Venue {
   name: String!
   state: String!
   zip: String!
+}
+
+input VenueAutocompleteInput {
+  name: String!
+}
+
+type VenueAutocompleteResult {
+  addressString: String!
+  id: String!
+  name: String!
 }
 
 type VenueEventsConnection {

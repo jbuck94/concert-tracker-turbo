@@ -12,7 +12,7 @@ import { Context } from './context';
 const PORT = Number(process.env.PORT) || 8080;
 
 // Add production app url here
-const ALLOWED_ORIGINS = ['http://localhost:3001'];
+const ALLOWED_ORIGINS = ['http://localhost:3000'];
 
 const app = express();
 const httpServer = http.createServer(app);
