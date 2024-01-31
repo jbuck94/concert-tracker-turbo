@@ -51,12 +51,40 @@ export type ArtistEventsConnectionEdge = {
   node: EventArtist;
 };
 
+export type ArtistsAutocompleteInput = {
+  name: Scalars['String']['input'];
+};
+
+export type BaseError = {
+  message: Scalars['String']['output'];
+};
+
 export type DateTimeFilter = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   gt?: InputMaybe<Scalars['DateTime']['input']>;
   gte?: InputMaybe<Scalars['DateTime']['input']>;
   lt?: InputMaybe<Scalars['DateTime']['input']>;
   lte?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type ErrorForbidden = BaseError & {
+  __typename?: 'ErrorForbidden';
+  message: Scalars['String']['output'];
+};
+
+export type ErrorInvalidRequest = BaseError & {
+  __typename?: 'ErrorInvalidRequest';
+  message: Scalars['String']['output'];
+};
+
+export type ErrorNotFound = BaseError & {
+  __typename?: 'ErrorNotFound';
+  message: Scalars['String']['output'];
+};
+
+export type ErrorUniqueConstraint = BaseError & {
+  __typename?: 'ErrorUniqueConstraint';
+  message: Scalars['String']['output'];
 };
 
 export type Event = {
@@ -136,7 +164,13 @@ export type IntFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createArtist: MutationCreateArtistResult;
   signUp: User;
+};
+
+
+export type MutationCreateArtistArgs = {
+  spotifyID: Scalars['String']['input'];
 };
 
 
@@ -144,6 +178,13 @@ export type MutationSignUpArgs = {
   avatar: Scalars['String']['input'];
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
+};
+
+export type MutationCreateArtistResult = ErrorInvalidRequest | ErrorNotFound | ErrorUniqueConstraint | MutationCreateArtistSuccess;
+
+export type MutationCreateArtistSuccess = {
+  __typename?: 'MutationCreateArtistSuccess';
+  data: Artist;
 };
 
 export type PageInfo = {
@@ -157,6 +198,7 @@ export type PageInfo = {
 export type Query = {
   __typename?: 'Query';
   artist?: Maybe<Artist>;
+  artistAutocomplete: QueryArtistAutocompleteConnection;
   artists: QueryArtistsConnection;
   events: QueryEventsConnection;
   user: User;
@@ -167,6 +209,15 @@ export type Query = {
 
 export type QueryArtistArgs = {
   input: QueryArtistInput;
+};
+
+
+export type QueryArtistAutocompleteArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  input: ArtistsAutocompleteInput;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -204,6 +255,18 @@ export type QueryVenuesArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryArtistAutocompleteConnection = {
+  __typename?: 'QueryArtistAutocompleteConnection';
+  edges: Array<QueryArtistAutocompleteConnectionEdge>;
+  pageInfo: PageInfo;
+};
+
+export type QueryArtistAutocompleteConnectionEdge = {
+  __typename?: 'QueryArtistAutocompleteConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: SpotifyArtist;
 };
 
 export type QueryArtistInput = {
@@ -256,6 +319,12 @@ export type QueryVenuesConnectionEdge = {
   __typename?: 'QueryVenuesConnectionEdge';
   cursor: Scalars['String']['output'];
   node: Venue;
+};
+
+export type SpotifyArtist = {
+  __typename?: 'SpotifyArtist';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type StringFilter = {
@@ -370,12 +439,29 @@ export type VenueListFilter = {
   some?: InputMaybe<VenueFilter>;
 };
 
-export type ArtistFragment = { __typename?: 'Artist', id: string, name: string, image: string, genres: Array<string> };
+export type ArtistFragment = { __typename?: 'Artist', id: string, spotifyID: string, name: string, image: string, genres: Array<string> };
 
 export type ArtistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', id: string, name: string, image: string, genres: Array<string> } }> } };
+export type ArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image: string, genres: Array<string> } }> } };
+
+export type SpotifyArtistFragment = { __typename?: 'SpotifyArtist', name: string, id: string };
+
+export type ArtistAutocompleteQueryVariables = Exact<{
+  input: ArtistsAutocompleteInput;
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ArtistAutocompleteQuery = { __typename?: 'Query', artistAutocomplete: { __typename?: 'QueryArtistAutocompleteConnection', edges: Array<{ __typename?: 'QueryArtistAutocompleteConnectionEdge', node: { __typename?: 'SpotifyArtist', name: string, id: string } }> } };
+
+export type CreateArtistMutationVariables = Exact<{
+  spotifyId: Scalars['String']['input'];
+}>;
+
+
+export type CreateArtistMutation = { __typename?: 'Mutation', createArtist: { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateArtistSuccess', data: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image: string, genres: Array<string> } } };
 
 export type EventFragment = { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image: string } } } | null> } };
 
@@ -394,9 +480,16 @@ export type VenuesQuery = { __typename?: 'Query', venues: { __typename?: 'QueryV
 export const ArtistFragmentDoc = gql`
     fragment Artist on Artist {
   id
+  spotifyID
   name
   image
   genres
+}
+    `;
+export const SpotifyArtistFragmentDoc = gql`
+    fragment SpotifyArtist on SpotifyArtist {
+  name
+  id
 }
     `;
 export const EventFragmentDoc = gql`
@@ -477,6 +570,97 @@ export type ArtistsQueryHookResult = ReturnType<typeof useArtistsQuery>;
 export type ArtistsLazyQueryHookResult = ReturnType<typeof useArtistsLazyQuery>;
 export type ArtistsSuspenseQueryHookResult = ReturnType<typeof useArtistsSuspenseQuery>;
 export type ArtistsQueryResult = Apollo.QueryResult<ArtistsQuery, ArtistsQueryVariables>;
+export const ArtistAutocompleteDocument = gql`
+    query ArtistAutocomplete($input: ArtistsAutocompleteInput!, $first: Int) {
+  artistAutocomplete(input: $input, first: $first) {
+    edges {
+      node {
+        ...SpotifyArtist
+      }
+    }
+  }
+}
+    ${SpotifyArtistFragmentDoc}`;
+
+/**
+ * __useArtistAutocompleteQuery__
+ *
+ * To run a query within a React component, call `useArtistAutocompleteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useArtistAutocompleteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useArtistAutocompleteQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useArtistAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>(ArtistAutocompleteDocument, options);
+      }
+export function useArtistAutocompleteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>(ArtistAutocompleteDocument, options);
+        }
+export function useArtistAutocompleteSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>(ArtistAutocompleteDocument, options);
+        }
+export type ArtistAutocompleteQueryHookResult = ReturnType<typeof useArtistAutocompleteQuery>;
+export type ArtistAutocompleteLazyQueryHookResult = ReturnType<typeof useArtistAutocompleteLazyQuery>;
+export type ArtistAutocompleteSuspenseQueryHookResult = ReturnType<typeof useArtistAutocompleteSuspenseQuery>;
+export type ArtistAutocompleteQueryResult = Apollo.QueryResult<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>;
+export const CreateArtistDocument = gql`
+    mutation CreateArtist($spotifyId: String!) {
+  createArtist(spotifyID: $spotifyId) {
+    ... on MutationCreateArtistSuccess {
+      data {
+        ...Artist
+      }
+    }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorUniqueConstraint {
+      message
+    }
+    ... on ErrorInvalidRequest {
+      message
+    }
+  }
+}
+    ${ArtistFragmentDoc}`;
+export type CreateArtistMutationFn = Apollo.MutationFunction<CreateArtistMutation, CreateArtistMutationVariables>;
+
+/**
+ * __useCreateArtistMutation__
+ *
+ * To run a mutation, you first call `useCreateArtistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateArtistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createArtistMutation, { data, loading, error }] = useCreateArtistMutation({
+ *   variables: {
+ *      spotifyId: // value for 'spotifyId'
+ *   },
+ * });
+ */
+export function useCreateArtistMutation(baseOptions?: Apollo.MutationHookOptions<CreateArtistMutation, CreateArtistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateArtistMutation, CreateArtistMutationVariables>(CreateArtistDocument, options);
+      }
+export type CreateArtistMutationHookResult = ReturnType<typeof useCreateArtistMutation>;
+export type CreateArtistMutationResult = Apollo.MutationResult<CreateArtistMutation>;
+export type CreateArtistMutationOptions = Apollo.BaseMutationOptions<CreateArtistMutation, CreateArtistMutationVariables>;
 export const EventsDocument = gql`
     query Events {
   events {

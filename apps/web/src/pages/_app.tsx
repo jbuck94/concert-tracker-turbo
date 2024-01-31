@@ -13,6 +13,7 @@ import Head from 'next/head';
 import ThemeProvider from 'src/theme/index';
 import { AuthProvider } from 'src/auth/Auth0Context';
 import ThemeSettings from 'src/components/settings/ThemeSettings';
+import SnackbarProvider from 'src/components/snackbar/SnackbarProvider';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -39,13 +40,15 @@ function CustomApp({
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
       <ThemeProvider>
-        <AuthProvider>
-          <ThemeSettings>
-            <ApolloProvider client={client}>
-              {getLayout(<Component {...pageProps} />)}
-            </ApolloProvider>
-          </ThemeSettings>
-        </AuthProvider>
+        <SnackbarProvider>
+          <AuthProvider>
+            <ThemeSettings>
+              <ApolloProvider client={client}>
+                {getLayout(<Component {...pageProps} />)}
+              </ApolloProvider>
+            </ThemeSettings>
+          </AuthProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </CacheProvider>
   );

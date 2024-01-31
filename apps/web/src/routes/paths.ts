@@ -40,6 +40,7 @@ export const PATH_DASHBOARD = {
   },
   artist: {
     root: path(ROOTS_DASHBOARD, '/artists'),
+    create: path(ROOTS_DASHBOARD, '/artists/create'),
   },
   venue: {
     root: path(ROOTS_DASHBOARD, '/venues'),

@@ -1,9 +1,7 @@
 import builder from '@/src/builder';
 import { spotifyClient } from '@/src/lib/spotify';
 
-console.log('Searching Spotify for The Beatles...');
-
-builder.prismaObject('Artist', {
+export const ArtistFields = builder.prismaObject('Artist', {
   fields: (t) => ({
     id: t.exposeID('id'),
     name: t.exposeString('name'),

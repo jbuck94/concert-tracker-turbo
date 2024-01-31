@@ -1,5 +1,6 @@
 fragment Artist on Artist {
   id
+  spotifyID
   name
   image
   genres
@@ -11,6 +12,40 @@ query Artists {
       node {
         ...Artist
       }
+    }
+  }
+}
+
+fragment SpotifyArtist on SpotifyArtist {
+  name
+  id
+}
+
+query ArtistAutocomplete($input: ArtistsAutocompleteInput!, $first: Int) {
+  artistAutocomplete(input: $input, first: $first) {
+    edges {
+      node {
+        ...SpotifyArtist
+      }
+    }
+  }
+}
+
+mutation CreateArtist($spotifyId: String!) {
+  createArtist(spotifyID: $spotifyId) {
+    ... on MutationCreateArtistSuccess {
+      data {
+        ...Artist
+      }
+    }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorUniqueConstraint {
+      message
+    }
+    ... on ErrorInvalidRequest {
+      message
     }
   }
 }

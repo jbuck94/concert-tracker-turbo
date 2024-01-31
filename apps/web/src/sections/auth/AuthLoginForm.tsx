@@ -18,18 +18,18 @@ type FormValuesProps = {
   afterSubmit?: string;
 };
 
+const LoginSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: 'email is required' })
+    .email('Email must be a valid email address'),
+  password: z.string().min(1, { message: 'Password is required' }),
+});
+
 export default function AuthLoginForm() {
   const { login } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
-
-  const LoginSchema = z.object({
-    email: z
-      .string()
-      .min(1, { message: 'email is required' })
-      .email('Email must be a valid email address'),
-    password: z.string().min(1, { message: 'Password is required' }),
-  });
 
   const defaultValues = {
     email: 'demo@minimals.cc',
