@@ -20,7 +20,10 @@ const StyledRoot = styled('div')(({ theme }) => ({
 export default function NavAccount() {
   const { user } = useAuthContext();
 
-  const userName = user ? `${user.firstName} ${user.lastName}` : '';
+  const userName =
+    user && user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user?.email;
 
   return (
     <Link

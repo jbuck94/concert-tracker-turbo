@@ -31,7 +31,10 @@ export default function AccountPopover() {
 
   const { user, logout } = useAuthContext();
 
-  const userName = user ? `${user.firstName} ${user.lastName}` : '';
+  const userName =
+    user && user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user?.email;
 
   const { enqueueSnackbar } = useSnackbar();
 

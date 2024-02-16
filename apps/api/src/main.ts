@@ -48,12 +48,10 @@ server.start().then(async () => {
     checkJwt,
     expressMiddleware(server, {
       context: async ({ req }) => {
-        console.log('req.auth?.payload.sub: ', req.auth?.payload.sub);
         if (req.auth?.payload.sub) {
           const user = await db.user.findFirst({
             where: { authId: req.auth?.payload.sub },
           });
-          console.log('user: ', user);
 
           return {
             user,
