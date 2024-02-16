@@ -26,3 +26,22 @@ builder.queryFields((t) => ({
     resolve: (query) => db.user.findMany(query),
   }),
 }));
+
+builder.queryFields((t) => ({
+  me: t.prismaField({
+    nullable: true,
+    type: 'User',
+    resolve: async (query, _, args, context) => {
+      if (!context?.user?.id) {
+        return null;
+      }
+
+      const user = await db.user.findUnique({
+        ...query,
+        where: { id: context.user.id },
+      });
+
+      return user;
+    },
+  }),
+}));

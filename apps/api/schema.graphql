@@ -144,6 +144,7 @@ type Query {
   artistAutocomplete(after: String, before: String, first: Int, input: ArtistsAutocompleteInput!, last: Int): QueryArtistAutocompleteConnection!
   artists(after: String, before: String, first: Int, last: Int): QueryArtistsConnection!
   events(after: String, before: String, first: Int, last: Int): QueryEventsConnection!
+  me: User
   user(userId: Int!): User!
   users(after: String, before: String, first: Int, last: Int): QueryUsersConnection!
   venueAutocomplete(after: String, before: String, first: Int, input: VenueAutocompleteInput!, last: Int): QueryVenueAutocompleteConnection!
@@ -229,8 +230,9 @@ input StringFilter {
 type User {
   email: String!
   events(after: String, before: String, first: Int, last: Int): UserEventsConnection!
+  firstName: String!
   id: ID!
-  name: String!
+  lastName: String!
 }
 
 type UserEvent {

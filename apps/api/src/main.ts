@@ -1,3 +1,5 @@
+import { auth } from 'express-oauth2-jwt-bearer';
+
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -8,6 +10,8 @@ import { json } from 'body-parser';
 
 import { schema } from './schema';
 import { Context } from './context';
+import { authHandler } from '@/src/handlers/auth';
+import db from '@/src/db';
 
 const PORT = Number(process.env.PORT) || 8080;
 
@@ -18,20 +22,48 @@ const app = express();
 const httpServer = http.createServer(app);
 const server = new ApolloServer<Context>({
   schema,
+  introspection: true,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
+const checkJwt = auth({
+  audience: ['concert-tracker-api', 'https://jamiewbuck.auth0.com/userinfo'],
+  issuerBaseURL: 'https://jamiewbuck.auth0.com/',
+});
+
 server.start().then(async () => {
+  app.use(json());
+
+  app.use(
+    cors<cors.CorsRequest>({
+      origin: '*', // TODO: ALLOW LOCAL OR AUTH0
+      credentials: true,
+    })
+  );
+
+  app.post('/webhook/auth', authHandler);
+
   app.use(
     '/graphql',
-    cors<cors.CorsRequest>({
-      origin: ALLOWED_ORIGINS,
-    }),
-    json(),
+    checkJwt,
     expressMiddleware(server, {
-      context: async ({ req }) => ({
-        accessToken: req?.headers?.authorization ?? '',
-      }),
+      context: async ({ req }) => {
+        console.log('req.auth?.payload.sub: ', req.auth?.payload.sub);
+        if (req.auth?.payload.sub) {
+          const user = await db.user.findFirst({
+            where: { authId: req.auth?.payload.sub },
+          });
+          console.log('user: ', user);
+
+          return {
+            user,
+          };
+        }
+
+        return {
+          user: null,
+        };
+      },
     })
   );
 

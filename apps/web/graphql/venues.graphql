@@ -16,3 +16,20 @@ query Venues {
     }
   }
 }
+
+fragment VenueAutocompleteResult on VenueAutocompleteResult {
+  name
+  id
+  addressString
+}
+
+query VenueAutocomplete($input: VenueAutocompleteInput!, $first: Int) {
+  venueAutocomplete(input: $input, first: $first) {
+    edges {
+      cursor
+      node {
+        ...VenueAutocompleteResult
+      }
+    }
+  }
+}

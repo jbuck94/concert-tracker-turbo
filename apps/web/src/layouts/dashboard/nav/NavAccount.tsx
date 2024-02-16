@@ -20,6 +20,8 @@ const StyledRoot = styled('div')(({ theme }) => ({
 export default function NavAccount() {
   const { user } = useAuthContext();
 
+  const userName = user ? `${user.firstName} ${user.lastName}` : '';
+
   return (
     <Link
       component={NextLink}
@@ -29,18 +31,18 @@ export default function NavAccount() {
     >
       <StyledRoot>
         <CustomAvatar
-          src={user?.photoURL}
-          alt={user?.displayName}
-          name={user?.displayName}
+          // src={user?.photoURL}
+          alt={userName}
+          name={userName}
         />
 
         <Box sx={{ ml: 2, minWidth: 0 }}>
           <Typography variant='subtitle2' noWrap>
-            {user?.displayName}
+            {userName}
           </Typography>
 
           <Typography variant='body2' noWrap sx={{ color: 'text.secondary' }}>
-            {user?.role}
+            {user?.email}
           </Typography>
         </Box>
       </StyledRoot>

@@ -1,10 +1,8 @@
 // scroll bar
 import 'simplebar-react/dist/simplebar.min.css';
 
-import { ApolloProvider } from '@apollo/client';
 import { AppProps } from 'next/app';
 
-import useApollo from '@/hooks/useApollo';
 import createEmotionCache from 'src/utils/createEmotionCache';
 import { NextPage } from 'next';
 import { EmotionCache } from '@emotion/cache';
@@ -14,6 +12,17 @@ import ThemeProvider from 'src/theme/index';
 import { AuthProvider } from 'src/auth/Auth0Context';
 import ThemeSettings from 'src/components/settings/ThemeSettings';
 import SnackbarProvider from 'src/components/snackbar/SnackbarProvider';
+
+import { Auth0Provider } from '@auth0/auth0-react';
+
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
+import ApolloProvider from 'apollo/ApolloClient';
+
+// if (__DEV__) {
+// Adds messages only in a dev environment
+loadDevMessages();
+loadErrorMessages();
+// }
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -31,7 +40,6 @@ function CustomApp({
   pageProps,
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
-  const client = useApollo(pageProps);
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
@@ -39,17 +47,29 @@ function CustomApp({
       <Head>
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
-      <ThemeProvider>
-        <SnackbarProvider>
-          <AuthProvider>
-            <ThemeSettings>
-              <ApolloProvider client={client}>
-                {getLayout(<Component {...pageProps} />)}
-              </ApolloProvider>
-            </ThemeSettings>
-          </AuthProvider>
-        </SnackbarProvider>
-      </ThemeProvider>
+      <Auth0Provider
+        domain={'jamiewbuck.auth0.com'}
+        clientId={'IRsGoxxrZOMdeAXczZyli2wiYrQrl8kb'}
+        authorizationParams={{
+          audience: 'concert-tracker-api',
+          redirect_uri:
+            typeof window == 'undefined'
+              ? ''
+              : `${window.location.origin}/dashboard`,
+        }}
+      >
+        <ThemeProvider>
+          <SnackbarProvider>
+            <ApolloProvider>
+              <AuthProvider>
+                <ThemeSettings>
+                  {getLayout(<Component {...pageProps} />)}
+                </ThemeSettings>
+              </AuthProvider>
+            </ApolloProvider>
+          </SnackbarProvider>
+        </ThemeProvider>
+      </Auth0Provider>
     </CacheProvider>
   );
 }

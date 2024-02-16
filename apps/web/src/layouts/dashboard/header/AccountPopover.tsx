@@ -31,6 +31,8 @@ export default function AccountPopover() {
 
   const { user, logout } = useAuthContext();
 
+  const userName = user ? `${user.firstName} ${user.lastName}` : '';
+
   const { enqueueSnackbar } = useSnackbar();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -78,11 +80,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <CustomAvatar
-          src={user?.photoURL}
-          alt={user?.displayName}
-          name={user?.displayName}
-        />
+        <CustomAvatar src={''} alt={userName} name={userName} />
       </IconButtonAnimate>
 
       <MenuPopover
@@ -92,7 +90,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant='subtitle2' noWrap>
-            {user?.displayName}
+            {userName}
           </Typography>
 
           <Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>

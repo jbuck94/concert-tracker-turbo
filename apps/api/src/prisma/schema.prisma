@@ -15,10 +15,12 @@ datasource db {
 }
 
 model User {
-  id     Int         @id @default(autoincrement())
-  name   String      @default("")
-  email  String      @unique @default("")
-  events UserEvent[] @relation("UserEvent_user")
+  id        Int         @id @default(autoincrement())
+  firstName String      @default("")
+  lastName  String      @default("")
+  email     String      @unique @default("")
+  authId    String      @unique @default("")
+  events    UserEvent[] @relation("UserEvent_user")
 }
 
 model Artist {

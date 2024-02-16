@@ -1,3 +1,5 @@
+import { User } from '@prisma/client';
+
 export type Context = {
-  accessToken: string;
+  user: User | null;
 };

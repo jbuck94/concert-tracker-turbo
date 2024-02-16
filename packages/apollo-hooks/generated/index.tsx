@@ -201,8 +201,10 @@ export type Query = {
   artistAutocomplete: QueryArtistAutocompleteConnection;
   artists: QueryArtistsConnection;
   events: QueryEventsConnection;
+  me?: Maybe<User>;
   user: User;
   users: QueryUsersConnection;
+  venueAutocomplete: QueryVenueAutocompleteConnection;
   venues: QueryVenuesConnection;
 };
 
@@ -246,6 +248,15 @@ export type QueryUsersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryVenueAutocompleteArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  input: VenueAutocompleteInput;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -309,6 +320,18 @@ export type QueryUsersConnectionEdge = {
   node: User;
 };
 
+export type QueryVenueAutocompleteConnection = {
+  __typename?: 'QueryVenueAutocompleteConnection';
+  edges: Array<QueryVenueAutocompleteConnectionEdge>;
+  pageInfo: PageInfo;
+};
+
+export type QueryVenueAutocompleteConnectionEdge = {
+  __typename?: 'QueryVenueAutocompleteConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: VenueAutocompleteResult;
+};
+
 export type QueryVenuesConnection = {
   __typename?: 'QueryVenuesConnection';
   edges: Array<QueryVenuesConnectionEdge>;
@@ -338,8 +361,9 @@ export type User = {
   __typename?: 'User';
   email: Scalars['String']['output'];
   events: UserEventsConnection;
+  firstName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
 };
 
 
@@ -410,6 +434,17 @@ export type VenueEventsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type VenueAutocompleteInput = {
+  name: Scalars['String']['input'];
+};
+
+export type VenueAutocompleteResult = {
+  __typename?: 'VenueAutocompleteResult';
+  addressString: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type VenueEventsConnection = {
   __typename?: 'VenueEventsConnection';
   edges: Array<Maybe<VenueEventsConnectionEdge>>;
@@ -470,12 +505,27 @@ export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'QueryEventsConnectionEdge', cursor: string, node: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image: string } } } | null> } } }> } };
 
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, firstName: string, lastName: string, email: string } | null };
+
 export type VenueFragment = { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number };
 
 export type VenuesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type VenuesQuery = { __typename?: 'Query', venues: { __typename?: 'QueryVenuesConnection', edges: Array<{ __typename?: 'QueryVenuesConnectionEdge', node: { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number } }> } };
+
+export type VenueAutocompleteResultFragment = { __typename?: 'VenueAutocompleteResult', name: string, id: string, addressString: string };
+
+export type VenueAutocompleteQueryVariables = Exact<{
+  input: VenueAutocompleteInput;
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type VenueAutocompleteQuery = { __typename?: 'Query', venueAutocomplete: { __typename?: 'QueryVenueAutocompleteConnection', edges: Array<{ __typename?: 'QueryVenueAutocompleteConnectionEdge', cursor: string, node: { __typename?: 'VenueAutocompleteResult', name: string, id: string, addressString: string } }> } };
 
 export const ArtistFragmentDoc = gql`
     fragment Artist on Artist {
@@ -525,6 +575,13 @@ export const VenueFragmentDoc = gql`
   state
   long
   lat
+}
+    `;
+export const VenueAutocompleteResultFragmentDoc = gql`
+    fragment VenueAutocompleteResult on VenueAutocompleteResult {
+  name
+  id
+  addressString
 }
     `;
 export const ArtistsDocument = gql`
@@ -711,6 +768,48 @@ export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
 export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
 export type EventsSuspenseQueryHookResult = ReturnType<typeof useEventsSuspenseQuery>;
 export type EventsQueryResult = Apollo.QueryResult<EventsQuery, EventsQueryVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    firstName
+    lastName
+    email
+  }
+}
+    `;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
+export function useMeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const VenuesDocument = gql`
     query Venues {
   venues {
@@ -754,3 +853,49 @@ export type VenuesQueryHookResult = ReturnType<typeof useVenuesQuery>;
 export type VenuesLazyQueryHookResult = ReturnType<typeof useVenuesLazyQuery>;
 export type VenuesSuspenseQueryHookResult = ReturnType<typeof useVenuesSuspenseQuery>;
 export type VenuesQueryResult = Apollo.QueryResult<VenuesQuery, VenuesQueryVariables>;
+export const VenueAutocompleteDocument = gql`
+    query VenueAutocomplete($input: VenueAutocompleteInput!, $first: Int) {
+  venueAutocomplete(input: $input, first: $first) {
+    edges {
+      cursor
+      node {
+        ...VenueAutocompleteResult
+      }
+    }
+  }
+}
+    ${VenueAutocompleteResultFragmentDoc}`;
+
+/**
+ * __useVenueAutocompleteQuery__
+ *
+ * To run a query within a React component, call `useVenueAutocompleteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVenueAutocompleteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVenueAutocompleteQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useVenueAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>(VenueAutocompleteDocument, options);
+      }
+export function useVenueAutocompleteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>(VenueAutocompleteDocument, options);
+        }
+export function useVenueAutocompleteSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>(VenueAutocompleteDocument, options);
+        }
+export type VenueAutocompleteQueryHookResult = ReturnType<typeof useVenueAutocompleteQuery>;
+export type VenueAutocompleteLazyQueryHookResult = ReturnType<typeof useVenueAutocompleteLazyQuery>;
+export type VenueAutocompleteSuspenseQueryHookResult = ReturnType<typeof useVenueAutocompleteSuspenseQuery>;
+export type VenueAutocompleteQueryResult = Apollo.QueryResult<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>;

@@ -1,70 +1,57 @@
+import { createContext, ReactNode, useEffect, useReducer } from 'react';
+import { useAuth0, RedirectLoginOptions } from '@auth0/auth0-react';
 import {
-  createContext,
-  useEffect,
-  useReducer,
-  useCallback,
-  useMemo,
-} from 'react';
-import { Auth0Client } from '@auth0/auth0-spa-js';
-import {
-  AuthUserType,
-  ActionMapType,
-  AuthStateType,
+  ActionMap,
+  AuthState,
+  AuthUser,
   Auth0ContextType,
 } from 'src/auth/types';
-import { AUTH0_API } from 'src/utils/config-global';
 
-// ----------------------------------------------------------------------
+import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
+import { useMeQuery } from 'apollo-hooks';
 
-// NOTE:
-// We only build demo at basic level.
-// Customer will need to do some extra handling yourself if you want to extend the logic and other features...
-
-// ----------------------------------------------------------------------
-
-enum Types {
-  INITIAL = 'INITIAL',
-  LOGIN = 'LOGIN',
-  LOGOUT = 'LOGOUT',
-}
-
-type Payload = {
-  [Types.INITIAL]: {
-    isAuthenticated: boolean;
-    user: AuthUserType;
-  };
-  [Types.LOGIN]: {
-    user: AuthUserType;
-  };
-  [Types.LOGOUT]: undefined;
-};
-
-type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
-
-// ----------------------------------------------------------------------
-
-const initialState: AuthStateType = {
-  isInitialized: false,
+const initialState: AuthState = {
   isAuthenticated: false,
+  isInitialized: false,
   user: null,
 };
 
-const reducer = (state: AuthStateType, action: ActionsType) => {
-  if (action.type === Types.INITIAL) {
-    return {
-      isInitialized: true,
-      isAuthenticated: action.payload.isAuthenticated,
-      user: action.payload.user,
-    };
-  }
-  if (action.type === Types.LOGIN) {
+enum Types {
+  init = 'INITIALIZE',
+  login = 'LOGIN',
+  logout = 'LOGOUT',
+}
+
+type Auth0AuthPayload = {
+  [Types.init]: {
+    isAuthenticated: boolean;
+    isInitialized: boolean;
+    user: AuthUser;
+  };
+  [Types.login]: {
+    user: AuthUser;
+  };
+  [Types.logout]: undefined;
+};
+
+type Auth0Actions =
+  ActionMap<Auth0AuthPayload>[keyof ActionMap<Auth0AuthPayload>];
+
+const reducer = (state: AuthState, action: Auth0Actions): AuthState => {
+  if (action.type === Types.init) {
+    const { isAuthenticated, user, isInitialized } = action.payload;
     return {
       ...state,
-      isAuthenticated: true,
-      user: action.payload.user,
+      isAuthenticated,
+      isInitialized,
+      user,
     };
   }
-  if (action.type === Types.LOGOUT) {
+  if (action.type === Types.login) {
+    const { user } = action.payload;
+    return { ...state, isAuthenticated: true, user };
+  }
+  if (action.type === Types.logout) {
     return {
       ...state,
       isAuthenticated: false,
@@ -74,124 +61,83 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
   return state;
 };
 
-// ----------------------------------------------------------------------
-
-export const AuthContext = createContext<Auth0ContextType | null>(null);
-
-// ----------------------------------------------------------------------
-
-let auth0Client: Auth0Client | null = null;
+const AuthContext = createContext<Auth0ContextType | null>(null);
 
 type AuthProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-export function AuthProvider({ children }: AuthProviderProps) {
+function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    isAuthenticated,
+    loginWithRedirect,
+    logout: auth0Logout,
+    isLoading,
+  } = useAuth0();
 
-  const initialize = useCallback(async () => {
-    try {
-      auth0Client = new Auth0Client({
-        clientId: AUTH0_API.clientId || '',
-        domain: AUTH0_API.domain || '',
-        authorizationParams: {
-          redirect_uri: window.location.origin,
-        },
-        cacheLocation: 'localstorage',
-        useRefreshTokens: true,
-      });
+  const { data: user, loading: userLoading } = useMeQuery({
+    skip: !isAuthenticated,
+  });
 
-      await auth0Client.checkSession();
-
-      const isAuthenticated = await auth0Client.isAuthenticated();
-
-      if (isAuthenticated) {
-        const user = await auth0Client.getUser();
-        console.log('user: ', user);
-
-        dispatch({
-          type: Types.INITIAL,
-          payload: {
-            isAuthenticated,
-            user: {
-              ...user,
-              displayName: user?.name,
-              photoURL: user?.picture,
-              role: 'admin',
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        if (isAuthenticated) {
+          dispatch({
+            type: Types.init,
+            payload: {
+              isAuthenticated,
+              user: user?.me,
+              isInitialized: !isLoading,
             },
-          },
-        });
-      } else {
+          });
+        } else {
+          dispatch({
+            type: Types.init,
+            payload: { isAuthenticated, user: null, isInitialized: !isLoading },
+          });
+        }
+      } catch (err) {
         dispatch({
-          type: Types.INITIAL,
+          type: Types.init,
           payload: {
-            isAuthenticated,
+            isAuthenticated: false,
             user: null,
+            isInitialized: !isLoading,
           },
         });
       }
-    } catch (error) {
-      console.error(error);
-      dispatch({
-        type: Types.INITIAL,
-        payload: {
-          isAuthenticated: false,
-          user: null,
-        },
-      });
-    }
-  }, []);
+    };
 
-  useEffect(() => {
     initialize();
-  }, [initialize]);
+  }, [isLoading, isAuthenticated, userLoading, user]);
 
-  // LOGIN
-  const login = useCallback(async () => {
-    await auth0Client?.loginWithPopup();
-
-    const isAuthenticated = await auth0Client?.isAuthenticated();
+  const login = async (options?: RedirectLoginOptions) => {
+    await loginWithRedirect(options);
 
     if (isAuthenticated) {
-      const user = await auth0Client?.getUser();
-
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user: {
-            ...user,
-            displayName: user?.name,
-            photoURL: user?.picture,
-            role: 'admin',
-          },
-        },
-      });
+      dispatch({ type: Types.login, payload: { user: user?.me } });
     }
-  }, []);
+  };
 
-  // LOGOUT
-  const logout = useCallback(() => {
-    auth0Client?.logout();
-    dispatch({
-      type: Types.LOGOUT,
-    });
-  }, []);
-
-  const memoizedValue = useMemo(
-    () => ({
-      isInitialized: state.isInitialized,
-      isAuthenticated: state.isAuthenticated,
-      user: state.user,
-      method: 'auth0',
-      login,
-      logout,
-    }),
-    [state.isAuthenticated, state.isInitialized, state.user, login, logout]
-  );
+  const logout = () => {
+    auth0Logout({ logoutParams: { returnTo: window.location.origin } });
+    dispatch({ type: Types.logout });
+  };
 
   return (
-    <AuthContext.Provider value={memoizedValue}>
-      {children}
+    <AuthContext.Provider
+      value={{
+        ...state,
+        method: 'auth0',
+        login,
+        logout,
+      }}
+    >
+      {isLoading ? <LoadingScreen /> : children}
     </AuthContext.Provider>
   );
 }
+
+export { AuthContext, AuthProvider };
