@@ -8,6 +8,7 @@ builder.queryFields((t) => ({
     nodeNullable: false,
     edgesNullable: false,
     cursor: 'id',
-    resolve: (query) => db.event.findMany(query),
+    resolve: (query, _parent, _args, context) =>
+      context.db.event.findMany(query),
   }),
 }));

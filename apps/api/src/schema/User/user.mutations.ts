@@ -9,8 +9,8 @@ builder.mutationFields((t) => ({
       name: t.arg.string({ required: true }),
       avatar: t.arg.string({ required: true }),
     },
-    resolve: async (query, _, args) => {
-      const user = await db.user.findFirst({
+    resolve: async (query, _parent, args, context) => {
+      const user = await context.db.user.findFirst({
         ...query,
         where: {
           email: args.email,
@@ -21,7 +21,7 @@ builder.mutationFields((t) => ({
         return user;
       }
 
-      const newUser = await db.user.create({
+      const newUser = await context.db.user.create({
         data: args,
       });
 

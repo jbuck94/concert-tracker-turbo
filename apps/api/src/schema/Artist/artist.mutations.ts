@@ -17,14 +17,14 @@ builder.mutationFields((t) => ({
     errors: {
       types: [ErrorNotFound, ErrorUniqueConstraint, ErrorInvalidRequest],
     },
-    resolve: async (_query, _, args) => {
+    resolve: async (_query, _, args, context) => {
       const spotifyArtist = await spotifyClient.artists.get(args.spotifyID);
 
       if (!spotifyArtist) {
         throw new ErrorNotFound(`Could not find artist: ${args.spotifyID}`);
       }
 
-      return db.artist
+      return context.db.artist
         .create({
           data: {
             spotifyID: spotifyArtist.id,

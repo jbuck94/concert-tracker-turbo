@@ -11,8 +11,8 @@ builder.queryField('artist', (t) =>
     input: {
       id: t.input.int({ required: true }),
     },
-    resolve: (query, _, args) => {
-      return db.artist.findUnique({
+    resolve: (query, _parent, args, context) => {
+      return context.db.artist.findUnique({
         where: {
           id: args.input.id,
         },
@@ -29,7 +29,8 @@ builder.queryFields((t) => ({
     nullable: false,
     nodeNullable: false,
     edgesNullable: false,
-    resolve: (query) => db.artist.findMany(query),
+    resolve: (query, _parent, _args, context) =>
+      context.db.artist.findMany(query),
   }),
 }));
 

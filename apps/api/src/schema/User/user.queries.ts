@@ -7,8 +7,8 @@ builder.queryFields((t) => ({
     args: {
       userId: t.arg.int({ required: true }),
     },
-    resolve: async (query, _, args) => {
-      const user = await db.user.findUnique({
+    resolve: async (query, _parent, args, context) => {
+      const user = await context.db.user.findUnique({
         ...query,
         where: { id: args.userId },
       });
@@ -31,12 +31,12 @@ builder.queryFields((t) => ({
   me: t.prismaField({
     nullable: true,
     type: 'User',
-    resolve: async (query, _, args, context) => {
+    resolve: async (query, _parent, _args, context) => {
       if (!context?.user?.id) {
         return null;
       }
 
-      const user = await db.user.findUnique({
+      const user = await context.db.user.findUnique({
         ...query,
         where: { id: context.user.id },
       });
