@@ -11,7 +11,7 @@ import { json } from 'body-parser';
 import { schema } from './schema';
 import { Context } from './context';
 import { authHandler } from '@/src/handlers/auth';
-import db from '@/src/db';
+import db, { getEnhancedDB } from '@/src/db';
 
 const PORT = Number(process.env.PORT) || 8080;
 
@@ -48,6 +48,7 @@ server.start().then(async () => {
     checkJwt,
     expressMiddleware(server, {
       context: async ({ req }) => {
+        console.log('req.auth: ', req.auth);
         if (req.auth?.payload.sub) {
           const user = await db.user.findFirst({
             where: { authId: req.auth?.payload.sub },
@@ -55,11 +56,13 @@ server.start().then(async () => {
 
           return {
             user,
+            db: getEnhancedDB(user),
           };
         }
 
         return {
           user: null,
+          db: getEnhancedDB(),
         };
       },
     })

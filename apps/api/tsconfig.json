@@ -22,9 +22,9 @@
     "baseUrl": ".",
     "paths": {
       "@/helpers/*": ["src/helpers/*"],
-      "@/src/*": ["src/*"]
-    }
+      "@/src/*": ["src/*"],
+    },
   },
   "exclude": ["node_modules"],
-  "include": ["src", "build-schema.js"]
+  "include": ["src", "build-schema.js"],
 }

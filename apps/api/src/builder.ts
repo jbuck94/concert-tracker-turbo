@@ -7,7 +7,7 @@ import ErrorsPlugin from '@pothos/plugin-errors';
 import WithInputPlugin from '@pothos/plugin-with-input';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 
-import db from './db';
+import { getEnhancedDB } from './db';
 
 import { Context } from '@/src/context';
 
@@ -34,7 +34,7 @@ const builder = new SchemaBuilder<{
     WithInputPlugin,
   ],
   prisma: {
-    client: db,
+    client: getEnhancedDB(),
     filterConnectionTotalCount: true,
   },
   relayOptions: {
