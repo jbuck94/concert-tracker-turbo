@@ -57,11 +57,11 @@ function Venues() {
           action={
             <Button
               component={NextLink}
-              href={'PATH_DASHBOARD.tour.new'}
+              href={PATH_DASHBOARD.venue.create}
               variant='contained'
               startIcon={<Iconify icon='mingcute:add-line' />}
             >
-              New Artist
+              New Venue
             </Button>
           }
           sx={{

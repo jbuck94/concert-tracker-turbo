@@ -44,6 +44,7 @@ export const PATH_DASHBOARD = {
   },
   venue: {
     root: path(ROOTS_DASHBOARD, '/venues'),
+    create: path(ROOTS_DASHBOARD, '/venues/create'),
   },
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),

@@ -18,7 +18,7 @@ function App() {
   const router = useRouter();
 
   const { data, loading, error } = useEventsQuery();
-  console.log('data: ', data);
+  console.log({ data, loading, error });
 
   const handleView = useCallback(
     (id: string) => {

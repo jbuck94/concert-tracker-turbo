@@ -53,11 +53,9 @@ builder.queryFields((t) => ({
     edgesNullable: false,
     resolve: async (parent, args, context) => {
       return resolveOffsetConnection({ args }, async ({ limit, offset }) => {
-        const searchResults = await googleClient.findPlaceFromText({
+        const searchResults = await googleClient.textSearch({
           params: {
-            input: args.input.name,
-            inputtype: PlaceInputType.textQuery,
-            fields: ['place_id', 'name', 'formatted_address', 'types'],
+            query: args.input.name,
             key: 'AIzaSyDEA_sSLLH0Y5l-56UlYXUsS_MzIWqkYsw',
           },
         });
@@ -79,11 +77,12 @@ builder.queryFields((t) => ({
         //     console.log(JSON.stringify(res.value.data, null, 2))
         // );
 
-        return searchResults.data.candidates.map((candidate) => {
+        return searchResults.data.results.map((candidate) => {
+          console.log('candidate: ', candidate);
           return {
-            id: candidate.place_id || '',
-            name: candidate.name || '',
-            addressString: candidate.formatted_address,
+            id: candidate?.place_id || '',
+            name: candidate?.name || '',
+            addressString: candidate?.formatted_address || '',
           };
         });
       });
