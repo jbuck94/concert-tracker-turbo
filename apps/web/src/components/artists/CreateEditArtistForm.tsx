@@ -18,10 +18,14 @@ import NextLink from 'next/link';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { PATH_DASHBOARD } from 'src/routes/paths';
+import { useDebouncedState } from '@/hooks/useDebouncedState';
 
 export const CreateEditArtistForm = () => {
   const [value, setValue] = useState<SpotifyArtistFragment | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  const [debouncedSearch, _, setDebouncedSearch] = useDebouncedState<
+    string | null
+  >(null);
+
   const [searchResults, setSearchResults] = useState<SpotifyArtistFragment[]>(
     []
   );
@@ -32,11 +36,11 @@ export const CreateEditArtistForm = () => {
   const { data, loading, error } = useArtistAutocompleteQuery({
     variables: {
       input: {
-        name: searchTerm as string,
+        name: debouncedSearch as string,
       },
       first: 5,
     },
-    skip: !searchTerm,
+    skip: !debouncedSearch,
   });
 
   const [createArtist] = useCreateArtistMutation({
@@ -57,7 +61,7 @@ export const CreateEditArtistForm = () => {
 
   const onChangeSearch = (newValue: string) => {
     setValue(null);
-    setSearchTerm(newValue);
+    setDebouncedSearch(newValue);
   };
 
   const onSubmit = async () => {
