@@ -37,6 +37,7 @@ export const PATH_DASHBOARD = {
   },
   concert: {
     root: path(ROOTS_DASHBOARD, '/concerts'),
+    create: path(ROOTS_DASHBOARD, '/concerts/create'),
   },
   artist: {
     root: path(ROOTS_DASHBOARD, '/artists'),

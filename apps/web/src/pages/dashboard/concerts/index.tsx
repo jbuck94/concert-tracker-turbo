@@ -57,7 +57,7 @@ function App() {
           action={
             <Button
               component={NextLink}
-              href={'PATH_DASHBOARD.tour.new'}
+              href={PATH_DASHBOARD.concert.create}
               variant='contained'
               startIcon={<Iconify icon='mingcute:add-line' />}
             >
