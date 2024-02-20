@@ -123,6 +123,7 @@ scalar JSON
 
 type Mutation {
   createArtist(spotifyID: String!): MutationCreateArtistResult!
+  createVenue(seatGeekID: String!): MutationCreateVenueResult!
   signUp(avatar: String!, email: String!, name: String!): User!
 }
 
@@ -130,6 +131,12 @@ union MutationCreateArtistResult = ErrorInvalidRequest | ErrorNotFound | ErrorUn
 
 type MutationCreateArtistSuccess {
   data: Artist!
+}
+
+union MutationCreateVenueResult = ErrorForbidden | ErrorInvalidRequest | ErrorNotFound | MutationCreateVenueSuccess
+
+type MutationCreateVenueSuccess {
+  data: Venue!
 }
 
 type PageInfo {

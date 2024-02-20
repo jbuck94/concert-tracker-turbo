@@ -33,7 +33,6 @@ const checkJwt = auth({
 
 server.start().then(async () => {
   app.use(json());
-
   app.use(
     cors<cors.CorsRequest>({
       origin: '*', // TODO: ALLOW LOCAL OR AUTH0
@@ -48,7 +47,6 @@ server.start().then(async () => {
     checkJwt,
     expressMiddleware(server, {
       context: async ({ req }) => {
-        console.log('req.auth: ', req.auth);
         if (req.auth?.payload.sub) {
           const user = await db.user.findFirst({
             where: { authId: req.auth?.payload.sub },
@@ -74,5 +72,4 @@ server.start().then(async () => {
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: PORT }, resolve)
   );
-  console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
 });

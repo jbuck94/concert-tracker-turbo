@@ -165,12 +165,18 @@ export type IntFilter = {
 export type Mutation = {
   __typename?: 'Mutation';
   createArtist: MutationCreateArtistResult;
+  createVenue: MutationCreateVenueResult;
   signUp: User;
 };
 
 
 export type MutationCreateArtistArgs = {
   spotifyID: Scalars['String']['input'];
+};
+
+
+export type MutationCreateVenueArgs = {
+  seatGeekID: Scalars['String']['input'];
 };
 
 
@@ -185,6 +191,13 @@ export type MutationCreateArtistResult = ErrorInvalidRequest | ErrorNotFound | E
 export type MutationCreateArtistSuccess = {
   __typename?: 'MutationCreateArtistSuccess';
   data: Artist;
+};
+
+export type MutationCreateVenueResult = ErrorForbidden | ErrorInvalidRequest | ErrorNotFound | MutationCreateVenueSuccess;
+
+export type MutationCreateVenueSuccess = {
+  __typename?: 'MutationCreateVenueSuccess';
+  data: Venue;
 };
 
 export type PageInfo = {
@@ -526,6 +539,13 @@ export type VenueAutocompleteQueryVariables = Exact<{
 
 
 export type VenueAutocompleteQuery = { __typename?: 'Query', venueAutocomplete: { __typename?: 'QueryVenueAutocompleteConnection', edges: Array<{ __typename?: 'QueryVenueAutocompleteConnectionEdge', cursor: string, node: { __typename?: 'VenueAutocompleteResult', name: string, id: string, addressString: string } }> } };
+
+export type CreateVenueMutationVariables = Exact<{
+  seatGeekId: Scalars['String']['input'];
+}>;
+
+
+export type CreateVenueMutation = { __typename?: 'Mutation', createVenue: { __typename?: 'ErrorForbidden', message: string } | { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'MutationCreateVenueSuccess', data: { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number } } };
 
 export const ArtistFragmentDoc = gql`
     fragment Artist on Artist {
@@ -899,3 +919,49 @@ export type VenueAutocompleteQueryHookResult = ReturnType<typeof useVenueAutocom
 export type VenueAutocompleteLazyQueryHookResult = ReturnType<typeof useVenueAutocompleteLazyQuery>;
 export type VenueAutocompleteSuspenseQueryHookResult = ReturnType<typeof useVenueAutocompleteSuspenseQuery>;
 export type VenueAutocompleteQueryResult = Apollo.QueryResult<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>;
+export const CreateVenueDocument = gql`
+    mutation CreateVenue($seatGeekId: String!) {
+  createVenue(seatGeekID: $seatGeekId) {
+    ... on MutationCreateVenueSuccess {
+      data {
+        ...Venue
+      }
+    }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorForbidden {
+      message
+    }
+    ... on ErrorInvalidRequest {
+      message
+    }
+  }
+}
+    ${VenueFragmentDoc}`;
+export type CreateVenueMutationFn = Apollo.MutationFunction<CreateVenueMutation, CreateVenueMutationVariables>;
+
+/**
+ * __useCreateVenueMutation__
+ *
+ * To run a mutation, you first call `useCreateVenueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateVenueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createVenueMutation, { data, loading, error }] = useCreateVenueMutation({
+ *   variables: {
+ *      seatGeekId: // value for 'seatGeekId'
+ *   },
+ * });
+ */
+export function useCreateVenueMutation(baseOptions?: Apollo.MutationHookOptions<CreateVenueMutation, CreateVenueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateVenueMutation, CreateVenueMutationVariables>(CreateVenueDocument, options);
+      }
+export type CreateVenueMutationHookResult = ReturnType<typeof useCreateVenueMutation>;
+export type CreateVenueMutationResult = Apollo.MutationResult<CreateVenueMutation>;
+export type CreateVenueMutationOptions = Apollo.BaseMutationOptions<CreateVenueMutation, CreateVenueMutationVariables>;

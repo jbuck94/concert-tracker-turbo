@@ -7,9 +7,6 @@ import {
   from,
   split,
 } from '@apollo/client';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -65,7 +62,16 @@ export default function Provider({
 
   const client = new ApolloClient({
     link: from([errorLink, authLink, httpLink]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      possibleTypes: {
+        BaseError: [
+          'ErrorForbidden',
+          'ErrorNotFound',
+          'ErrorInvalidRequest',
+          'ErrorUniqueConstraint',
+        ],
+      },
+    }),
   });
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;

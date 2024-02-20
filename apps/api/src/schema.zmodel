@@ -14,62 +14,11 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-// model User {
-//   id Int @id
-//   email String @unique
-//   orgs Organization[]
-
-//   // everyone can sign up
-//   @@allow('create', true)
-
-//   // can be read by users sharing an organization
-//   @@allow('read', orgs?[members?[auth() == this]])
-
-//   // full access by oneself
-//   @@allow('all', auth() == this)
-// }
-
-
-// model Organization {
-//   id Int @id
-//   name String
-//   members User[]
-
-//   // login users can create an org
-//   @@allow('create', auth() != null)
-
-//   // members can read the org
-//   @@allow('read', members?[auth() == this])
-// }
-
-// abstract model Base {
-//   id Int @id
-//   isPublic Boolean @default(false)
-//   owner User @relation(fields: [ownerId], references: [id])
-//   ownerId Int
-//   org Organization @relation(fields: [orgId], references: [id])
-//   orgId Int
-
-//   // create: owner must be set to the current user, and the user must be in the org
-//   @@allow('create', owner == auth() && org.members?[this == auth()])
-
-//   // update: only the owner can update and is not allowed to change the owner
-//   @@allow('update', owner == auth() && org.members?[this == auth()] && future().owner == owner)
-
-//   // allow owner to read and delete
-//   @@allow('read,delete', owner == auth())
-
-//   // allow org members to read if public
-//   @@allow('read', isPublic && org.members?[this == auth()])
-// }
-
 abstract model Base {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
 
-
-  // author has full access
   @@allow('all', auth() != null)
 }
 
@@ -84,9 +33,6 @@ model User {
 
   // everyone can sign up
   @@allow('create', true)
-
-  // can be read by users sharing an organization
-  // @@allow('read', orgs?[members?[auth() == this]])
 
   // full access by oneself
   @@allow('all', auth() == this)

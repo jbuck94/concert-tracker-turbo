@@ -1,6 +1,7 @@
 import builder from '@/src/builder';
 import db from '@/src/db';
 import { googleClient } from '@/src/lib/google';
+import { SeatGeekClient } from '@/src/lib/seatGeek';
 import {
   Client,
   PlaceInputType,
@@ -53,36 +54,15 @@ builder.queryFields((t) => ({
     edgesNullable: false,
     resolve: async (parent, args, context) => {
       return resolveOffsetConnection({ args }, async ({ limit, offset }) => {
-        const searchResults = await googleClient.textSearch({
-          params: {
-            query: args.input.name,
-            key: 'AIzaSyDEA_sSLLH0Y5l-56UlYXUsS_MzIWqkYsw',
-          },
-        });
+        const client = new SeatGeekClient();
 
-        // const allPlaces = await Promise.allSettled(
-        //   searchResults.data.candidates.map((candidate) =>
-        //     googleClient.placeDetails({
-        //       params: {
-        //         place_id: candidate.place_id || '',
-        //         key: 'AIzaSyDEA_sSLLH0Y5l-56UlYXUsS_MzIWqkYsw',
-        //       },
-        //     })
-        //   )
-        // );
+        const venues = await client.searchVenues(args.input.name);
 
-        // allPlaces.forEach(
-        //   (res) =>
-        //     res.status === 'fulfilled' &&
-        //     console.log(JSON.stringify(res.value.data, null, 2))
-        // );
-
-        return searchResults.data.results.map((candidate) => {
-          console.log('candidate: ', candidate);
+        return venues.map((venue) => {
           return {
-            id: candidate?.place_id || '',
-            name: candidate?.name || '',
-            addressString: candidate?.formatted_address || '',
+            id: venue.id.toString(),
+            name: venue.name,
+            addressString: venue.display_location,
           };
         });
       });

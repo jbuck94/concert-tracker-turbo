@@ -16,19 +16,24 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {
   VenueAutocompleteResult,
   useArtistAutocompleteQuery,
+  useCreateVenueMutation,
   useVenueAutocompleteQuery,
 } from 'apollo-hooks';
 import NextLink from 'next/link';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { PATH_DASHBOARD } from 'src/routes/paths';
+import { useDebouncedState } from '@/hooks/useDebouncedState';
 
 export const CreateEditVenueForm = () => {
   const [value, setValue] = useState<VenueAutocompleteResult | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<VenueAutocompleteResult[]>(
     []
   );
+
+  const [debouncedSearch, _, setDebouncedSearch] = useDebouncedState<
+    string | null
+  >(null);
 
   const { enqueueSnackbar } = useSnackbar();
   const { push } = useRouter();
@@ -36,17 +41,14 @@ export const CreateEditVenueForm = () => {
   const { data, loading, error } = useVenueAutocompleteQuery({
     variables: {
       input: {
-        name: searchTerm as string,
+        name: debouncedSearch as string,
       },
       first: 5,
     },
-    skip: !searchTerm,
+    skip: !debouncedSearch,
   });
 
-  // const [createArtist] = useCreateArtistMutation({
-  //   // TODO: change this to single artist GET
-  //   refetchQueries: (result) => [{ query: ArtistsDocument }],
-  // });
+  const [createVenue] = useCreateVenueMutation();
 
   useEffect(() => {
     const results = (
@@ -62,32 +64,32 @@ export const CreateEditVenueForm = () => {
 
   const onChangeSearch = (newValue: string) => {
     setValue(null);
-    setSearchTerm(newValue);
+    setDebouncedSearch(newValue);
   };
 
   const onSubmit = async () => {
-    // try {
-    //   const result = await createArtist({
-    //     variables: {
-    //       spotifyId: value!.id,
-    //     },
-    //   });
-    //   switch (result.data?.createArtist.__typename) {
-    //     case 'MutationCreateArtistSuccess': {
-    //       enqueueSnackbar('Created new artist!', { variant: 'success' });
-    //       break;
-    //     }
-    //     default: {
-    //       enqueueSnackbar('Failed to create artist', {
-    //         variant: 'error',
-    //       });
-    //       break;
-    //     }
-    //   }
-    //   push(PATH_DASHBOARD.artist.root);
-    // } catch (e) {
-    //   enqueueSnackbar('Failed to create artist', { variant: 'error' });
-    // }
+    try {
+      const result = await createVenue({
+        variables: {
+          seatGeekId: value!.id,
+        },
+      });
+      switch (result.data?.createVenue.__typename) {
+        case 'MutationCreateVenueSuccess': {
+          enqueueSnackbar('Created new venue!', { variant: 'success' });
+          push(PATH_DASHBOARD.venue.root);
+          break;
+        }
+        default: {
+          enqueueSnackbar('Failed to create venue', {
+            variant: 'error',
+          });
+          break;
+        }
+      }
+    } catch (e) {
+      enqueueSnackbar('Failed to create artist', { variant: 'error' });
+    }
   };
 
   return (
@@ -124,7 +126,7 @@ export const CreateEditVenueForm = () => {
             )}
             renderOption={(props, option) => {
               return (
-                <li {...props}>
+                <li {...props} key={option.id}>
                   <Grid container alignItems='center'>
                     <Grid item sx={{ display: 'flex', width: 44 }}>
                       <LocationOnIcon sx={{ color: 'text.secondary' }} />

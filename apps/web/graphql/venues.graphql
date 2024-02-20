@@ -33,3 +33,22 @@ query VenueAutocomplete($input: VenueAutocompleteInput!, $first: Int) {
     }
   }
 }
+
+mutation CreateVenue($seatGeekId: String!) {
+  createVenue(seatGeekID: $seatGeekId) {
+    ... on MutationCreateVenueSuccess {
+      data {
+        ...Venue
+      }
+    }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorForbidden {
+      message
+    }
+    ... on ErrorInvalidRequest {
+      message
+    }
+  }
+}
