@@ -1,4 +1,4 @@
-import { Public_Sans, Barlow } from 'next/font/google';
+import { Barlow, Public_Sans } from 'next/font/google';
 
 // ----------------------------------------------------------------------
 

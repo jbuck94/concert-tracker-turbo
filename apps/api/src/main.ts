@@ -1,5 +1,4 @@
 import { auth } from 'express-oauth2-jwt-bearer';
-
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -7,11 +6,11 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import { json } from 'body-parser';
-
-import { schema } from './schema';
-import { Context } from './context';
 import { authHandler } from '@/src/handlers/auth';
+
+import { Context } from './context';
 import db, { getEnhancedDB } from '@/src/db';
+import { schema } from './schema';
 
 const PORT = Number(process.env.PORT) || 8080;
 

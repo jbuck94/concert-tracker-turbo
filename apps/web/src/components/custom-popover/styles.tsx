@@ -1,4 +1,4 @@
-import { styled, alpha } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import { MenuPopoverArrowValue } from 'src/components/menu-popover/types';
 import { bgBlur } from 'src/utils/cssStyles';
 

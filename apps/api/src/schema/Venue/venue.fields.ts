@@ -1,6 +1,5 @@
 import builder from '@/src/builder';
-import { googleClient } from '@/src/lib/google';
-import { FloatFilter, IDFilter, StringFilter } from '@/src/schema/Filters';
+import { IDFilter, StringFilter } from '@/src/schema/Filters';
 
 export const VenueWhere = builder.prismaWhere('Venue', {
   fields: (t) => ({

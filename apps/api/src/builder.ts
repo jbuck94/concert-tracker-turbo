@@ -2,12 +2,12 @@ import PrismaPlugin from '@pothos/plugin-prisma';
 import SchemaBuilder from '@pothos/core';
 import RelayPlugin from '@pothos/plugin-relay';
 import PrismaUtils from '@pothos/plugin-prisma-utils';
-import SimpleObjectsPlugin from '@pothos/plugin-simple-objects';
-import ErrorsPlugin from '@pothos/plugin-errors';
-import WithInputPlugin from '@pothos/plugin-with-input';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
+import SimpleObjectsPlugin from '@pothos/plugin-simple-objects';
+import WithInputPlugin from '@pothos/plugin-with-input';
 
 import { getEnhancedDB } from './db';
+import ErrorsPlugin from '@pothos/plugin-errors';
 
 import { Context } from '@/src/context';
 

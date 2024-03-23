@@ -1,4 +1,4 @@
-import { m, MotionProps } from 'framer-motion';
+import { MotionProps, m } from 'framer-motion';
 import { Box, BoxProps } from '@mui/material';
 import { varContainer } from 'src/components/animate/variants/container';
 

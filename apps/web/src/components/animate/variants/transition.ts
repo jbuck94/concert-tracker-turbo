@@ -1,7 +1,7 @@
 import {
-  TranHoverType,
   TranEnterType,
   TranExitType,
+  TranHoverType,
 } from 'src/components/animate/types';
 
 export const varTranHover = (props?: TranHoverType) => {

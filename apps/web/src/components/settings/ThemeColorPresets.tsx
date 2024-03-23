@@ -1,8 +1,6 @@
-import { useMemo } from 'react';
 
 import {
   PaletteOptions,
-  ThemeOptions,
   ThemeProvider,
   alpha,
   createTheme,

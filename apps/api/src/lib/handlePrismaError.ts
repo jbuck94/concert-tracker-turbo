@@ -1,5 +1,4 @@
 import {
-  CustomError,
   ErrorForbidden,
   ErrorInvalidRequest,
   ErrorUniqueConstraint,

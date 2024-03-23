@@ -1,10 +1,10 @@
 import {
   format,
-  getTime,
   formatDistanceToNow,
+  getTime,
+  getYear,
   isSameDay,
   isSameMonth,
-  getYear,
 } from 'date-fns';
 
 type InputValue = Date | string | number | null;

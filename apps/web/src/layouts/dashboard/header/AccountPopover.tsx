@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
+import { Box, Divider, MenuItem, Stack, Typography } from '@mui/material';
 import { useAuthContext } from 'src/auth/useAuthContext';
-import { PATH_DASHBOARD, PATH_AUTH } from 'src/routes/paths';
+import { PATH_AUTH, PATH_DASHBOARD } from 'src/routes/paths';
 import { useSnackbar } from 'notistack';
 import MenuPopover from 'src/components/menu-popover/MenuPopover';
 import CustomAvatar from 'src/components/custom-avatar/CustomAvatar';

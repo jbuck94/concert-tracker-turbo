@@ -1,5 +1,5 @@
 // @mui
-import { alpha, Theme } from '@mui/material/styles';
+import { Theme, alpha } from '@mui/material/styles';
 import { dividerClasses } from '@mui/material/Divider';
 import { checkboxClasses } from '@mui/material/Checkbox';
 import { menuItemClasses } from '@mui/material/MenuItem';

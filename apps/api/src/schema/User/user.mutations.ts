@@ -1,5 +1,4 @@
 import builder from '@/src/builder';
-import db from '@/src/db';
 
 builder.mutationFields((t) => ({
   signUp: t.prismaField({

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Badge, Avatar } from '@mui/material';
+import { Avatar, Badge } from '@mui/material';
 import { CustomAvatarProps } from 'src/components/custom-avatar/types';
 
 const getCharAtName = (name: string) => name && name.charAt(0).toUpperCase();

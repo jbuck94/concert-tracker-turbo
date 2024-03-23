@@ -1,12 +1,8 @@
 import builder from '@/src/builder';
 import db from '@/src/db';
-import { googleClient } from '@/src/lib/google';
 import { SeatGeekClient } from '@/src/lib/seatGeek';
-import {
-  Client,
-  PlaceInputType,
-  ResponseData,
-} from '@googlemaps/google-maps-services-js';
+
+
 import { resolveOffsetConnection } from '@pothos/plugin-relay';
 
 builder.queryFields((t) => ({

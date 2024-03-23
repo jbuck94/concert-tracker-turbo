@@ -1,11 +1,11 @@
 import NextLink from 'next/link';
 
-import { Box, Tooltip, Link, ListItemText } from '@mui/material';
+import { Box, Link, ListItemText, Tooltip } from '@mui/material';
 import RoleBasedGuard from 'src/auth/RoleBasedGuard';
 import Iconify from 'src/components/iconify/Iconify';
 import {
-  StyledItem,
   StyledIcon,
+  StyledItem,
 } from 'src/components/nav-section/vertical/styles';
 import { NavItemProps } from 'src/components/nav-section/types';
 import { StyledDotIcon } from 'src/components/nav-section/vertical/styles';

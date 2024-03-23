@@ -1,5 +1,4 @@
 import builder from '@/src/builder';
-import db from '@/src/db';
 import { spotifyClient } from '@/src/lib/spotify';
 import {
   ErrorInvalidRequest,

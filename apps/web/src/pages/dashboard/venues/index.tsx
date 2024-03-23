@@ -1,10 +1,9 @@
-import { Box, Container, Button } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import { useVenuesQuery } from 'apollo-hooks';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import ArtistCard from 'src/components/artists/ArtistCard';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
 import Iconify from 'src/components/iconify/Iconify';
 import VenueCard from 'src/components/venues/VenueCard';

@@ -1,15 +1,15 @@
 import axios from 'axios';
 import {
   createContext,
-  useEffect,
-  useReducer,
   useCallback,
+  useEffect,
   useMemo,
+  useReducer,
 } from 'react';
 import {
-  AuthUserType,
   ActionMapType,
   AuthStateType,
+  AuthUserType,
   JWTContextType,
 } from 'src/auth/types';
 import { isValidToken, setSession } from 'src/auth/utils';

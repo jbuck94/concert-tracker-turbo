@@ -1,4 +1,4 @@
-import { StackProps, ListItemButtonProps } from '@mui/material';
+import { ListItemButtonProps, StackProps } from '@mui/material';
 
 export type INavItem = {
   item: NavListProps;

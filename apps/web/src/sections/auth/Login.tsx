@@ -1,9 +1,8 @@
-import { Alert, Tooltip, Stack, Typography, Link, Box } from '@mui/material';
+import { Box, Link, Stack, Tooltip, Typography } from '@mui/material';
 
 import LoginLayout from 'src/layouts/login/LoginLayout';
 import { useAuthContext } from 'src/auth/useAuthContext';
 import AuthLoginForm from 'src/sections/auth/AuthLoginForm';
-import AuthWithSocial from 'src/sections/auth/AuthWithSocial';
 
 export default function Login() {
   const { method } = useAuthContext();

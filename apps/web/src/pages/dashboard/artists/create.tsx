@@ -1,10 +1,8 @@
-import { Button, Container, TextField } from '@mui/material';
+import { Container } from '@mui/material';
 import Head from 'next/head';
-import NextLink from 'next/link';
 import { useState } from 'react';
 import { CreateEditArtistForm } from 'src/components/artists/CreateEditArtistForm';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
-import Iconify from 'src/components/iconify/Iconify';
 import DashboardLayout from 'src/layouts/dashboard/DashboardLayout';
 import { PATH_DASHBOARD } from 'src/routes/paths';
 

@@ -75,6 +75,7 @@ export const CreateEditArtistForm = () => {
       switch (result.data?.createArtist.__typename) {
         case 'MutationCreateArtistSuccess': {
           enqueueSnackbar('Created new artist!', { variant: 'success' });
+          push(PATH_DASHBOARD.artist.root);
           break;
         }
         default: {
@@ -84,7 +85,6 @@ export const CreateEditArtistForm = () => {
           break;
         }
       }
-      push(PATH_DASHBOARD.artist.root);
     } catch (e) {
       enqueueSnackbar('Failed to create artist', { variant: 'error' });
     }

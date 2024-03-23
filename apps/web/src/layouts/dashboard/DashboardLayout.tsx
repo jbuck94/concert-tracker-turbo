@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { Box } from '@mui/material';
-import useResponsive from '@/hooks/useResponsive';
 import Main from 'src/layouts/dashboard/Main';
 
 import NavVertical from 'src/layouts/dashboard/nav/NavVertical';

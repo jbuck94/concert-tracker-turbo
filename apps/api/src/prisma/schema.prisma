@@ -5,7 +5,7 @@
 
 datasource db {
     provider = "sqlite"
-    url = "file:./dev.db"
+    url      = "file:./dev.db"
 }
 
 generator client {
@@ -13,84 +13,87 @@ generator client {
 }
 
 generator pothos {
-    provider = "prisma-pothos-types"
+    provider    = "prisma-pothos-types"
     prismaUtils = true
 }
 
 /// @@allow('create', true)
 /// @@allow('all', auth() == this)
 model User {
-    id Int @id() @default(autoincrement())
-    firstName String @default("")
-    lastName String @default("")
-    email String @unique() @default("")
-    authId String @unique() @default("")
-    events UserEvent[] @relation("UserEvent_user")
+    id        Int         @id() @default(autoincrement())
+    firstName String      @default("")
+    lastName  String      @default("")
+    email     String      @unique() @default("")
+    authId    String      @unique() @default("")
+    events    UserEvent[] @relation("UserEvent_user")
 }
 
 /// @@allow('all', auth() != null)
 model Artist {
-    id Int @id() @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    name String @unique() @default("")
-    spotifyID String @unique() @default("")
-    events EventArtist[]
+    id        Int           @id() @default(autoincrement())
+    createdAt DateTime      @default(now())
+    updatedAt DateTime      @updatedAt()
+    name      String        @unique() @default("")
+    spotifyID String        @unique() @default("")
+    events    EventArtist[]
 }
 
 /// @@allow('all', auth() != null)
 model Venue {
-    id Int @id() @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    name String @default("")
-    address1 String @default("")
-    address2 String @default("")
-    city String @default("")
-    state String @default("")
-    zip String @default("")
-    lat Float @unique()
-    long Float @unique()
-    googlePlacesID String @unique() @default("")
-    events Event[] @relation("Event_venue")
+    id             Int      @id() @default(autoincrement())
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt()
+    name           String   @default("")
+    address1       String   @default("")
+    address2       String   @default("")
+    city           String   @default("")
+    state          String   @default("")
+    zip            String   @default("")
+    lat            Float    @unique()
+    long           Float    @unique()
+    googlePlacesID String   @unique() @default("")
+    events         Event[]  @relation("Event_venue")
 }
 
 /// @@allow('all', auth() != null)
 model Event {
-    id Int @id() @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    name String @unique() @default("")
-    date DateTime
-    artists EventArtist[]
-    venue Venue @relation("Event_venue", fields: [venueId], references: [id])
-    venueId Int @map("venue")
-    userEvents UserEvent[] @relation("UserEvent_event")
+    id         Int           @id() @default(autoincrement())
+    createdAt  DateTime      @default(now())
+    updatedAt  DateTime      @updatedAt()
+    name       String        @unique() @default("")
+    date       DateTime
+    artists    EventArtist[]
+    venue      Venue         @relation("Event_venue", fields: [venueId], references: [id])
+    venueId    Int           @map("venue")
+    userEvents UserEvent[]   @relation("UserEvent_event")
 
     @@index([venueId])
 }
 
 /// @@allow('all', auth() != null)
 model EventArtist {
-    id Int @id() @default(autoincrement())
+    id        Int      @id() @default(autoincrement())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
-    event Event @relation(fields: [eventId], references: [id])
-    eventId Int
-    artist Artist @relation(fields: [artistId], references: [id])
-    artistId Int
+    event     Event    @relation(fields: [eventId], references: [id])
+    eventId   Int
+    artist    Artist   @relation(fields: [artistId], references: [id])
+    artistId  Int
+
+    @@unique([eventId, artistId])
 }
 
 /// @@allow('all', auth() != null)
+/// @@allow('all', auth().id == userId)
 model UserEvent {
-    id Int @id() @default(autoincrement())
+    id        Int      @id() @default(autoincrement())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
-    user User? @relation("UserEvent_user", fields: [userId], references: [id])
-    userId Int? @map("user")
-    event Event? @relation("UserEvent_event", fields: [eventId], references: [id])
-    eventId Int? @map("event")
-    notes String @default("")
+    user      User     @relation("UserEvent_user", fields: [userId], references: [id])
+    userId    Int      @map("user")
+    event     Event    @relation("UserEvent_event", fields: [eventId], references: [id])
+    eventId   Int      @map("event")
+    notes     String   @default("")
 
     @@unique([userId, eventId])
     @@index([userId])

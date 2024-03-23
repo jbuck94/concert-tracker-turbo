@@ -15,7 +15,7 @@ import SnackbarProvider from 'src/components/snackbar/SnackbarProvider';
 
 import { Auth0Provider } from '@auth0/auth0-react';
 
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
+import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev';
 import ApolloProvider from 'apollo/ApolloClient';
 
 // if (__DEV__) {

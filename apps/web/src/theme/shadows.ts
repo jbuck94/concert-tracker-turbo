@@ -1,4 +1,4 @@
-import { alpha, Shadows } from '@mui/material/styles';
+import { Shadows, alpha } from '@mui/material/styles';
 import { palette as themePalette } from 'src/theme/palette';
 
 const palette = themePalette('dark');

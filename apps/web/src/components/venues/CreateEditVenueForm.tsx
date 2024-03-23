@@ -5,9 +5,7 @@ import {
   Box,
   Button,
   Card,
-  CardHeader,
   Grid,
-  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -15,7 +13,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import {
   VenueAutocompleteResult,
-  useArtistAutocompleteQuery,
   useCreateVenueMutation,
   useVenueAutocompleteQuery,
 } from 'apollo-hooks';

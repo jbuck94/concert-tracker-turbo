@@ -1,4 +1,4 @@
-import { alpha, Theme } from '@mui/material/styles';
+import { Theme, alpha } from '@mui/material/styles';
 import { ChipProps, chipClasses } from '@mui/material/Chip';
 import Iconify from 'src/components/iconify/Iconify';
 

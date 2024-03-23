@@ -1,10 +1,6 @@
 import builder from '@/src/builder';
 import { IDFilter, StringFilter } from '@/src/schema/Filters';
-import { UserEventListFilter, UserEventWhere } from '@/src/schema/UserEvent';
-
-// export const UserUniqueFilter = builder.prismaWhereUnique("User", {
-//   fields: t => ({})
-// })
+import { UserEventListFilter } from '@/src/schema/UserEvent';
 
 export const UserWhere = builder.prismaWhere('User', {
   fields: (t) => ({

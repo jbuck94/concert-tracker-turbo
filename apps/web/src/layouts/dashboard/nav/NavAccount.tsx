@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 
-import { styled, alpha } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import { Box, Link, Typography } from '@mui/material';
 import { useAuthContext } from 'src/auth/useAuthContext';
 import { PATH_DASHBOARD } from 'src/routes/paths';

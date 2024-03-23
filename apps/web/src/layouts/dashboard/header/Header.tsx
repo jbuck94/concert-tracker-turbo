@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material/styles';
-import { Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { AppBar, IconButton, Stack, Toolbar } from '@mui/material';
 import useResponsive from '@/hooks/useResponsive';
 import Iconify from 'src/components/iconify/Iconify';
 import AccountPopover from 'src/layouts/dashboard/header/AccountPopover';

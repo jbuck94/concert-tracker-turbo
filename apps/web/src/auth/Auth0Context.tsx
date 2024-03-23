@@ -1,10 +1,10 @@
-import { createContext, ReactNode, useEffect, useReducer } from 'react';
-import { useAuth0, RedirectLoginOptions } from '@auth0/auth0-react';
+import { ReactNode, createContext, useEffect, useReducer } from 'react';
+import { RedirectLoginOptions, useAuth0 } from '@auth0/auth0-react';
 import {
   ActionMap,
+  Auth0ContextType,
   AuthState,
   AuthUser,
-  Auth0ContextType,
 } from 'src/auth/types';
 
 import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
