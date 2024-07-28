@@ -6,11 +6,7 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "web#build": {
-      "env": [
-        "NEXT_PUBLIC_AUTH0_CLIENT_ID",
-        "NEXT_PUBLIC_AUTH0_DOMAIN",
-        "NEXT_PUBLIC_SERVER_URL"
-      ]
+      "env": ["NEXT_PUBLIC_AUTH0_CLIENT_ID", "NEXT_PUBLIC_AUTH0_DOMAIN"]
     },
     "api#build": {
       "env": [
