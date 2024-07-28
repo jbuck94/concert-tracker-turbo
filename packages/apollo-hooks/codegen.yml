@@ -1,7 +1,7 @@
 overwrite: true
 schema: '../../apps/api/schema.graphql'
 generates:
-  generated/index.tsx:
+  generated/index.ts:
     documents: ['../../apps/web/**/*.graphql']
     plugins:
       - 'typescript'
