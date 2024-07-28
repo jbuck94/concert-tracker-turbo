@@ -4,7 +4,6 @@
  */
 
 import { PrismaClient, User } from '@prisma/client';
-import { enhance } from '@zenstackhq/runtime';
 
 class DBClient {
   public prisma: PrismaClient;
@@ -26,5 +25,6 @@ const db = DBClient.getInstance().prisma;
 export default db;
 
 export const getEnhancedDB = (user?: User | null) => {
-  return enhance(db, { user: user ?? undefined });
+  // return enhance(db, { user: user ?? undefined });
+  return db;
 };

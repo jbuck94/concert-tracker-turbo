@@ -35,7 +35,7 @@ const builder = new SchemaBuilder<{
   ],
   prisma: {
     client: getEnhancedDB(),
-    defaultConnectionSize: 20,
+    defaultConnectionSize: 200,
     filterConnectionTotalCount: true,
   },
   relayOptions: {

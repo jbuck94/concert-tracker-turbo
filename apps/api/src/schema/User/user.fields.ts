@@ -15,6 +15,10 @@ builder.prismaObject('User', {
     firstName: t.exposeString('firstName'),
     lastName: t.exposeString('lastName'),
     email: t.exposeString('email'),
-    events: t.relatedConnection('events', { cursor: 'id' }),
+    events: t.relatedConnection('events', {
+      cursor: 'id',
+      nodeNullable: false,
+      edgesNullable: false,
+    }),
   }),
 });

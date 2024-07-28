@@ -24,13 +24,7 @@ builder.prismaObject('Event', {
       type: 'DateTime',
       resolve: (event) => event.date,
     }),
-    venue: t.relation('venue', {
-      resolve: (query, parent, args, context) => {
-        return context.db.venue.findUniqueOrThrow({
-          where: { id: parent.venueId },
-        });
-      },
-    }),
+    venue: t.relation('venue'),
     artists: t.relatedConnection('artists', {
       cursor: 'id',
       args: {
