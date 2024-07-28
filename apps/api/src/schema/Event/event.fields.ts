@@ -24,32 +24,13 @@ builder.prismaObject('Event', {
       type: 'DateTime',
       resolve: (event) => event.date,
     }),
-    venue: t.relation('venue'),
-    // anotherTest: t.field({
-    //   type: 'String',
-    //   resolve: (query, args, context) => {
-    //     console.log('anotherTest query: ', query);
-    //     console.log('anotherTest args: ', args);
-    //     return 'ayyee';
-    //   },
-    // }),
-    // artists: t.connection({
-    //   type: EventArtistFields,
-    //   resolve: (parent, args, context) => {
-    //     return resolveOffsetConnection({ args }, async ({ limit, offset }) => {
-    //       const artists = await context.db.eventArtist.findMany({
-    //         where: {
-    //           eventId: parent.id,
-    //         },
-    //         take: limit,
-    //       });
-
-    //       console.log('artists: ', artists);
-
-    //       return artists;
-    //     });
-    //   },
-    // }),
+    venue: t.relation('venue', {
+      resolve: (query, parent, args, context) => {
+        return context.db.venue.findUniqueOrThrow({
+          where: { id: parent.venueId },
+        });
+      },
+    }),
     artists: t.relatedConnection('artists', {
       cursor: 'id',
       args: {

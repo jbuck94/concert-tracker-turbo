@@ -55,6 +55,7 @@ builder.objectType(ErrorEventExists, {
         const eventIdsToLoad = parentError.events.map((event) => event.id);
         console.log('eventIdsToLoad: ', eventIdsToLoad);
         return context.db.event.findMany({
+          include: { artists: true },
           where: { id: { in: eventIdsToLoad } },
         });
       },

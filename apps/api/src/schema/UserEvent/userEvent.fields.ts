@@ -15,22 +15,19 @@ import builder from '@/src/builder';
 builder.prismaObject('UserEvent', {
   fields: (t) => ({
     id: t.exposeID('id'),
+    user: t.relation('user', {
+      resolve: (query, parent, args, context) => {
+        return context.db.user.findUniqueOrThrow({
+          where: { id: parent.userId },
+        });
+      },
+    }),
     event: t.relation('event', {
-      resolve(query, parent, args, context, info) {
-        console.log('parent: ', parent);
+      resolve: (query, parent, args, context) => {
         return context.db.event.findUniqueOrThrow({
           where: { id: parent.eventId },
         });
       },
     }),
-    // event: t.prismaField({
-    //   type: 'Event',
-    //   resolve: async (query, parent, args, context) => {
-    //     console.log('parent.eventId: ', parent.eventId);
-    //     return context.db.event.findUniqueOrThrow({
-    //       where: { id: parent.eventId },
-    //     });
-    //   },
-    // }),
   }),
 });

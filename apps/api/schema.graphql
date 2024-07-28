@@ -275,6 +275,7 @@ type User {
 type UserEvent {
   event: Event!
   id: ID!
+  user: User!
 }
 
 type UserEventsConnection {
