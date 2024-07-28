@@ -37,7 +37,7 @@
     "react-lazy-load-image-component": "^1.6.0",
     "simplebar-react": "^3.2.4",
     "ui": "*",
-    "zod": "^3.22.4"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.191",
