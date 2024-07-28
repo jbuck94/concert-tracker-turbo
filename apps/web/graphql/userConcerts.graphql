@@ -1,0 +1,51 @@
+mutation CreateUserEvent($input: CreateUserEventInput!) {
+  createEvent(input: $input) {
+    ... on ErrorInvalidRequest {
+      message
+    }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorUniqueConstraint {
+      message
+    }
+    ... on ErrorEventExists {
+      message
+      possibleEvents {
+        edges {
+          node {
+            ...Event
+          }
+        }
+      }
+    }
+    ... on MutationCreateEventSuccess {
+      data {
+        id
+        event {
+          id
+          name
+          date
+          venue {
+            id
+            name
+            city
+            state
+          }
+        }
+        user {
+          id
+          events {
+            edges {
+              node {
+                event {
+                  ...Event
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ fragment Artist on Artist {
 
 query Artists {
   artists {
+    totalCount
     edges {
       node {
         ...Artist

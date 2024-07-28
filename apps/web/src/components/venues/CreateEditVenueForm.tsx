@@ -112,7 +112,13 @@ export const CreateEditVenueForm = () => {
             value={value}
             isOptionEqualToValue={(option, value) => value.id === option.id}
             getOptionLabel={(option) => option.name}
-            noOptionsText={loading ? 'Loading...' : 'No Venues Found'}
+            noOptionsText={
+              loading
+                ? 'Loading...'
+                : value
+                  ? 'No Venues Found'
+                  : 'Search for a venue'
+            }
             onChange={(_, newValue) => setValue(newValue)}
             onInputChange={(event, newInputValue) =>
               onChangeSearch(newInputValue)

@@ -25,7 +25,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
       <Card>
         <ListItemText
           sx={{
-            p: (theme) => theme.spacing(2.5, 2.5, 2, 2.5),
+            p: (theme) => theme.spacing(2, 2.5, 2, 2.5),
           }}
           secondary={
             <Link component={NextLink} href={'TODO:'} color='inherit'>

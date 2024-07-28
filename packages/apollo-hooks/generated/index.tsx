@@ -26,7 +26,7 @@ export type Artist = {
   events: ArtistEventsConnection;
   genres: Array<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  image: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   spotifyID: Scalars['String']['output'];
 };
@@ -59,12 +59,45 @@ export type BaseError = {
   message: Scalars['String']['output'];
 };
 
+export type CreateUserEventInput = {
+  artistSpotifyIds: Array<Scalars['String']['input']>;
+  date: Scalars['DateTime']['input'];
+  forceCreateEvent?: InputMaybe<Scalars['Boolean']['input']>;
+  venueSeatGeekId: Scalars['String']['input'];
+};
+
 export type DateTimeFilter = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   gt?: InputMaybe<Scalars['DateTime']['input']>;
   gte?: InputMaybe<Scalars['DateTime']['input']>;
   lt?: InputMaybe<Scalars['DateTime']['input']>;
   lte?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type ErrorEventExists = BaseError & {
+  __typename?: 'ErrorEventExists';
+  message: Scalars['String']['output'];
+  possibleEvents: ErrorEventExistsPossibleEventsConnection;
+};
+
+
+export type ErrorEventExistsPossibleEventsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ErrorEventExistsPossibleEventsConnection = {
+  __typename?: 'ErrorEventExistsPossibleEventsConnection';
+  edges: Array<ErrorEventExistsPossibleEventsConnectionEdge>;
+  pageInfo: PageInfo;
+};
+
+export type ErrorEventExistsPossibleEventsConnectionEdge = {
+  __typename?: 'ErrorEventExistsPossibleEventsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Event;
 };
 
 export type ErrorForbidden = BaseError & {
@@ -165,6 +198,7 @@ export type IntFilter = {
 export type Mutation = {
   __typename?: 'Mutation';
   createArtist: MutationCreateArtistResult;
+  createEvent: MutationCreateEventResult;
   createVenue: MutationCreateVenueResult;
   signUp: User;
 };
@@ -172,6 +206,11 @@ export type Mutation = {
 
 export type MutationCreateArtistArgs = {
   spotifyID: Scalars['String']['input'];
+};
+
+
+export type MutationCreateEventArgs = {
+  input: CreateUserEventInput;
 };
 
 
@@ -191,6 +230,13 @@ export type MutationCreateArtistResult = ErrorInvalidRequest | ErrorNotFound | E
 export type MutationCreateArtistSuccess = {
   __typename?: 'MutationCreateArtistSuccess';
   data: Artist;
+};
+
+export type MutationCreateEventResult = ErrorEventExists | ErrorInvalidRequest | ErrorNotFound | ErrorUniqueConstraint | MutationCreateEventSuccess;
+
+export type MutationCreateEventSuccess = {
+  __typename?: 'MutationCreateEventSuccess';
+  data: UserEvent;
 };
 
 export type MutationCreateVenueResult = ErrorForbidden | ErrorInvalidRequest | ErrorNotFound | MutationCreateVenueSuccess;
@@ -301,6 +347,7 @@ export type QueryArtistsConnection = {
   __typename?: 'QueryArtistsConnection';
   edges: Array<QueryArtistsConnectionEdge>;
   pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
 };
 
 export type QueryArtistsConnectionEdge = {
@@ -394,17 +441,6 @@ export type UserEvent = {
   user: User;
 };
 
-export type UserEventFilter = {
-  event?: InputMaybe<EventFilter>;
-  id?: InputMaybe<IntFilter>;
-};
-
-export type UserEventListFilter = {
-  every?: InputMaybe<UserEventFilter>;
-  none?: InputMaybe<UserEventFilter>;
-  some?: InputMaybe<UserEventFilter>;
-};
-
 export type UserEventsConnection = {
   __typename?: 'UserEventsConnection';
   edges: Array<Maybe<UserEventsConnectionEdge>>;
@@ -415,13 +451,6 @@ export type UserEventsConnectionEdge = {
   __typename?: 'UserEventsConnectionEdge';
   cursor: Scalars['String']['output'];
   node: UserEvent;
-};
-
-export type UserFilter = {
-  email?: InputMaybe<StringFilter>;
-  events?: InputMaybe<UserEventListFilter>;
-  id?: InputMaybe<IntFilter>;
-  name?: InputMaybe<StringFilter>;
 };
 
 export type Venue = {
@@ -487,12 +516,12 @@ export type VenueListFilter = {
   some?: InputMaybe<VenueFilter>;
 };
 
-export type ArtistFragment = { __typename?: 'Artist', id: string, spotifyID: string, name: string, image: string, genres: Array<string> };
+export type ArtistFragment = { __typename?: 'Artist', id: string, spotifyID: string, name: string, image?: string | null, genres: Array<string> };
 
 export type ArtistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image: string, genres: Array<string> } }> } };
+export type ArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', totalCount: number, edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image?: string | null, genres: Array<string> } }> } };
 
 export type SpotifyArtistFragment = { __typename?: 'SpotifyArtist', name: string, id: string };
 
@@ -509,14 +538,21 @@ export type CreateArtistMutationVariables = Exact<{
 }>;
 
 
-export type CreateArtistMutation = { __typename?: 'Mutation', createArtist: { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateArtistSuccess', data: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image: string, genres: Array<string> } } };
+export type CreateArtistMutation = { __typename?: 'Mutation', createArtist: { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateArtistSuccess', data: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image?: string | null, genres: Array<string> } } };
 
-export type EventFragment = { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image: string } } } | null> } };
+export type EventFragment = { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } };
 
 export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'QueryEventsConnectionEdge', cursor: string, node: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image: string } } } | null> } } }> } };
+export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'QueryEventsConnectionEdge', cursor: string, node: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } }> } };
+
+export type CreateUserEventMutationVariables = Exact<{
+  input: CreateUserEventInput;
+}>;
+
+
+export type CreateUserEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'ErrorEventExists', message: string, possibleEvents: { __typename?: 'ErrorEventExistsPossibleEventsConnection', edges: Array<{ __typename?: 'ErrorEventExistsPossibleEventsConnectionEdge', node: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } }> } } | { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateEventSuccess', data: { __typename?: 'UserEvent', id: string, event: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string } }, user: { __typename?: 'User', id: string, events: { __typename?: 'UserEventsConnection', edges: Array<{ __typename?: 'UserEventsConnectionEdge', node: { __typename?: 'UserEvent', event: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } } | null> } } } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -607,6 +643,7 @@ export const VenueAutocompleteResultFragmentDoc = gql`
 export const ArtistsDocument = gql`
     query Artists {
   artists {
+    totalCount
     edges {
       node {
         ...Artist
@@ -788,6 +825,85 @@ export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
 export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
 export type EventsSuspenseQueryHookResult = ReturnType<typeof useEventsSuspenseQuery>;
 export type EventsQueryResult = Apollo.QueryResult<EventsQuery, EventsQueryVariables>;
+export const CreateUserEventDocument = gql`
+    mutation CreateUserEvent($input: CreateUserEventInput!) {
+  createEvent(input: $input) {
+    ... on ErrorInvalidRequest {
+      message
+    }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorUniqueConstraint {
+      message
+    }
+    ... on ErrorEventExists {
+      message
+      possibleEvents {
+        edges {
+          node {
+            ...Event
+          }
+        }
+      }
+    }
+    ... on MutationCreateEventSuccess {
+      data {
+        id
+        event {
+          id
+          name
+          date
+          venue {
+            id
+            name
+            city
+            state
+          }
+        }
+        user {
+          id
+          events {
+            edges {
+              node {
+                event {
+                  ...Event
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${EventFragmentDoc}`;
+export type CreateUserEventMutationFn = Apollo.MutationFunction<CreateUserEventMutation, CreateUserEventMutationVariables>;
+
+/**
+ * __useCreateUserEventMutation__
+ *
+ * To run a mutation, you first call `useCreateUserEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserEventMutation, { data, loading, error }] = useCreateUserEventMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateUserEventMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserEventMutation, CreateUserEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserEventMutation, CreateUserEventMutationVariables>(CreateUserEventDocument, options);
+      }
+export type CreateUserEventMutationHookResult = ReturnType<typeof useCreateUserEventMutation>;
+export type CreateUserEventMutationResult = Apollo.MutationResult<CreateUserEventMutation>;
+export type CreateUserEventMutationOptions = Apollo.BaseMutationOptions<CreateUserEventMutation, CreateUserEventMutationVariables>;
 export const MeDocument = gql`
     query Me {
   me {

@@ -1,11 +1,10 @@
 import React, { ReactElement, ReactNode } from 'react';
 import {
   ApolloClient,
-  InMemoryCache,
   ApolloProvider,
   HttpLink,
+  InMemoryCache,
   from,
-  split,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
@@ -69,6 +68,7 @@ export default function Provider({
           'ErrorNotFound',
           'ErrorInvalidRequest',
           'ErrorUniqueConstraint',
+          'ErrorEventExists',
         ],
       },
     }),

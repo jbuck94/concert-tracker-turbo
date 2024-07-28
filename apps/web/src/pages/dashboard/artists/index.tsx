@@ -17,7 +17,7 @@ Artists.getLayout = (page: React.ReactElement) => (
 function Artists() {
   const router = useRouter();
 
-  const { data, loading, error } = useArtistsQuery();
+  const { data, loading, error } = useArtistsQuery({});
 
   const handleView = useCallback(
     (id: string) => {
