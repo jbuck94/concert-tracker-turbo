@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "dist/main.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
+}
