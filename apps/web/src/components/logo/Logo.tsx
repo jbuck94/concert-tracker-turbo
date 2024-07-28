@@ -99,4 +99,5 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
   }
 );
 
+Logo.displayName = 'Logo';
 export default Logo;

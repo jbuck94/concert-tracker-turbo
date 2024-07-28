@@ -47,14 +47,16 @@ export default function ConcertCard({
             p: (theme) => theme.spacing(1, 1, 0, 1),
           }}
         >
-          <Stack flexGrow={1} sx={{ position: 'relative' }}>
-            <Image
-              alt={images[0]}
-              src={images[0]}
-              ratio='16/9'
-              sx={{ borderRadius: 1, height: 1, width: 1 }}
-            />
-          </Stack>
+          {images[0] && (
+            <Stack flexGrow={1} sx={{ position: 'relative' }}>
+              <Image
+                alt={images[0]}
+                src={images[0]}
+                ratio='16/9'
+                sx={{ borderRadius: 1, height: 1, width: 1 }}
+              />
+            </Stack>
+          )}
           {/* {artists.length > 1 && (
             <Stack spacing={0.5}>
               <Image

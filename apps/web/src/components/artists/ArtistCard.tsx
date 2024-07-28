@@ -30,22 +30,24 @@ export default function ArtistCard({
   return (
     <>
       <Card>
-        <Stack
-          spacing={0.5}
-          direction='row'
-          sx={{
-            p: (theme) => theme.spacing(1, 1, 0, 1),
-          }}
-        >
-          <Stack flexGrow={1} sx={{ position: 'relative' }}>
-            <Image
-              ratio='16/9'
-              alt={artist.image}
-              src={artist.image}
-              sx={{ borderRadius: 1, height: 1, width: 1 }}
-            />
+        {artist.image && (
+          <Stack
+            spacing={0.5}
+            direction='row'
+            sx={{
+              p: (theme) => theme.spacing(1, 1, 0, 1),
+            }}
+          >
+            <Stack flexGrow={1} sx={{ position: 'relative' }}>
+              <Image
+                ratio='16/9'
+                alt={artist.image}
+                src={artist.image}
+                sx={{ borderRadius: 1, height: 1, width: 1 }}
+              />
+            </Stack>
           </Stack>
-        </Stack>
+        )}
 
         <ListItemText
           sx={{

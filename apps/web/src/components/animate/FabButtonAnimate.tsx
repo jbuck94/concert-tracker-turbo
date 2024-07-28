@@ -16,6 +16,8 @@ const FabButtonAnimate = forwardRef<HTMLButtonElement, FabButtonAnimateProps>(
   )
 );
 
+FabButtonAnimate.displayName = 'FabButtonAnimate';
+
 export default FabButtonAnimate;
 
 type AnimateWrapProp = {

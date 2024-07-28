@@ -2,7 +2,7 @@ import { AppBar, Box, BoxProps, Toolbar } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import Logo from 'src/components/logo/Logo';
-import { HEADER } from 'src/config-global';
+import { HEADER } from 'src/utils/config-global';
 import { bgBlur } from 'src/utils/cssStyles';
 
 type Props = {
@@ -13,7 +13,7 @@ export default function Header({ isOffset }: Props) {
   const theme = useTheme();
 
   return (
-    <AppBar color="transparent" sx={{ boxShadow: 0 }}>
+    <AppBar color='transparent' sx={{ boxShadow: 0 }}>
       <Toolbar
         sx={{
           justifyContent: 'space-between',

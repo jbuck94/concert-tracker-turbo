@@ -30,7 +30,7 @@ export const CreateEditConcertForm = () => {
   const methods = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      venue: undefined,
+      venue: {} as z.infer<typeof schema>['venue'],
       date: new Date(),
       artists: [] as Artist[],
     },
@@ -47,6 +47,11 @@ export const CreateEditConcertForm = () => {
 
   const onSubmit = async () => {
     const data = getValues();
+
+    if (!data.venue) {
+      return enqueueSnackbar('You must select a venue', { variant: 'warning' });
+    }
+
     try {
       const result = await createEvent({
         variables: {

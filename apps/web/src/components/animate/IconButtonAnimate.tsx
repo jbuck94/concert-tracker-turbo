@@ -12,6 +12,8 @@ export const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
   )
 );
 
+IconButtonAnimate.displayName = 'IconButtonAnimate';
+
 type AnimateWrapProp = {
   children: React.ReactNode;
   size: 'small' | 'medium' | 'large';

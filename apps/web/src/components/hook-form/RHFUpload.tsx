@@ -3,7 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { UploadProps } from 'src/components/upload/types';
 import Upload from 'src/components/upload/Upload';
-import UploadAvatar from 'src/components/upload/UploadAvatar';
+import UploadAvatar from 'src/components/upload/UploadAvater';
 import UploadBox from 'src/components/upload/UploadBox';
 
 interface Props extends Omit<UploadProps, 'file'> {

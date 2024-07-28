@@ -12,6 +12,24 @@ export type ActionMapType<M extends { [index: string]: any }> = {
       };
 };
 
+export type JWTContextType = {
+  isInitialized: boolean;
+  isAuthenticated: boolean;
+  user: AuthUserType;
+  method: string;
+  login: (email: string, password: string) => Promise<void>;
+  // loginWithGoogle: () => {};
+  // loginWithGithub: () => {};
+  // loginWithTwitter: () => {};
+  register: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) => Promise<void>;
+  logout: () => void;
+};
+
 export type AuthUserType = null | Record<string, any>;
 
 export type AuthStateType = {
