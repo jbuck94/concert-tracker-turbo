@@ -2,7 +2,7 @@ type Artist {
   events(after: String, before: String, first: Int, last: Int): ArtistEventsConnection!
   genres: [String!]!
   id: ID!
-  image: String!
+  image: String
   name: String!
   spotifyID: String!
 }
@@ -25,6 +25,13 @@ interface BaseError {
   message: String!
 }
 
+input CreateUserEventInput {
+  artistSpotifyIds: [String!]!
+  date: DateTime!
+  forceCreateEvent: Boolean = false
+  venueSeatGeekId: String!
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -36,6 +43,21 @@ input DateTimeFilter {
   gte: DateTime
   lt: DateTime
   lte: DateTime
+}
+
+type ErrorEventExists implements BaseError {
+  message: String!
+  possibleEvents(after: String, before: String, first: Int, last: Int): ErrorEventExistsPossibleEventsConnection!
+}
+
+type ErrorEventExistsPossibleEventsConnection {
+  edges: [ErrorEventExistsPossibleEventsConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ErrorEventExistsPossibleEventsConnectionEdge {
+  cursor: String!
+  node: Event!
 }
 
 type ErrorForbidden implements BaseError {
@@ -123,6 +145,7 @@ scalar JSON
 
 type Mutation {
   createArtist(spotifyID: String!): MutationCreateArtistResult!
+  createEvent(input: CreateUserEventInput!): MutationCreateEventResult!
   createVenue(seatGeekID: String!): MutationCreateVenueResult!
   signUp(avatar: String!, email: String!, name: String!): User!
 }
@@ -131,6 +154,12 @@ union MutationCreateArtistResult = ErrorInvalidRequest | ErrorNotFound | ErrorUn
 
 type MutationCreateArtistSuccess {
   data: Artist!
+}
+
+union MutationCreateEventResult = ErrorEventExists | ErrorInvalidRequest | ErrorNotFound | ErrorUniqueConstraint | MutationCreateEventSuccess
+
+type MutationCreateEventSuccess {
+  data: UserEvent!
 }
 
 union MutationCreateVenueResult = ErrorForbidden | ErrorInvalidRequest | ErrorNotFound | MutationCreateVenueSuccess
@@ -175,6 +204,7 @@ input QueryArtistInput {
 type QueryArtistsConnection {
   edges: [QueryArtistsConnectionEdge!]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type QueryArtistsConnectionEdge {
@@ -245,18 +275,6 @@ type User {
 type UserEvent {
   event: Event!
   id: ID!
-  user: User!
-}
-
-input UserEventFilter {
-  event: EventFilter
-  id: IntFilter
-}
-
-input UserEventListFilter {
-  every: UserEventFilter
-  none: UserEventFilter
-  some: UserEventFilter
 }
 
 type UserEventsConnection {
@@ -267,13 +285,6 @@ type UserEventsConnection {
 type UserEventsConnectionEdge {
   cursor: String!
   node: UserEvent!
-}
-
-input UserFilter {
-  email: StringFilter
-  events: UserEventListFilter
-  id: IntFilter
-  name: StringFilter
 }
 
 type Venue {

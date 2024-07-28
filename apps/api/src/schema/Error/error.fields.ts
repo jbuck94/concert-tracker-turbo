@@ -1,6 +1,7 @@
 import builder from '@/src/builder';
 import {
   CustomError,
+  ErrorEventExists,
   ErrorForbidden,
   ErrorInvalidRequest,
   ErrorNotFound,
@@ -36,4 +37,27 @@ builder.objectType(ErrorUniqueConstraint, {
   name: 'ErrorUniqueConstraint',
   interfaces: [BaseError],
   isTypeOf: (obj) => obj instanceof ErrorUniqueConstraint,
+});
+
+builder.objectType(ErrorEventExists, {
+  name: 'ErrorEventExists',
+  interfaces: [BaseError],
+  isTypeOf: (obj) => obj instanceof ErrorEventExists,
+  fields: (t) => ({
+    possibleEvents: t.prismaConnection({
+      type: 'Event',
+      cursor: 'id',
+      nullable: false,
+      nodeNullable: false,
+      edgesNullable: false,
+      resolve: (_query, parentError, _, context) => {
+        console.log('_query: ', _query);
+        const eventIdsToLoad = parentError.events.map((event) => event.id);
+        console.log('eventIdsToLoad: ', eventIdsToLoad);
+        return context.db.event.findMany({
+          where: { id: { in: eventIdsToLoad } },
+        });
+      },
+    }),
+  }),
 });

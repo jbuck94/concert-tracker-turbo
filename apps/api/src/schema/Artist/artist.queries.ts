@@ -1,7 +1,6 @@
 import builder from '@/src/builder';
 import { spotifyClient } from '@/src/lib/spotify';
 import { resolveOffsetConnection } from '@pothos/plugin-relay';
-import { MaxInt } from '@spotify/web-api-ts-sdk';
 
 builder.queryField('artist', (t) =>
   t.prismaFieldWithInput({
@@ -28,6 +27,7 @@ builder.queryFields((t) => ({
     nullable: false,
     nodeNullable: false,
     edgesNullable: false,
+    totalCount: (_parent, _args, context) => context.db.artist.count(),
     resolve: (query, _parent, _args, context) =>
       context.db.artist.findMany(query),
   }),
@@ -59,7 +59,7 @@ builder.queryFields((t) => ({
     nullable: false,
     nodeNullable: false,
     edgesNullable: false,
-    resolve: async (parent, args, context) => {
+    resolve: async (parent, args) => {
       return resolveOffsetConnection({ args }, async ({ limit, offset }) => {
         if (limit > 50) {
           throw new Error('Max page size is 50');
@@ -69,7 +69,7 @@ builder.queryFields((t) => ({
           args.input.name,
           ['artist'],
           undefined,
-          limit as MaxInt<50>,
+          limit,
           offset
         );
 

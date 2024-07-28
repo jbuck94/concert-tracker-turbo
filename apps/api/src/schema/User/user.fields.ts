@@ -1,15 +1,13 @@
 import builder from '@/src/builder';
-import { IDFilter, StringFilter } from '@/src/schema/Filters';
-import { UserEventListFilter } from '@/src/schema/UserEvent';
 
-export const UserWhere = builder.prismaWhere('User', {
-  fields: (t) => ({
-    id: IDFilter,
-    name: StringFilter,
-    email: StringFilter,
-    events: UserEventListFilter,
-  }),
-});
+// export const UserWhere = builder.prismaWhere('User', {
+//   fields: (t) => ({
+//     id: IDFilter,
+//     name: StringFilter,
+//     email: StringFilter,
+//     events: UserEventListFilter,
+//   }),
+// });
 
 builder.prismaObject('User', {
   fields: (t) => ({

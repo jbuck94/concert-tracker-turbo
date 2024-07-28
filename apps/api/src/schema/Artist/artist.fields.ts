@@ -18,10 +18,10 @@ export const ArtistFields = builder.prismaObject('Artist', {
     }),
     image: t.field({
       type: 'String',
-      nullable: false,
+      nullable: true,
       resolve: async (artist) => {
         const spotifyArtist = await spotifyClient.artists.get(artist.spotifyID);
-        return spotifyArtist.images[0].url;
+        return spotifyArtist.images[0]?.url;
       },
     }),
   }),

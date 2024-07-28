@@ -21,7 +21,7 @@ builder.mutationFields((t) => ({
         args.seatGeekID
       );
 
-      if (!seatGeekVenue.id) {
+      if (!seatGeekVenue?.id) {
         throw new ErrorNotFound('Venue Not Found');
       }
 

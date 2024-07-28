@@ -5,7 +5,7 @@ import {
   ErrorNotFound,
   ErrorUniqueConstraint,
 } from '@/src/schema/Error/error.model';
-import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 builder.mutationFields((t) => ({
   createArtist: t.prismaField({
@@ -30,8 +30,8 @@ builder.mutationFields((t) => ({
             name: spotifyArtist.name,
           },
         })
-        .catch((e) => {
-          if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        .catch((e: unknown) => {
+          if (e instanceof PrismaClientKnownRequestError) {
             if (e.code === 'P2002') {
               throw new ErrorUniqueConstraint('Artist already exists');
             }

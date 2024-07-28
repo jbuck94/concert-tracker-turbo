@@ -1,5 +1,5 @@
 import builder from '@/src/builder';
-import { IDFilter } from '@/src/schema/Filters';
+import { IDFilter } from '../Filters';
 
 export const EventArtistWhere = builder.prismaWhere('EventArtist', {
   fields: (t) => ({
@@ -14,7 +14,7 @@ export const EventArtistListFilter = builder.prismaListFilter(
   }
 );
 
-builder.prismaObject('EventArtist', {
+export const EventArtistFields = builder.prismaObject('EventArtist', {
   fields: (t) => ({
     id: t.exposeID('id'),
     artist: t.relation('artist'),

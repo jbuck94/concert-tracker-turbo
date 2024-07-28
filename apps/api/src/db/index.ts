@@ -10,7 +10,7 @@ class DBClient {
   public prisma: PrismaClient;
   private static instance: DBClient;
   private constructor() {
-    this.prisma = new PrismaClient({ log: ['info'] });
+    this.prisma = new PrismaClient({ log: ['query', 'info'] });
   }
 
   public static getInstance = () => {

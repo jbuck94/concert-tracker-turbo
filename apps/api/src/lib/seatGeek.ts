@@ -1,4 +1,5 @@
 import axios, { Axios } from 'axios';
+import { writeFile } from 'fs';
 
 type SeatGeekMeta = {
   took: number;
@@ -60,8 +61,9 @@ export class SeatGeekClient {
   }
 
   public getVenue = async (venueId: string) => {
-    const { data } = await this.client.get<SeatGeekVenue>(`/venues/${venueId}`);
-    console.log('data: ', data);
+    const { data } = await this.client.get<SeatGeekVenue | undefined>(
+      `/venues/${venueId}`
+    );
 
     return data;
   };
@@ -70,8 +72,41 @@ export class SeatGeekClient {
     const { data } = await this.client.get<SeatGeekVenueResponse>(
       `/venues?q=${search}`
     );
-    console.log('data: ', JSON.stringify(data, null, 2));
 
     return data.venues;
+  };
+
+  // https://api.seatgeek.com/2/events?q=boston+celtics
+
+  public searchEvents = async (q: string) => {
+    try {
+      const { data } = await this.client.get('/events', {
+        params: {
+          q,
+          'taxonomies.name': 'concert',
+          sort: 'datetime_utc.desc',
+          // 'datetime_utc.lte': '2024-01-01',
+        },
+      });
+
+      writeFile(
+        './searchResults.json',
+        JSON.stringify(data, null, 2),
+        () => {}
+      );
+
+      console.log('NumEvents', data.events.length);
+      data.events.forEach((event: any) =>
+        console.log(
+          event.title,
+          '@',
+          event.venue.name_v2,
+          'on',
+          new Date(event.datetime_utc).toLocaleDateString()
+        )
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 }

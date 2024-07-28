@@ -1,8 +1,11 @@
+import { Event } from '@prisma/client';
+
 export enum ErrorType {
   NOT_FOUND = 'NOT_FOUND',
   FORBIDDEN = 'FORBIDDEN',
   INVALID_REQUEST = 'INVALID_REQUEST',
   UNIQUE_CONSTRAINT = 'UNIQUE_CONSTRAINT',
+  EVENT_ALREADY_EXISTS = 'EVENT_ALREADY_EXISTS',
 }
 
 export class CustomError extends Error {
@@ -63,5 +66,22 @@ export class ErrorUniqueConstraint extends CustomError {
       message,
       metadata,
     });
+  }
+}
+
+export class ErrorEventExists extends CustomError {
+  events: Event[];
+
+  constructor(
+    message: string,
+    events: Event[],
+    metadata?: Record<string, any>
+  ) {
+    super({
+      name: ErrorType.EVENT_ALREADY_EXISTS,
+      message,
+      metadata,
+    });
+    this.events = events;
   }
 }

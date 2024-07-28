@@ -1,7 +1,7 @@
 import builder from '@/src/builder';
-import { EventArtistListFilter } from '@/src/schema/EventArtist';
 import { DateTimeFilter, IDFilter, StringFilter } from '@/src/schema/Filters';
-import { VenueWhere } from '@/src/schema/Venue';
+import { EventArtistListFilter } from '../EventArtist';
+import { VenueWhere } from '../Venue';
 
 export const EventWhere = builder.prismaWhere('Event', {
   fields: (r) => ({
@@ -25,6 +25,31 @@ builder.prismaObject('Event', {
       resolve: (event) => event.date,
     }),
     venue: t.relation('venue'),
+    // anotherTest: t.field({
+    //   type: 'String',
+    //   resolve: (query, args, context) => {
+    //     console.log('anotherTest query: ', query);
+    //     console.log('anotherTest args: ', args);
+    //     return 'ayyee';
+    //   },
+    // }),
+    // artists: t.connection({
+    //   type: EventArtistFields,
+    //   resolve: (parent, args, context) => {
+    //     return resolveOffsetConnection({ args }, async ({ limit, offset }) => {
+    //       const artists = await context.db.eventArtist.findMany({
+    //         where: {
+    //           eventId: parent.id,
+    //         },
+    //         take: limit,
+    //       });
+
+    //       console.log('artists: ', artists);
+
+    //       return artists;
+    //     });
+    //   },
+    // }),
     artists: t.relatedConnection('artists', {
       cursor: 'id',
       args: {

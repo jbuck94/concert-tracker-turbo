@@ -1,24 +1,36 @@
 import builder from '@/src/builder';
-import { EventWhere } from '@/src/schema/Event';
-import { IDFilter } from '@/src/schema/Filters';
-import { UserWhere } from '@/src/schema/User/user.fields';
 
-export const UserEventWhere = builder.prismaWhere('UserEvent', {
-  fields: (t) => ({
-    id: IDFilter,
-    // user: UserWhere,
-    event: EventWhere,
-  }),
-});
+// export const UserEventWhere = builder.prismaWhere('UserEvent', {
+//   fields: (t) => ({
+//     id: IDFilter,
+//     // user: UserWhere,
+//     event: EventWhere,
+//   }),
+// });
 
-export const UserEventListFilter = builder.prismaListFilter(UserEventWhere, {
-  ops: ['every', 'some', 'none'],
-});
+// export const UserEventListFilter = builder.prismaListFilter(UserEventWhere, {
+//   ops: ['every', 'some', 'none'],
+// });
 
 builder.prismaObject('UserEvent', {
   fields: (t) => ({
     id: t.exposeID('id'),
-    user: t.relation('user'),
-    event: t.relation('event'),
+    event: t.relation('event', {
+      resolve(query, parent, args, context, info) {
+        console.log('parent: ', parent);
+        return context.db.event.findUniqueOrThrow({
+          where: { id: parent.eventId },
+        });
+      },
+    }),
+    // event: t.prismaField({
+    //   type: 'Event',
+    //   resolve: async (query, parent, args, context) => {
+    //     console.log('parent.eventId: ', parent.eventId);
+    //     return context.db.event.findUniqueOrThrow({
+    //       where: { id: parent.eventId },
+    //     });
+    //   },
+    // }),
   }),
 });
