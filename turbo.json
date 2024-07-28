@@ -7,18 +7,19 @@
     },
     "web#build": {
       "env": [
-        "NEXT_PUBLIC_SERVER_URL",
         "NEXT_PUBLIC_AUTH0_CLIENT_ID",
-        "NEXT_PUBLIC_AUTH0_DOMAIN"
+        "NEXT_PUBLIC_AUTH0_DOMAIN",
+        "NEXT_PUBLIC_SERVER_URL"
       ]
     },
     "api#build": {
       "env": [
-        "SPOTIFY_CLIENT_ID",
-        "SPOTIFY_CLIENT_SECRET",
         "AUTH0_HOOK_SECRET",
+        "DATABASE_URL",
         "SEATGEEK_CLIENT_ID",
-        "SEATGEEK_SECRET"
+        "SEATGEEK_SECRET",
+        "SPOTIFY_CLIENT_ID",
+        "SPOTIFY_CLIENT_SECRET"
       ]
     },
     "lint": {
