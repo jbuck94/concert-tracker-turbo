@@ -27,8 +27,5 @@
   "typescript.format.semicolons": "insert",
   "javascript.format.semicolons": "insert",
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[zmodel]": {
-    "editor.defaultFormatter": "zenstack.zenstack"
-  }
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
