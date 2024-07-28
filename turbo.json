@@ -1,8 +1,25 @@
 {
-  "pipeline": {
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
+    },
+    "web#build": {
+      "env": [
+        "NEXT_PUBLIC_SERVER_URL",
+        "NEXT_PUBLIC_AUTH0_CLIENT_ID",
+        "NEXT_PUBLIC_AUTH0_DOMAIN"
+      ]
+    },
+    "api#build": {
+      "env": [
+        "SPOTIFY_CLIENT_ID",
+        "SPOTIFY_CLIENT_SECRET",
+        "AUTH0_HOOK_SECRET",
+        "SEATGEEK_CLIENT_ID",
+        "SEATGEEK_SECRET"
+      ]
     },
     "lint": {
       "outputs": []
