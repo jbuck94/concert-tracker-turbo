@@ -21,7 +21,7 @@
     "@mui/lab": "5.0.0-alpha.173",
     "@mui/material": "5.16.5",
     "@mui/x-date-pickers": "7.11.1",
-    "@spotify/web-api-ts-sdk": "^1.2.0",
+    "@spotify/web-api-ts-sdk": "1.2.0",
     "apollo-hooks": "*",
     "axios": "^1.6.7",
     "date-fns": "^3.3.1",
@@ -53,6 +53,6 @@
     "next-transpile-modules": "10.0.1",
     "npm": "^10.4.0",
     "tsconfig": "*",
-    "typescript": "^4.8.4"
+    "typescript": "5.5.4"
   }
 }

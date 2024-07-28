@@ -23,7 +23,8 @@
     "@graphql-codegen/cli": "^5.0.0",
     "eslint-config-custom": "latest",
     "prettier": "3.2.4",
-    "turbo": "2.0.9"
+    "turbo": "2.0.9",
+    "typescript": "5.5.4"
   },
   "packageManager": "npm@10.5.0"
 }
