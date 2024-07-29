@@ -68,9 +68,10 @@ server.start().then(async () => {
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
   app.use(express.json({ type: 'application/json', limit: '50mb' }));
 
-  await new Promise<void>((resolve) =>
-    httpServer.listen({ port: PORT }, resolve)
-  );
+  await new Promise<void>((resolve) => {
+    console.log(`listening on http://localhost:${PORT}`);
+    return httpServer.listen({ port: PORT }, resolve);
+  });
 });
 
 export default app;

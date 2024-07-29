@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "files": [
-    "eslint-preset.js",
-    "prettier-preset.js"
+    "eslint-preset.js"
   ],
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^7.3.1",

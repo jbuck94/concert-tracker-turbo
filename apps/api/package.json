@@ -6,7 +6,7 @@
     "test": "jest --detectOpenHandles",
     "dev": "nodemon --exec \"node -r esbuild-register ./src/main.ts\" -e .ts",
     "dev:old": "ts-node-dev --transpile-only --no-notify ./src/main.ts",
-    "start": "node ./dist/main.js",
+    "start": "node dist/main.js",
     "build": "tsup",
     "lint": "tsc --noEmit && TIMING=1 eslint src --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
