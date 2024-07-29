@@ -5,6 +5,7 @@
       "src": "dist/main.js",
       "use": "@vercel/node",
       "config": {
+        "includeFiles": ["dist/**"],
         "runtime": "nodejs20.x"
       }
     }
