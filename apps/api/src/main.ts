@@ -72,3 +72,5 @@ server.start().then(async () => {
     httpServer.listen({ port: PORT }, resolve)
   );
 });
+
+export default app;
