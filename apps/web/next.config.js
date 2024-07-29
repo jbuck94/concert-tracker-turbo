@@ -1,5 +1,4 @@
-const withTM = require('next-transpile-modules')(['apollo-hooks', 'config']);
-
-module.exports = withTM({
+module.exports = {
   reactStrictMode: true,
-});
+  transpilePackages: ['apollo-hooks'],
+};
