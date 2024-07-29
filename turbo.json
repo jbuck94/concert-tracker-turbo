@@ -5,19 +5,6 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "web#build": {
-      "env": ["NEXT_PUBLIC_AUTH0_CLIENT_ID", "NEXT_PUBLIC_AUTH0_DOMAIN"]
-    },
-    "api#build": {
-      "env": [
-        "AUTH0_HOOK_SECRET",
-        "DATABASE_URL",
-        "SEATGEEK_CLIENT_ID",
-        "SEATGEEK_SECRET",
-        "SPOTIFY_CLIENT_ID",
-        "SPOTIFY_CLIENT_SECRET"
-      ]
-    },
     "lint": {
       "outputs": []
     },
