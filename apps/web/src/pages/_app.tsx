@@ -1,4 +1,6 @@
 // scroll bar
+import { Analytics } from '@vercel/analytics/react';
+
 import 'simplebar-react/dist/simplebar.min.css';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
@@ -74,6 +76,7 @@ function CustomApp({
           </SnackbarProvider>
         </ThemeProvider>
       </Auth0Provider>
+      <Analytics />
     </CacheProvider>
   );
 }
