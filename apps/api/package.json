@@ -6,7 +6,7 @@
     "test": "jest --detectOpenHandles",
     "dev": "nodemon --exec \"node -r esbuild-register ./src/main.ts\" -e .ts",
     "start": "node dist/main.js",
-    "build": "tsup",
+    "build": "tsc -p tsconfig.json",
     "lint": "tsc --noEmit && TIMING=1 eslint src --fix",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "db:seed": "npx prisma db seed",
