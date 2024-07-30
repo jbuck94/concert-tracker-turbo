@@ -3,14 +3,16 @@
   "globalEnv": ["INTERNAL_ENV"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^db:generate", "^build"],
       "outputs": ["dist/**", ".next/**"]
     },
     "lint": {
       "outputs": []
     },
     "dev": {
-      "cache": false
+      "dependsOn": ["^db:generate"],
+      "cache": false,
+      "persistent": true
     },
     "generate": {
       "cache": false
