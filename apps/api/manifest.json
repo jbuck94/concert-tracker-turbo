@@ -1,0 +1,14 @@
+{
+  "secrets": [
+    "SPOTIFY_CLIENT_ID",
+    "SPOTIFY_CLIENT_SECRET",
+    "AUTH0_HOOK_SECRET",
+    "SEATGEEK_CLIENT_ID",
+    "SEATGEEK_SECRET",
+    "DATABASE_URL"
+  ],
+  "local": {
+    "secretOverrides": {},
+    "environmentVariables": {}
+  }
+}

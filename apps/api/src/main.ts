@@ -6,6 +6,7 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import { json } from 'body-parser';
+import { initializeRuntime } from 'runtime';
 import { authHandler } from '@/src/handlers/auth';
 
 import { Context } from './context';
@@ -31,6 +32,8 @@ const checkJwt = auth({
 });
 
 server.start().then(async () => {
+  await initializeRuntime(require('manifest.json'));
+
   app.use(json());
   app.use(
     cors<cors.CorsRequest>({

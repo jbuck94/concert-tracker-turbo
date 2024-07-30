@@ -1,0 +1,17 @@
+{
+  "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "lib": ["es2020"],
+    "outDir": "dist",
+    "target": "es2020",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["node", "@types/jest"],
+    "checkJs": false,
+    "allowJs": true,
+  },
+  "include": [".", ".eslintrc.js"],
+  "exclude": ["dist", "node_modules"]
+}

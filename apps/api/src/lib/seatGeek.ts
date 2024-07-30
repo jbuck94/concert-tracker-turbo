@@ -1,5 +1,6 @@
 import axios, { Axios } from 'axios';
 import { writeFile } from 'fs';
+import { getOrThrow } from 'runtime';
 
 type SeatGeekMeta = {
   took: number;
@@ -55,7 +56,7 @@ export class SeatGeekClient {
       baseURL: 'https://api.seatgeek.com/2',
       timeout: 1000,
       params: {
-        client_id: process.env.SEATGEEK_CLIENT_ID,
+        client_id: getOrThrow('SEATGEEK_CLIENT_ID'),
       },
     });
   }

@@ -5,8 +5,7 @@ import 'simplebar-react/dist/simplebar.min.css';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 
-import { AppProps } from 'next/app';
-
+import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
 import createEmotionCache from 'src/utils/createEmotionCache';
 import { NextPage } from 'next';
 import { EmotionCache } from '@emotion/cache';
@@ -21,6 +20,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 
 import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev';
 import ApolloProvider from 'apollo/ApolloClient';
+import { InternalEnv } from 'runtime';
 
 // if (__DEV__) {
 // Adds messages only in a dev environment
@@ -34,17 +34,41 @@ type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
 };
 
-interface MyAppProps extends AppProps {
+type Auth0Config = {
+  domain: string;
+  clientId: string;
+};
+
+type AppConfig = {
+  apiUrl: string;
+  internalEnv: InternalEnv;
+};
+
+interface MyAppInitialProps extends AppInitialProps {
+  auth0?: Auth0Config;
+  appConfig?: AppConfig;
+}
+
+interface MyAppProps extends AppProps, MyAppInitialProps {
   emotionCache?: EmotionCache;
   Component: NextPageWithLayout;
 }
 
-function CustomApp({
+const CustomApp = ({
   Component,
   pageProps,
   emotionCache = clientSideEmotionCache,
-}: MyAppProps) {
+  auth0,
+  appConfig,
+}: MyAppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
+
+  console.log('appConfig: ', appConfig);
+  console.log('auth0: ', auth0);
+
+  if (!auth0 || !appConfig) {
+    throw new Error('Could not initialize runtime ');
+  }
 
   return (
     <CacheProvider value={emotionCache}>
@@ -52,8 +76,8 @@ function CustomApp({
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
       <Auth0Provider
-        domain={'jamiewbuck.auth0.com'}
-        clientId={'IRsGoxxrZOMdeAXczZyli2wiYrQrl8kb'}
+        domain={auth0.domain}
+        clientId={auth0.clientId}
         authorizationParams={{
           audience: 'concert-tracker-api',
           redirect_uri:
@@ -64,7 +88,7 @@ function CustomApp({
       >
         <ThemeProvider>
           <SnackbarProvider>
-            <ApolloProvider>
+            <ApolloProvider apiURL={appConfig?.apiUrl}>
               <AuthProvider>
                 <ThemeSettings>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -79,6 +103,44 @@ function CustomApp({
       <Analytics />
     </CacheProvider>
   );
-}
+};
+
+CustomApp.getInitialProps = async (
+  context: AppContext
+): Promise<MyAppInitialProps> => {
+  const appProps = await App.getInitialProps(context);
+
+  let serversideProps:
+    | {
+        auth0: Auth0Config;
+        appConfig: AppConfig;
+      }
+    | undefined;
+
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    const { getOrThrow, initializeRuntime, isRuntimeInitialized } =
+      await import('runtime');
+
+    if (!isRuntimeInitialized()) {
+      await initializeRuntime(require('manifest.json'));
+    }
+
+    serversideProps = {
+      auth0: {
+        clientId: getOrThrow('AUTH0_CLIENT_ID'),
+        domain: getOrThrow('AUTH0_DOMAIN'),
+      },
+      appConfig: {
+        apiUrl: getOrThrow('API_URL'),
+        internalEnv: getOrThrow('INTERNAL_ENV') as InternalEnv,
+      },
+    };
+  }
+
+  return {
+    ...appProps,
+    ...serversideProps,
+  };
+};
 
 export default CustomApp;

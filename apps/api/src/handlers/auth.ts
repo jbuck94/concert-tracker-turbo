@@ -1,11 +1,12 @@
 import db from '@/src/db';
 
 import { Request, Response } from 'express';
+import { getOrThrow } from 'runtime';
 
 export const authHandler = async (req: Request, res: Response) => {
   const { email, family_name, given_name, user_id } = req.body;
 
-  if (req.headers['x-auth0-secret'] !== process.env.AUTH0_HOOK_SECRET) {
+  if (req.headers['x-auth0-secret'] !== getOrThrow('AUTH0_HOOK_SECRET')) {
     return res.status(403).json({ message: `You must provide the secret 🤫` });
   }
 

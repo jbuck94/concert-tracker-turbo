@@ -12,13 +12,15 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Provider({
   children,
+  apiURL,
 }: {
   children: ReactNode;
+  apiURL?: string;
 }): ReactElement {
   const { getAccessTokenSilently } = useAuth0();
 
   const httpLink = new HttpLink({
-    uri: process.env.REACT_APP_SERVER_URI || 'http://localhost:8080/graphql',
+    uri: apiURL || 'http://localhost:8080/graphql',
   });
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
