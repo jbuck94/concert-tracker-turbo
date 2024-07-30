@@ -20,6 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: apps/api
 
       - name: Build API app
         run: npm run build
@@ -50,7 +51,7 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy api-service \
+          gcloud run deploy api \
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/api:latest \
             --platform managed \
             --region ${{ secrets.GCP_REGION }} \

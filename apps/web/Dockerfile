@@ -1,6 +1,9 @@
 # Install dependencies only when needed
 FROM node:18-alpine AS deps
 WORKDIR /app
+RUN npm i -g turbo@2.0.9
+RUN turbo prune api --docker
+
 COPY package.json package-lock.json ./
 RUN npm install --production
 
