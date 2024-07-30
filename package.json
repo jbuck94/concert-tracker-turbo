@@ -7,16 +7,16 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "dev:web": "turbo run dev --filter=web",
-    "dev:api": "turbo run dev --filter=api",
-    "db:generate": "turbo run db:generate",
-    "db:push": "turbo run db:push db:generate",
-    "db:seed": "turbo run db:seed",
-    "db:studio": "turbo run db:studio",
-    "apollo:generate": "turbo run generate --filter=apollo-hooks",
-    "lint": "turbo run lint",
+    "build": "npx turbo run build",
+    "dev": "npx turbo run dev --parallel",
+    "dev:web": "npx turbo run dev --filter=web",
+    "dev:api": "npx turbo run dev --filter=api",
+    "db:generate": "npx turbo run db:generate",
+    "db:push": "npx turbo run db:push db:generate",
+    "db:seed": "npx turbo run db:seed",
+    "db:studio": "npx turbo run db:studio",
+    "apollo:generate": "npx turbo run generate --filter=apollo-hooks",
+    "lint": "npx turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
