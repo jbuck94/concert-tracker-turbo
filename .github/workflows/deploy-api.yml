@@ -42,7 +42,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./apps/API
+          context: ./apps/api
           push: true
           tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/api:latest
 

@@ -38,7 +38,19 @@ output "service_account_key" {
   sensitive   = true
 }
 
-output "service_account_email" {
-  value       = google_service_account.service_account.email
-  description = "The email of the service account"
+output "service_account_key_json" {
+  value = jsonencode({
+    type                        = "service_account"
+    project_id                  = var.project_id
+    private_key_id              = google_service_account_key.sa_key.id
+    private_key                 = google_service_account_key.sa_key.private_key
+    client_email                = google_service_account.service_account.email
+    client_id                   = google_service_account.service_account.unique_id
+    auth_uri                    = "https://accounts.google.com/o/oauth2/auth"
+    token_uri                   = "https://oauth2.googleapis.com/token"
+    auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+    client_x509_cert_url        = "https://www.googleapis.com/robot/v1/metadata/x509/${google_service_account.service_account.email}"
+  })
+  description = "The JSON key for the service account"
+  sensitive   = true
 }
