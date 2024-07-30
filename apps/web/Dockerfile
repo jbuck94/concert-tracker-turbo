@@ -1,31 +1,38 @@
-# Install dependencies only when needed
-FROM node:18-alpine AS deps
-WORKDIR /app
-RUN npm i -g turbo@2.0.9
-RUN turbo prune api --docker
+# Use the official Node.js image as the base image
+FROM node:18-alpine AS base
 
-COPY package.json package-lock.json ./
-RUN npm install --production
-
-# Rebuild the source code only when needed
-FROM node:18-alpine AS builder
+# Set the working directory
 WORKDIR /app
+
+# Install Turbo globally
+RUN npm install -g turbo@latest
+
+# Prune the repo to only include necessary files for the web
+FROM base AS pruner
+WORKDIR /repo
 COPY . .
-COPY --from=deps /app/node_modules ./node_modules
-RUN npm run build
+RUN npm install
+RUN turbo prune --scope=web --docker
 
-# Production image, copy all the files and run next
+# Install dependencies
+FROM base AS deps
+WORKDIR /app
+COPY --from=pruner /repo/out/json/ ./
+RUN npm install
+
+# Build the source code
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=pruner /repo/out/full/ ./
+RUN npm run build --workspace=web
+
+# Production image
 FROM node:18-alpine AS runner
 WORKDIR /app
-
-ENV NODE_ENV production
-
-# You only need to copy next.config.js if you are NOT using the default configuration
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/.next ./.next
+COPY --from=pruner /repo/out/full/apps/web/package.json ./package.json
 
 EXPOSE 3000
 

@@ -20,11 +20,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: apps/api
 
       - name: Build API app
-        run: npm run build
-        working-directory: apps/api
+        run: npm run build -- --filter=api
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -45,7 +43,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/api
+          context: .
+          file: ./apps/api/Dockerfile
           push: true
           tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/api:latest
 
