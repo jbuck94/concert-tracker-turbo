@@ -33,3 +33,5 @@ dist
 # sqlite
 dev.db
 .vercel
+
+*.terraform
