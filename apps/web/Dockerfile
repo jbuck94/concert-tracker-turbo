@@ -35,6 +35,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=pruner /repo/out/full/apps/web/package.json ./package.json
 
-EXPOSE 3000
+ENV PORT 8080
+EXPOSE 8080
 
 CMD ["npm", "start"]

@@ -41,6 +41,7 @@ COPY --from=builder /app/apps/api/dist ./dist
 # COPY --from=builder /app/apps/api/src/prisma/schema.prisma ./src/prisma/schema.prisma
 COPY --from=pruner /repo/out/full/apps/api/package.json ./package.json
 
-EXPOSE 4000
+ENV PORT 8080
+EXPOSE 8080
 
 CMD ["node", "dist/main.js"]

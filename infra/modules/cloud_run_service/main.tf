@@ -7,8 +7,24 @@ resource "google_cloud_run_service" "service" {
     spec {
       containers {
         image = var.image
-        ports {
-          container_port = var.container_port
+
+
+        startup_probe {
+          initial_delay_seconds = 30
+          timeout_seconds       = 30
+          period_seconds        = 30
+          failure_threshold     = 3
+          http_get {
+            path = var.startup_probe_endpoint
+          }
+        }
+
+        liveness_probe {
+          timeout_seconds = 10
+          period_seconds  = 300 # 5 minutes
+          http_get {
+            path = var.liveness_probe_endpoint
+          }
         }
       }
     }

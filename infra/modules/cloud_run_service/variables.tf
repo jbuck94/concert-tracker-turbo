@@ -14,7 +14,14 @@ variable "image" {
   type        = string
 }
 
-variable "container_port" {
-  description = "The port on which the container listens"
-  type        = number
+
+
+variable "startup_probe_endpoint" {
+  description = "The endpoint used to determine if the service has started and is ready to accept traffic."
+  type        = string
+}
+
+variable "liveness_probe_endpoint" {
+  description = "The endpoint used to determine if the service is live or needs to be restarted a container."
+  type        = string
 }
