@@ -45,6 +45,13 @@ resource "google_service_account_key" "sa_key" {
   private_key_type   = "TYPE_GOOGLE_CREDENTIALS_FILE"
 }
 
+resource "google_project_iam_member" "service_account_user" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
+
+
 output "service_account_key" {
   value       = google_service_account_key.sa_key.private_key
   description = "The private key for the service account"
