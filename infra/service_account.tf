@@ -27,6 +27,19 @@ resource "google_project_iam_member" "storage_admin" {
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
+
+resource "google_project_iam_member" "artifact_registry_reader" {
+  project = var.project_id
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
+
+resource "google_project_iam_member" "artifact_registry_writer" {
+  project = var.project_id
+  role    = "roles/artifactregistry.writer"
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
+
 resource "google_service_account_key" "sa_key" {
   service_account_id = google_service_account.service_account.id
   private_key_type   = "TYPE_GOOGLE_CREDENTIALS_FILE"

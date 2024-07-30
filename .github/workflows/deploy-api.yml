@@ -49,12 +49,10 @@ jobs:
           context: .
           file: ./apps/api/Dockerfile
           push: true
-          tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/api:latest
+          tags: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/api-repo/api:latest
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy api \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/api:latest \
-            --platform managed \
-            --region ${{ secrets.GCP_REGION }} \
-            --allow-unauthenticated
+            --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/api-repo/api:latest \
+            --region ${{ secrets.GCP_REGION }}
