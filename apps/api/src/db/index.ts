@@ -4,12 +4,16 @@
  */
 
 import { PrismaClient, User } from '@prisma/client';
+import { getOrThrow } from 'runtime';
 
 class DBClient {
   public prisma: PrismaClient;
   private static instance: DBClient;
   private constructor() {
-    this.prisma = new PrismaClient({ log: ['query', 'info'] });
+    this.prisma = new PrismaClient({
+      log: ['query', 'info'],
+      datasourceUrl: getOrThrow('DATABASE_URL'),
+    });
   }
 
   public static getInstance = () => {

@@ -1,6 +1,7 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, useMemo } from 'react';
 import {
   ApolloClient,
+  ApolloLink,
   ApolloProvider,
   HttpLink,
   InMemoryCache,
@@ -9,19 +10,20 @@ import {
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useConfig } from '@/hooks/useConfig';
+
+const buildHttpLink = (env: 'local' | 'prod', apiUrl: string): ApolloLink => {
+  return new HttpLink({
+    uri: env === 'local' ? 'http://localhost:8080/graphql' : apiUrl,
+  });
+};
 
 export default function Provider({
   children,
-  apiURL,
 }: {
   children: ReactNode;
-  apiURL?: string;
 }): ReactElement {
   const { getAccessTokenSilently } = useAuth0();
-
-  const httpLink = new HttpLink({
-    uri: apiURL || 'http://localhost:8080/graphql',
-  });
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
@@ -61,20 +63,26 @@ export default function Provider({
     }
   });
 
-  const client = new ApolloClient({
-    link: from([errorLink, authLink, httpLink]),
-    cache: new InMemoryCache({
-      possibleTypes: {
-        BaseError: [
-          'ErrorForbidden',
-          'ErrorNotFound',
-          'ErrorInvalidRequest',
-          'ErrorUniqueConstraint',
-          'ErrorEventExists',
-        ],
-      },
-    }),
-  });
+  const { appConfig } = useConfig();
+
+  const client = useMemo(() => {
+    const httpLink = buildHttpLink(appConfig.internalEnv, appConfig.apiUrl);
+
+    return new ApolloClient({
+      link: from([errorLink, authLink, httpLink]),
+      cache: new InMemoryCache({
+        possibleTypes: {
+          BaseError: [
+            'ErrorForbidden',
+            'ErrorNotFound',
+            'ErrorInvalidRequest',
+            'ErrorUniqueConstraint',
+            'ErrorEventExists',
+          ],
+        },
+      }),
+    });
+  }, [errorLink, authLink, appConfig.apiUrl]);
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }

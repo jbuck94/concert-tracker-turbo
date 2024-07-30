@@ -16,11 +16,11 @@ import { AuthProvider } from 'src/auth/Auth0Context';
 import ThemeSettings from 'src/components/settings/ThemeSettings';
 import SnackbarProvider from 'src/components/snackbar/SnackbarProvider';
 
-import { Auth0Provider } from '@auth0/auth0-react';
-
 import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev';
 import ApolloProvider from 'apollo/ApolloClient';
 import { InternalEnv } from 'runtime';
+import { ConfigProvider } from 'src/components/provider/AppConfigProvider';
+import { Auth0ConfiguredProvider } from 'src/components/provider/Auth0ConfiguredProvider';
 
 // if (__DEV__) {
 // Adds messages only in a dev environment
@@ -34,12 +34,12 @@ type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
 };
 
-type Auth0Config = {
+export type Auth0Config = {
   domain: string;
   clientId: string;
 };
 
-type AppConfig = {
+export type AppConfig = {
   apiUrl: string;
   internalEnv: InternalEnv;
 };
@@ -63,44 +63,31 @@ const CustomApp = ({
 }: MyAppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  console.log('appConfig: ', appConfig);
-  console.log('auth0: ', auth0);
-
-  if (!auth0 || !appConfig) {
-    throw new Error('Could not initialize runtime ');
-  }
-
   return (
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
-      <Auth0Provider
-        domain={auth0.domain}
-        clientId={auth0.clientId}
-        authorizationParams={{
-          audience: 'concert-tracker-api',
-          redirect_uri:
-            typeof window == 'undefined'
-              ? ''
-              : `${window.location.origin}/dashboard`,
-        }}
+      <ConfigProvider
+        appConfig={auth0 && appConfig ? { auth0, appConfig } : undefined}
       >
-        <ThemeProvider>
-          <SnackbarProvider>
-            <ApolloProvider apiURL={appConfig?.apiUrl}>
-              <AuthProvider>
-                <ThemeSettings>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    {getLayout(<Component {...pageProps} />)}
-                  </LocalizationProvider>
-                </ThemeSettings>
-              </AuthProvider>
-            </ApolloProvider>
-          </SnackbarProvider>
-        </ThemeProvider>
-      </Auth0Provider>
-      <Analytics />
+        <Auth0ConfiguredProvider>
+          <ThemeProvider>
+            <SnackbarProvider>
+              <ApolloProvider>
+                <AuthProvider>
+                  <ThemeSettings>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      {getLayout(<Component {...pageProps} />)}
+                    </LocalizationProvider>
+                  </ThemeSettings>
+                </AuthProvider>
+              </ApolloProvider>
+            </SnackbarProvider>
+          </ThemeProvider>
+        </Auth0ConfiguredProvider>
+        <Analytics />
+      </ConfigProvider>
     </CacheProvider>
   );
 };
