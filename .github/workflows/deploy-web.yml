@@ -47,10 +47,10 @@ jobs:
           context: .
           file: ./apps/web/Dockerfile
           push: true
-          tags: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-repo/web:latest
+          tags: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-repo/web:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy web \
-            --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-repo/web:latest \
+            --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-repo/web:${{ github.sha }} \
             --region ${{ secrets.GCP_REGION }}

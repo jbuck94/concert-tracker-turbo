@@ -43,4 +43,4 @@ COPY --from=pruner /repo/out/full/apps/api/package.json ./package.json
 
 EXPOSE 4000
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/main.js"]
