@@ -31,14 +31,14 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=pruner /repo/out/full/ ./
 RUN npm run db:generate
-RUN npm run build --workspace=apps/api
+RUN npx turbo run build --filter=api
 
 # Production image
 FROM node:18-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/api/dist ./dist
-# COPY --from=builder /app/apps/api/src/prisma/schema.prisma ./src/prisma/schema.prisma
+COPY --from=builder /app/src/prisma/schema.prisma ./src/prisma/schema.prisma
 COPY --from=pruner /repo/out/full/apps/api/package.json ./package.json
 
 ENV PORT 8080

@@ -25,8 +25,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=pruner /repo/out/full/ ./
-RUN npm run build
-RUN ls -lha
+RUN npx turbo run build --filter=web
 
 # Production image
 FROM node:18-alpine AS runner
