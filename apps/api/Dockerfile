@@ -18,18 +18,17 @@ RUN turbo prune --scope=api --docker
 FROM base AS deps
 WORKDIR /app
 COPY --from=pruner /repo/out/json/ ./
-RUN npm install
 
-# Copy Prisma schema
-FROM deps AS prisma
+# Copy Prisma schema for postinstall
 COPY --from=pruner /repo/out/full/apps/api/src/prisma/schema.prisma ./src/prisma/schema.prisma
-RUN npx prisma generate
+
+# Install dependencies
+RUN npm install
 
 # Build the source code
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=prisma /app/src/prisma/schema.prisma ./src/prisma/schema.prisma
 COPY --from=pruner /repo/out/full/ ./
 RUN npm run build --workspace=api
 
