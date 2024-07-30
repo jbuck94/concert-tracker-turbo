@@ -5,13 +5,13 @@ FROM node:18-alpine AS base
 WORKDIR /app
 
 # Install Turbo globally
-FROM base AS turbo
 RUN npm install -g turbo@latest
 
 # Prune the repo to only include necessary files for the API
-FROM turbo AS pruner
+FROM base AS pruner
 WORKDIR /repo
 COPY . .
+RUN npm install
 RUN turbo prune --scope=api --docker
 
 # Install dependencies
@@ -20,10 +20,16 @@ WORKDIR /app
 COPY --from=pruner /repo/out/json/ ./
 RUN npm install
 
+# Copy Prisma schema
+FROM deps AS prisma
+COPY --from=pruner /repo/out/full/apps/api/src/prisma/schema.prisma ./src/prisma/schema.prisma
+RUN npx prisma generate
+
 # Build the source code
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=prisma /app/src/prisma/schema.prisma ./src/prisma/schema.prisma
 COPY --from=pruner /repo/out/full/ ./
 RUN npm run build --workspace=api
 
@@ -32,6 +38,7 @@ FROM node:18-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/src/prisma/schema.prisma ./src/prisma/schema.prisma
 COPY --from=pruner /repo/out/full/apps/api/package.json ./package.json
 
 EXPOSE 4000
