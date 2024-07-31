@@ -1,5 +1,8 @@
 overwrite: true
-schema: '../../apps/api/schema.graphql'
+schema: ['http://localhost:8080/graphql']
+config:
+  scalars:
+    - DateTime: 'Date'
 generates:
   generated/index.ts:
     documents: ['../../apps/web/**/*.graphql']

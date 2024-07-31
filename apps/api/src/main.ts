@@ -6,7 +6,7 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import { json } from 'body-parser';
-import { initializeRuntime } from 'runtime';
+import { InternalEnv, getInternalEnv, initializeRuntime } from 'runtime';
 import { authHandler } from '@/src/handlers/auth';
 
 import { Context } from './context';
@@ -32,9 +32,7 @@ const checkJwt = auth({
 });
 
 server.start().then(async () => {
-  console.log('Starting server');
   await initializeRuntime(require('manifest.json'));
-  console.log('Initialized runtime successfully');
 
   app.use(json());
   app.use(
@@ -50,7 +48,14 @@ server.start().then(async () => {
 
   app.use(
     '/graphql',
-    checkJwt,
+    (req, res, next) => {
+      if (
+        getInternalEnv() === InternalEnv.LOCAL &&
+        (req.body.query as string).includes('query IntrospectionQuery')
+      ) {
+        return next();
+      }
+    },
     expressMiddleware(server, {
       context: async ({ req }) => {
         if (req.auth?.payload.sub) {
@@ -77,7 +82,6 @@ server.start().then(async () => {
   app.use(express.json({ type: 'application/json', limit: '50mb' }));
 
   await new Promise<void>((resolve) => {
-    console.log(`listening on http://localhost:${PORT}`);
     return httpServer.listen({ port: PORT }, resolve);
   });
 });
