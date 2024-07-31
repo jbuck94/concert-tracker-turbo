@@ -10,6 +10,11 @@ import { getEnhancedDB } from './db';
 import ErrorsPlugin from '@pothos/plugin-errors';
 
 import { Context } from '@/src/context';
+import { Prisma, PrismaClient } from '@prisma/client';
+
+const client = (): PrismaClient => {
+  return getEnhancedDB();
+};
 
 const builder = new SchemaBuilder<{
   Context: Context;
@@ -34,7 +39,8 @@ const builder = new SchemaBuilder<{
     WithInputPlugin,
   ],
   prisma: {
-    client: getEnhancedDB(),
+    client,
+    dmmf: Prisma.dmmf,
     defaultConnectionSize: 200,
     filterConnectionTotalCount: true,
   },
