@@ -6,4 +6,5 @@ module "web_service" {
   image                   = "gcr.io/cloudrun/hello"
   startup_probe_endpoint  = "/health"
   liveness_probe_endpoint = "/health"
+  service_account_email   = google_service_account.cloud_run_service_account.email
 }
