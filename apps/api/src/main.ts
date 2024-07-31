@@ -55,6 +55,8 @@ server.start().then(async () => {
       ) {
         return next();
       }
+
+      return checkJwt(req, res, next);
     },
     expressMiddleware(server, {
       context: async ({ req }) => {

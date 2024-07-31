@@ -8,4 +8,5 @@ module "api_service" {
   startup_probe_endpoint  = "/health"
   liveness_probe_endpoint = "/health"
   service_account_email   = google_service_account.cloud_run_service_account.email
+  internal_env            = "prod"
 }

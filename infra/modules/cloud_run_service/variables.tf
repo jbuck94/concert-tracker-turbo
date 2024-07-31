@@ -34,3 +34,14 @@ variable "service_account_email" {
   description = "Email of the service account for the cloud run instance"
   type        = string
 }
+
+
+variable "internal_env" {
+  description = "The internal env that the service will run in."
+  type        = string
+
+  validation {
+    condition     = contains(["prod"], var.internal_env)
+    error_message = "Environment must be one of:  'prod'"
+  }
+}

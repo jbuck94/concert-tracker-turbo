@@ -9,6 +9,11 @@ resource "google_cloud_run_service" "service" {
       containers {
         image = var.image
 
+        env {
+          name  = "INTERNAL_ENV"
+          value = var.internal_env
+        }
+
         # startup_probe {
         #   initial_delay_seconds = 30
         #   timeout_seconds       = 30
