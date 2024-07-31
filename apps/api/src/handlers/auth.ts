@@ -1,4 +1,4 @@
-import db from '@/src/db';
+import { getEnhancedDB } from '@/src/db';
 
 import { Request, Response } from 'express';
 import { getOrThrow } from 'runtime';
@@ -11,7 +11,7 @@ export const authHandler = async (req: Request, res: Response) => {
   }
 
   if (email) {
-    await db.user.upsert({
+    await getEnhancedDB().user.upsert({
       where: { email },
       update: {
         firstName: given_name || '',

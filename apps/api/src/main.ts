@@ -10,7 +10,7 @@ import { initializeRuntime } from 'runtime';
 import { authHandler } from '@/src/handlers/auth';
 
 import { Context } from './context';
-import db, { getEnhancedDB } from '@/src/db';
+import { getEnhancedDB } from '@/src/db';
 import { schema } from './schema';
 
 const PORT = Number(process.env.PORT) || 8080;
@@ -32,7 +32,9 @@ const checkJwt = auth({
 });
 
 server.start().then(async () => {
+  console.log('Starting server');
   await initializeRuntime(require('manifest.json'));
+  console.log('Initialized runtime successfully');
 
   app.use(json());
   app.use(
@@ -52,7 +54,8 @@ server.start().then(async () => {
     expressMiddleware(server, {
       context: async ({ req }) => {
         if (req.auth?.payload.sub) {
-          const user = await db.user.findFirst({
+          // Might need to go back to non-enhanced DB here if i use zenstack again
+          const user = await getEnhancedDB().user.findFirst({
             where: { authId: req.auth?.payload.sub },
           });
 

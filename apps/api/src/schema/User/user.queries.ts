@@ -1,5 +1,4 @@
 import builder from '@/src/builder';
-import db from '@/src/db';
 
 builder.queryFields((t) => ({
   user: t.prismaField({
@@ -23,7 +22,8 @@ builder.queryFields((t) => ({
   users: t.prismaConnection({
     type: 'User',
     cursor: 'id',
-    resolve: (query) => db.user.findMany(query),
+    resolve: (query, _parent, _args, context) =>
+      context.db.user.findMany(query),
   }),
 }));
 

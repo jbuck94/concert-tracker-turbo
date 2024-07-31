@@ -10,6 +10,7 @@ class DBClient {
   public prisma: PrismaClient;
   private static instance: DBClient;
   private constructor() {
+    console.log('CONSTRUCTING NEW DB CLIENT');
     this.prisma = new PrismaClient({
       log: ['query', 'info'],
       datasourceUrl: getOrThrow('DATABASE_URL'),
@@ -24,11 +25,8 @@ class DBClient {
   };
 }
 
-const db = DBClient.getInstance().prisma;
-
-export default db;
-
 export const getEnhancedDB = (user?: User | null) => {
   // return enhance(db, { user: user ?? undefined });
+  const db = DBClient.getInstance().prisma;
   return db;
 };

@@ -1,7 +1,5 @@
 import builder from '@/src/builder';
-import db from '@/src/db';
 import { SeatGeekClient } from '@/src/lib/seatGeek';
-
 
 import { resolveOffsetConnection } from '@pothos/plugin-relay';
 
@@ -12,7 +10,8 @@ builder.queryFields((t) => ({
     nullable: false,
     nodeNullable: false,
     edgesNullable: false,
-    resolve: (query) => db.venue.findMany(query),
+    resolve: (query, _parent, _args, context) =>
+      context.db.venue.findMany(query),
   }),
 }));
 
