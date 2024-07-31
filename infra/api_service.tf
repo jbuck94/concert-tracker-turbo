@@ -5,7 +5,7 @@ module "api_service" {
   region       = var.region
   # image          = "gcr.io/${var.project_id}/api:latest"
   image                   = "gcr.io/cloudrun/hello"
-  startup_probe_endpoint  = "/"
-  liveness_probe_endpoint = "/"
+  startup_probe_endpoint  = "/health"
+  liveness_probe_endpoint = "/health"
   service_account_email   = google_service_account.cloud_run_service_account.email
 }
