@@ -1,5 +1,5 @@
 import builder from '@/src/builder';
-import { spotifyClient } from '@/src/lib/spotify';
+import { getSpotifyClient } from '@/src/lib/spotify';
 import {
   ErrorInvalidRequest,
   ErrorNotFound,
@@ -17,7 +17,9 @@ builder.mutationFields((t) => ({
       types: [ErrorNotFound, ErrorUniqueConstraint, ErrorInvalidRequest],
     },
     resolve: async (_query, _, args, context) => {
-      const spotifyArtist = await spotifyClient.artists.get(args.spotifyID);
+      const spotifyArtist = await getSpotifyClient().artists.get(
+        args.spotifyID
+      );
 
       if (!spotifyArtist) {
         throw new ErrorNotFound(`Could not find artist: ${args.spotifyID}`);

@@ -1,5 +1,5 @@
 import builder from '@/src/builder';
-import { spotifyClient } from '@/src/lib/spotify';
+import { getSpotifyClient } from '@/src/lib/spotify';
 
 export const ArtistFields = builder.prismaObject('Artist', {
   fields: (t) => ({
@@ -11,7 +11,9 @@ export const ArtistFields = builder.prismaObject('Artist', {
       type: ['String'],
       nullable: false,
       resolve: async (artist) => {
-        const spotifyArtist = await spotifyClient.artists.get(artist.spotifyID);
+        const spotifyArtist = await getSpotifyClient().artists.get(
+          artist.spotifyID
+        );
 
         return spotifyArtist.genres;
       },
@@ -20,7 +22,9 @@ export const ArtistFields = builder.prismaObject('Artist', {
       type: 'String',
       nullable: true,
       resolve: async (artist) => {
-        const spotifyArtist = await spotifyClient.artists.get(artist.spotifyID);
+        const spotifyArtist = await getSpotifyClient().artists.get(
+          artist.spotifyID
+        );
         return spotifyArtist.images[0]?.url;
       },
     }),

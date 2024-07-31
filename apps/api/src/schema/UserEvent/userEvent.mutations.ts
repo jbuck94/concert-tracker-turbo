@@ -1,7 +1,7 @@
 import builder from '@/src/builder';
 import { SeatGeekClient } from '@/src/lib/seatGeek';
 
-import { spotifyClient } from '@/src/lib/spotify';
+import { getSpotifyClient } from '@/src/lib/spotify';
 import {
   ErrorEventExists,
   ErrorInvalidRequest,
@@ -78,7 +78,7 @@ builder.mutationFields((t) => ({
       const artists = await Promise.all(
         args.input.artistSpotifyIds.map(async (artistSpotifyId) => {
           const spotifyArtist =
-            await spotifyClient.artists.get(artistSpotifyId);
+            await getSpotifyClient().artists.get(artistSpotifyId);
 
           return context.db.artist.upsert({
             where: {

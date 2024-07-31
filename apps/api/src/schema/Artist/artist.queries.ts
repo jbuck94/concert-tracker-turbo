@@ -1,5 +1,5 @@
 import builder from '@/src/builder';
-import { spotifyClient } from '@/src/lib/spotify';
+import { getSpotifyClient } from '@/src/lib/spotify';
 import { resolveOffsetConnection } from '@pothos/plugin-relay';
 import { MaxInt } from '@spotify/web-api-ts-sdk';
 
@@ -66,7 +66,7 @@ builder.queryFields((t) => ({
           throw new Error('Max page size is 50');
         }
 
-        const searchResults = await spotifyClient.search(
+        const searchResults = await getSpotifyClient().search(
           args.input.name,
           ['artist'],
           undefined,
