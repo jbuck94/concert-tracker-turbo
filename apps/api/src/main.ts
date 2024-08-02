@@ -51,11 +51,10 @@ server.start().then(async () => {
     (req, res, next) => {
       if (
         getInternalEnv() === InternalEnv.LOCAL &&
-        (req.body.query as string).includes('query IntrospectionQuery')
+        (req.body.query as string)?.includes('query IntrospectionQuery')
       ) {
         return next();
       }
-
       return checkJwt(req, res, next);
     },
     expressMiddleware(server, {

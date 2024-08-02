@@ -10,7 +10,6 @@ class DBClient {
   public prisma: PrismaClient;
   private static instance: DBClient;
   private constructor() {
-    console.log('CONSTRUCTING NEW DB CLIENT');
     this.prisma = new PrismaClient({
       log: ['query', 'info'],
       datasourceUrl: getOrThrow('DATABASE_URL'),
