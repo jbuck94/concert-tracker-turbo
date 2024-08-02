@@ -2,10 +2,10 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/index.ts'],
-  target: 'node18',
+  outDir: 'dist',
   format: ['cjs'],
-  platform: 'node',
-  clean: true,
+  target: 'es2020',
   sourcemap: true,
-  dts: true,
+  minify: true,
+  clean: true,
 });

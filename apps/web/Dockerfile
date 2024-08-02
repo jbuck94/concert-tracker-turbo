@@ -1,40 +1,64 @@
-# Use the official Node.js image as the base image
-FROM node:18-alpine AS base
+FROM --platform=linux/amd64 node:18-alpine AS base
 
-# Set the working directory
+FROM base AS builder
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+RUN apk update
+
+# Set working directory
 WORKDIR /app
-
-# Install Turbo globally
-RUN npm install -g turbo@latest
-
-# Prune the repo to only include necessary files for the web
-FROM base AS pruner
-WORKDIR /repo
+RUN npm install -g turbo@2.0.9
 COPY . .
-RUN npm install
 RUN turbo prune --scope=web --docker
 
-# Install dependencies
-FROM base AS deps
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+RUN apk add --no-cache libc6-compat
+RUN apk update
 WORKDIR /app
-COPY --from=pruner /repo/out/json/ ./
-RUN npm install
 
-# Build the source code
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=pruner /repo/out/full/ ./
+# First install dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/package-lock.json ./package-lock.json
+
+# Debug: List files and inspect package-lock.json
+RUN ls -la
+# RUN cat package-lock.json
+
+# RUN npm ci
+RUN npm ci
+
+# Build the project
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+
+# Debug: List files and inspect package.json
+RUN ls -la
+RUN cat package.json
+
 RUN npx turbo run build --filter=web
 
-# Production image
-FROM node:18-alpine AS runner
+FROM base AS runner
 WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next ./.next
-COPY --from=pruner /repo/out/full/apps/web/package.json ./package.json
+
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+USER nextjs
+
+COPY --from=installer /app/apps/web/next.config.js .
+COPY --from=installer /app/apps/web/next-logger.config.js .
+COPY --from=installer /app/apps/web/package.json .
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
 ENV PORT 8080
 EXPOSE 8080
 
-CMD ["npm", "start"]
+ENV NODE_ENV="production"
+CMD node apps/web/server.js
