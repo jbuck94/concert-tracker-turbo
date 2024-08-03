@@ -21,22 +21,11 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
-
-# Debug: List files and inspect package-lock.json
-RUN ls -la
-# RUN cat package-lock.json
-
-# RUN npm ci
 RUN npm ci
 
 # Build the project
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-
-# Debug: List files and inspect package.json
-RUN ls -la
-RUN cat package.json
-
 RUN npx turbo run build --filter=web
 
 FROM base AS runner
