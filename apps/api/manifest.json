@@ -9,6 +9,8 @@
   ],
   "local": {
     "secretOverrides": {},
-    "environmentVariables": {}
+    "environmentVariables": {
+      "DATABASE_URL": "postgresql://primary_owner:lGL1sqHSIi3Q@ep-billowing-glade-a5tlk9f8-pooler.us-east-2.aws.neon.tech/primary?sslmode=require"
+    }
   }
 }
