@@ -48,4 +48,4 @@ ENV PORT 8080
 EXPOSE 8080
 
 ENV NODE_ENV="production"
-CMD node apps/web/server.js
+CMD NODE_OPTIONS='-r @newrelic/next' node apps/web/server.js
