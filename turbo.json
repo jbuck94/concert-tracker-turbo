@@ -3,7 +3,7 @@
   "globalEnv": ["INTERNAL_ENV"],
   "tasks": {
     "build": {
-      "dependsOn": ["^db:generate", "^build"],
+      "dependsOn": ["db:generate", "^build"],
       "inputs": [
         "src/**",
         "manifest.json",
