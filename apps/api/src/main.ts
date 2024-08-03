@@ -1,3 +1,4 @@
+import 'newrelic';
 import { auth } from 'express-oauth2-jwt-bearer';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';

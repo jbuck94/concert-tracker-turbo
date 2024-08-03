@@ -7,5 +7,8 @@ module "web_service" {
   startup_probe_endpoint  = "/"
   liveness_probe_endpoint = "/"
   service_account_email   = google_service_account.cloud_run_service_account.email
-  internal_env            = "prod"
+
+  env_vars = [
+    { env_name = "INTERNAL_ENV", value : "prod" }
+  ]
 }

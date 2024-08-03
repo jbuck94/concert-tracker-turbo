@@ -8,5 +8,17 @@ module "api_service" {
   startup_probe_endpoint  = "/health"
   liveness_probe_endpoint = "/health"
   service_account_email   = google_service_account.cloud_run_service_account.email
-  internal_env            = "prod"
+
+  env_secrets = [
+    { env_name = "NEW_RELIC_LICENSE_KEY", secret_name = "NEW_RELIC_LICENSE_KEY" }
+  ]
+
+  env_vars = [
+    { env_name = "INTERNAL_ENV", value : "prod" },
+    { env_name = "NEW_RELIC_APP_NAME", value : "API" },
+    { env_name = "NEW_RELIC_NO_CONFIG_FILE", value : "true" },
+    { env_name = "NEW_RELIC_DISTRIBUTED_TRACING_ENABLED", value : "true" },
+    { env_name = "ENV NEW_RELIC_LOG", value : "stdout" },
+  ]
 }
+

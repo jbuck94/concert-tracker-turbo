@@ -11,12 +11,25 @@ resource "google_cloud_run_v2_service" "service" {
       max_instance_count = 1
     }
 
+
+
     containers {
       image = var.image
 
-      env {
-        name  = "INTERNAL_ENV"
-        value = var.internal_env
+      dynamic "env" {
+        for_each = var.env_secrets
+        content {
+          name  = env.value.env_name
+          value = data.google_secret_manager_secret_version.env_secrets[env.value.env_name].secret_data
+        }
+      }
+
+      dynamic "env" {
+        for_each = var.env_vars
+        content {
+          name  = env.value.env_name
+          value = env.value.value
+        }
       }
 
       startup_probe {
@@ -39,8 +52,6 @@ resource "google_cloud_run_v2_service" "service" {
     }
   }
 
-
-
   traffic {
     percent = 100
     type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
@@ -58,4 +69,10 @@ resource "google_cloud_run_service_iam_member" "invoker" {
   location = google_cloud_run_v2_service.service.location
   role     = "roles/run.invoker"
   member   = "allUsers"
+}
+
+data "google_secret_manager_secret_version" "env_secrets" {
+  for_each = { for secret in var.env_secrets : secret.env_name => secret }
+  secret   = each.value.secret_name
+  project  = var.project_id
 }

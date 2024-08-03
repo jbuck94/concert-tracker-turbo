@@ -35,13 +35,24 @@ variable "service_account_email" {
   type        = string
 }
 
+variable "env_secrets" {
+  description = "List of environment secrets and their corresponding GCP secret names"
 
-variable "internal_env" {
-  description = "The internal env that the service will run in."
-  type        = string
+  type = list(object({
+    env_name    = string
+    secret_name = string
+  }))
 
-  validation {
-    condition     = contains(["prod"], var.internal_env)
-    error_message = "Environment must be one of:  'prod'"
-  }
+  default = []
+}
+
+variable "env_vars" {
+  description = "List of environment variables and their corresponding values"
+
+  type = list(object({
+    env_name = string
+    value    = string
+  }))
+
+  default = []
 }
