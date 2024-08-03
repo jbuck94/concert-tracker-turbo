@@ -18,12 +18,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Next.js app
-        run: npm run build -- --filter=web
-
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
