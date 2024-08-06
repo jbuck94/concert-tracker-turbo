@@ -10,7 +10,6 @@ export const Auth0ConfiguredProvider = ({
   children,
 }: Auth0ConfiguredProviderProps) => {
   const { auth0 } = useConfig();
-  console.log('auth0: ', auth0);
 
   return (
     <Auth0Provider

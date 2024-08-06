@@ -545,6 +545,11 @@ export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'QueryEventsConnectionEdge', cursor: string, node: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } }> } };
 
+export type MyEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyEventsQuery = { __typename?: 'Query', me?: { __typename?: 'User', events: { __typename?: 'UserEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'UserEventsConnectionEdge', cursor: string, node: { __typename?: 'UserEvent', id: string, event: { __typename?: 'Event', id: string, name: string, date: any, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } | null };
+
 export type CreateUserEventMutationVariables = Exact<{
   input: CreateUserEventInput;
 }>;
@@ -823,6 +828,61 @@ export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
 export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
 export type EventsSuspenseQueryHookResult = ReturnType<typeof useEventsSuspenseQuery>;
 export type EventsQueryResult = Apollo.QueryResult<EventsQuery, EventsQueryVariables>;
+export const MyEventsDocument = gql`
+    query MyEvents {
+  me {
+    events {
+      pageInfo {
+        startCursor
+        hasPreviousPage
+        hasNextPage
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          event {
+            ...Event
+          }
+        }
+      }
+    }
+  }
+}
+    ${EventFragmentDoc}`;
+
+/**
+ * __useMyEventsQuery__
+ *
+ * To run a query within a React component, call `useMyEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyEventsQuery(baseOptions?: Apollo.QueryHookOptions<MyEventsQuery, MyEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyEventsQuery, MyEventsQueryVariables>(MyEventsDocument, options);
+      }
+export function useMyEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyEventsQuery, MyEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyEventsQuery, MyEventsQueryVariables>(MyEventsDocument, options);
+        }
+export function useMyEventsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyEventsQuery, MyEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyEventsQuery, MyEventsQueryVariables>(MyEventsDocument, options);
+        }
+export type MyEventsQueryHookResult = ReturnType<typeof useMyEventsQuery>;
+export type MyEventsLazyQueryHookResult = ReturnType<typeof useMyEventsLazyQuery>;
+export type MyEventsSuspenseQueryHookResult = ReturnType<typeof useMyEventsSuspenseQuery>;
+export type MyEventsQueryResult = Apollo.QueryResult<MyEventsQuery, MyEventsQueryVariables>;
 export const CreateUserEventDocument = gql`
     mutation CreateUserEvent($input: CreateUserEventInput!) {
   createEvent(input: $input) {

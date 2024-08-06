@@ -5,7 +5,17 @@ import { PATH_DASHBOARD } from 'src/routes/paths';
 
 const navConfig = [
   {
-    subheader: 'general',
+    subheader: 'General',
+    items: [
+      {
+        title: 'My Concerts',
+        path: PATH_DASHBOARD.user.concerts,
+        icon: <GroupTwoToneIcon />,
+      },
+    ],
+  },
+  {
+    subheader: 'Admin',
     items: [
       {
         title: 'artists',

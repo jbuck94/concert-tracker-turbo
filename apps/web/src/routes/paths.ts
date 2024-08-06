@@ -48,8 +48,6 @@ export const PATH_DASHBOARD = {
     create: path(ROOTS_DASHBOARD, '/venues/create'),
   },
   user: {
-    root: path(ROOTS_DASHBOARD, '/user'),
-    profile: path(ROOTS_DASHBOARD, '/user/profile'),
-    account: path(ROOTS_DASHBOARD, '/user/account'),
+    concerts: path(ROOTS_DASHBOARD, '/user/concerts'),
   },
 };

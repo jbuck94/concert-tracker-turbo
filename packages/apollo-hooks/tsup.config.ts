@@ -1,9 +1,9 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts'],
+  entry: ['generated/index.ts'],
   outDir: 'dist',
-  format: ['cjs', 'esm'],
+  format: ['cjs'],
   target: 'es2020',
   sourcemap: true,
   minify: true,

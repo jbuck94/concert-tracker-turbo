@@ -26,12 +26,7 @@ export default function NavAccount() {
       : user?.email;
 
   return (
-    <Link
-      component={NextLink}
-      href={PATH_DASHBOARD.user.account}
-      underline='none'
-      color='inherit'
-    >
+    <Link component={NextLink} href='' underline='none' color='inherit'>
       <StyledRoot>
         <CustomAvatar
           // src={user?.photoURL}

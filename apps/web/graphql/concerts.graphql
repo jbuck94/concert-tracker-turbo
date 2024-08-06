@@ -38,3 +38,25 @@ query Events {
     }
   }
 }
+
+query MyEvents {
+  me {
+    events {
+      pageInfo {
+        startCursor
+        hasPreviousPage
+        hasNextPage
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          event {
+            ...Event
+          }
+        }
+      }
+    }
+  }
+}
