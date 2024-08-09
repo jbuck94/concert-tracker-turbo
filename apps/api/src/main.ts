@@ -84,6 +84,7 @@ server.start().then(async () => {
   app.use(express.json({ type: 'application/json', limit: '50mb' }));
 
   await new Promise<void>((resolve) => {
+    console.log(`started on port: ${PORT}`);
     return httpServer.listen({ port: PORT }, resolve);
   });
 });

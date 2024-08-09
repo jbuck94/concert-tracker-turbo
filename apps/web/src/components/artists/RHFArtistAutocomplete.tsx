@@ -63,7 +63,7 @@ export default function RHFArtistAutocomplete<
         variant: 'error',
       });
     }
-  }, [error]);
+  }, [error, enqueueSnackbar]);
 
   useEffect(() => {
     const results = (

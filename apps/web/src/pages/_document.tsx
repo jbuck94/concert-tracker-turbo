@@ -1,4 +1,4 @@
-import newrelic from 'newrelic';
+// import newrelic from 'newrelic';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 
@@ -13,12 +13,12 @@ export default class MyDocument extends Document {
       <Html lang='en' className={primaryFont.className}>
         <Head>
           <meta charSet='utf-8' />
-          <script
+          {/* <script
             type='text/javascript'
             dangerouslySetInnerHTML={{
               __html: (this.props as any).browserTimingHeader,
             }}
-          />
+          /> */}
           {/* <link rel='manifest' href='/manifest.json' /> */}
 
           {/* PWA primary color */}
@@ -80,9 +80,9 @@ MyDocument.getInitialProps = async (ctx) => {
 
   const emotionStyles = extractCriticalToChunks(initialProps.html);
 
-  const browserTimingHeader = newrelic.getBrowserTimingHeader({
-    hasToRemoveScriptWrapper: true,
-  });
+  // const browserTimingHeader = newrelic.getBrowserTimingHeader({
+  //   hasToRemoveScriptWrapper: true,
+  // });
 
   const emotionStyleTags = emotionStyles.styles.map((style) => (
     <style
@@ -96,6 +96,6 @@ MyDocument.getInitialProps = async (ctx) => {
   return {
     ...initialProps,
     emotionStyleTags,
-    browserTimingHeader,
+    // browserTimingHeader,
   };
 };

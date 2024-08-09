@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     replace(PATH_DASHBOARD.artist.root);
-  }, []);
+  }, [replace]);
 }
 
 export default App;

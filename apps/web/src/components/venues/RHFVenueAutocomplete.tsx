@@ -63,7 +63,7 @@ export default function RHFVenueAutoComplete<
         variant: 'error',
       });
     }
-  }, [error]);
+  }, [error, enqueueSnackbar]);
 
   useEffect(() => {
     const results = (

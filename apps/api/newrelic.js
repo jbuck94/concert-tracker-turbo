@@ -61,4 +61,5 @@ exports.config = {
       'response.headers.x*',
     ],
   },
+  developer_mode: false,
 };
