@@ -716,7 +716,7 @@ export const ArtistAutocompleteDocument = gql`
  *   },
  * });
  */
-export function useArtistAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>) {
+export function useArtistAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables> & ({ variables: ArtistAutocompleteQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>(ArtistAutocompleteDocument, options);
       }
@@ -1077,7 +1077,7 @@ export const VenueAutocompleteDocument = gql`
  *   },
  * });
  */
-export function useVenueAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>) {
+export function useVenueAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<VenueAutocompleteQuery, VenueAutocompleteQueryVariables> & ({ variables: VenueAutocompleteQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>(VenueAutocompleteDocument, options);
       }
