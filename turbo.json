@@ -13,6 +13,9 @@
       ],
       "outputs": ["dist/**", ".next/**"]
     },
+    "start": {
+      "cache": false
+    },
     "lint": {
       "outputs": []
     },
@@ -20,6 +23,9 @@
       "dependsOn": ["db:generate"],
       "cache": false,
       "persistent": true
+    },
+    "db:deploy": {
+      "cache": false
     },
     "generate": {
       "cache": false

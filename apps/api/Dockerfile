@@ -29,6 +29,9 @@ COPY turbo.json turbo.json
 
 RUN npx turbo run build --filter=api...
 
+# Run DB Migrations
+RUN npx turbo run db:deploy
+
 FROM base AS runner
 RUN apk add --no-cache libc6-compat
 RUN apk update

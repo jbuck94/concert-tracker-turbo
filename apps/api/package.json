@@ -13,7 +13,7 @@
     "db:generate": "npx prisma generate",
     "db:push": "npx prisma db push",
     "db:studio": "npx prisma studio",
-    "db:deploy": "npx prisma migrate deploy"
+    "db:deploy": "tsx ./src/db/migrate-deploy.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.4.0",

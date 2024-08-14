@@ -38,13 +38,12 @@ USER nextjs
 
 COPY --from=installer /app/apps/web/next.config.js .
 COPY --from=installer /app/apps/web/package.json .
+COPY --from=installer /app/apps/web/.next ./
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next ./
+RUN cat package.json
 
 ENV PORT 8080
 EXPOSE 8080
 
 ENV NODE_ENV="production"
-CMD npm run start
+CMD npx turbo start --filter=web

@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "npx turbo run build",
+    "start": "npx turbo start",
     "dev": "npx turbo run dev --parallel",
     "dev:web": "npx turbo run dev --filter=web",
     "dev:api": "npx turbo run dev --filter=api",
@@ -15,6 +16,7 @@
     "db:push": "npx turbo run db:push db:generate",
     "db:seed": "npx turbo run db:seed",
     "db:studio": "npx turbo run db:studio",
+    "db:deploy": "npx turbo run db:deploy",
     "apollo:generate": "npx turbo run generate --filter=apollo-hooks",
     "lint": "npx turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -24,6 +26,7 @@
     "eslint-config-custom": "latest",
     "prettier": "3.2.4",
     "turbo": "2.0.9",
+    "tsx": "4.10.2",
     "typescript": "5.5.4"
   },
   "packageManager": "npm@10.5.0"
