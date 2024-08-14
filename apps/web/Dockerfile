@@ -28,8 +28,7 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 RUN ls -lha
 RUN cat package.json
-RUN cat /app/apps/web/package.json
-# RUN npx turbo run build --filter=web
+RUN npx turbo run build --filter=web
 
 FROM base AS runner
 WORKDIR /app
