@@ -74,3 +74,10 @@ output "service_account_key_json" {
   description = "The JSON key for the service account"
   sensitive   = true
 }
+
+
+output "service_account_private_key" {
+  description = "Private JSON key for the service account"
+  value       = google_service_account_key.sa_key.private_key
+  sensitive   = true
+}

@@ -41,11 +41,10 @@ COPY --from=installer /app/apps/web/package.json .
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next ./
 
 ENV PORT 8080
 EXPOSE 8080
 
 ENV NODE_ENV="production"
-CMD node apps/web/server.js
+CMD npm run start

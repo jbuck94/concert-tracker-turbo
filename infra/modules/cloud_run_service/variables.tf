@@ -56,3 +56,12 @@ variable "env_vars" {
 
   default = []
 }
+
+variable "domain" {
+  description = "domain name to run the service on"
+  type        = string
+}
+
+variable "zone_name" {
+  type = string
+}

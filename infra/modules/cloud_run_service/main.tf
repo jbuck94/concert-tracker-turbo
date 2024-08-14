@@ -76,3 +76,19 @@ data "google_secret_manager_secret_version" "env_secrets" {
   secret   = each.value.secret_name
   project  = var.project_id
 }
+
+
+resource "google_cloud_run_domain_mapping" "mapping" {
+  location = var.region
+  name     = var.domain
+
+  spec {
+    route_name = google_cloud_run_v2_service.service.name
+  }
+
+  metadata {
+    namespace = var.project_id
+  }
+
+  depends_on = [google_cloud_run_v2_service.service]
+}
