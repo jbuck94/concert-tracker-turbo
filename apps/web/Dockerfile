@@ -26,7 +26,10 @@ RUN npm ci
 # Build the project
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN npx turbo run build --filter=web
+RUN ls -lha
+RUN cat package.json
+RUN cat /app/apps/web/package.json
+# RUN npx turbo run build --filter=web
 
 FROM base AS runner
 WORKDIR /app
@@ -36,14 +39,15 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
+COPY --from=installer /app/apps/web/.next ./
 COPY --from=installer /app/apps/web/next.config.js .
 COPY --from=installer /app/apps/web/package.json .
-COPY --from=installer /app/apps/web/.next ./
 
+RUN ls -lha
 RUN cat package.json
 
 ENV PORT 8080
 EXPOSE 8080
 
 ENV NODE_ENV="production"
-CMD npx turbo start --filter=web
+CMD npm run start

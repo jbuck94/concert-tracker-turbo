@@ -29,8 +29,6 @@ COPY turbo.json turbo.json
 
 RUN npx turbo run build --filter=api...
 
-# Run DB Migrations
-RUN npx turbo run db:deploy
 
 FROM base AS runner
 RUN apk add --no-cache libc6-compat
@@ -52,4 +50,5 @@ ENV PORT 8080
 EXPOSE 8080
 
 ENV NODE_ENV="production"
-CMD node apps/api/dist/main.js
+# Migrate and then deploy
+CMD npx turbo run db:deploy && node apps/api/dist/main.js
