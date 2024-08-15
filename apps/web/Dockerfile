@@ -30,14 +30,13 @@ COPY --from=deps /app .
 RUN npx turbo run build --filter=web...
 
 # Debugging step: List the contents of the /app directory
-RUN ls -la /app/apps
+RUN ls -la /app/apps/web
 
 # Stage 4: Prepare the production image
 FROM node:18-alpine AS runner
 WORKDIR /app
 
 # Copy the built application files
-COPY --from=builder /app/apps/web/public ./public
 COPY --from=builder /app/apps/web/.next ./.next
 COPY --from=builder /app/apps/web/node_modules ./node_modules
 COPY --from=builder /app/apps/web/package.json ./package.json
