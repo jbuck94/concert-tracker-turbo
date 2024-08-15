@@ -49,4 +49,4 @@ ENV PORT 8080
 EXPOSE 8080
 
 ENV NODE_ENV="production"
-CMD npm run start
+CMD npx turbo run start --filter=web
