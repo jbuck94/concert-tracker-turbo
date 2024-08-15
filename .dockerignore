@@ -1,5 +1,53 @@
+# Ignore node_modules in the root and in apps/packages
 **/node_modules
+node_modules
+
+# Ignore log files
+**/*.log
+*.log
+
+# Ignore build artifacts in the root and in apps/packages
+dist/
+build/
+out/
+coverage/
+**/dist/
+**/build/
+**/out/
+**/coverage/
+
+# Ignore Next.js build directory
 **/.next
-**/dist
+.next
+
+# Ignore Turbo cache directory
 **/.turbo
-infra
+.turbo
+
+# Ignore Docker-related files
+Dockerfile
+.dockerignore
+
+# Ignore Git files
+.git
+.gitignore
+
+# Ignore temp files and directories
+*.tmp
+*.swp
+.DS_Store
+.tmp/
+.cache/
+
+# Ignore editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore environment files for security reasons
+.env
+.env.local
+.env.development
+.env.production
+.env.test

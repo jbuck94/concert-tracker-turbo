@@ -1,52 +1,42 @@
-FROM --platform=linux/amd64 node:18-alpine AS base
-
-FROM base AS builder
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-RUN apk update
-
-# Set working directory
+# Stage 1: Prune the monorepo to only include relevant packages
+FROM node:18-alpine AS pruner
 WORKDIR /app
-RUN npm install -g turbo@2.0.9
+
+# Copy the entire repository
 COPY . .
-RUN turbo prune --scope=web --docker
 
-# Add lockfile and package.json's of isolated subworkspace
-FROM base AS installer
-RUN apk add --no-cache libc6-compat
-RUN apk update
+# Prune the monorepo
+RUN npx turbo prune --scope=web --docker
+
+# Stage 2: Install dependencies
+FROM node:18-alpine AS deps
 WORKDIR /app
 
-# First install dependencies (as they change less often)
-COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/package-lock.json ./package-lock.json
-RUN npm ci
+# Copy the pruned files
+COPY --from=pruner /app/out/full/ .
 
-# Build the project
-COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
-RUN ls -lha
-RUN cat package.json
-RUN npx turbo run build --filter=web
+# Install dependencies
+RUN npm install
 
-FROM base AS runner
+# Stage 3: Build the application
+FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# Copy the pruned repo and build the app
+COPY --from=deps /app .
+RUN npx turbo run build --filter=apps/web...
 
-COPY --from=installer /app/apps/web/.next ./
-COPY --from=installer /app/apps/web/next.config.js .
-COPY --from=installer /app/apps/web/package.json .
+# Stage 4: Prepare the production image
+FROM node:18-alpine AS runner
+WORKDIR /app
 
-RUN ls -lha
-RUN cat package.json
+# Copy the built application files
+COPY --from=builder /app/apps/web/public ./public
+COPY --from=builder /app/apps/web/.next ./.next
+COPY --from=builder /app/apps/web/node_modules ./node_modules
+COPY --from=builder /app/apps/web/package.json ./package.json
 
-ENV PORT 8080
-EXPOSE 8080
+EXPOSE 3000
 
-ENV NODE_ENV="production"
-CMD npx turbo run start --filter=web
+# Run the Next.js app
+CMD ["npm", "run", "start"]
