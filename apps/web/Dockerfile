@@ -12,7 +12,7 @@ RUN npx turbo prune --scope=web --docker
 FROM node:18-alpine AS deps
 WORKDIR /app
 
-# Copy the pruned files, including the lockfile
+# Copy the pruned files
 COPY --from=pruner /app/out/full/ .
 
 # Ensure the lockfile is present before running npm ci
@@ -29,19 +29,21 @@ WORKDIR /app
 COPY --from=deps /app .
 RUN npx turbo run build --filter=web...
 
-# Debugging step: List the contents of the /app directory
-RUN ls -la /app/apps/web
-
 # Stage 4: Prepare the production image
 FROM node:18-alpine AS runner
 WORKDIR /app
 
 # Copy the built application files
 COPY --from=builder /app/apps/web/.next ./.next
-COPY --from=builder /app/apps/web/node_modules ./node_modules
+
+# Ensure dependencies are copied over
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy package.json to keep consistency
 COPY --from=builder /app/apps/web/package.json ./package.json
 
 EXPOSE 3000
 
-# Run the Next.js app
+# Set the environment variable and run the Next.js app
+ENV NODE_ENV=production
 CMD ["npm", "run", "start"]
