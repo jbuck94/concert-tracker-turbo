@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=pruner /app/out/full/ .
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Stage 3: Build the application
 FROM node:18-alpine AS builder
@@ -24,7 +24,7 @@ WORKDIR /app
 
 # Copy the pruned repo and build the app
 COPY --from=deps /app .
-RUN npx turbo run build --filter=apps/web...
+RUN npx turbo run build --filter=web...
 
 # Stage 4: Prepare the production image
 FROM node:18-alpine AS runner
