@@ -50,5 +50,4 @@ ENV PORT 8080
 EXPOSE 8080
 
 ENV NODE_ENV="production"
-# Migrate and then deploy
-CMD npx turbo run db:deploy && node apps/api/dist/main.js
+CMD node apps/api/dist/main.js
