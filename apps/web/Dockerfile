@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 
 # Prune the monorepo, include the lockfile in the pruned output
-RUN npx turbo prune --scope=web --docker --include-lockfiles
+RUN npx turbo prune --scope=web --docker
 
 # Stage 2: Install dependencies
 FROM node:18-alpine AS deps
