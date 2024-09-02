@@ -1,49 +1,42 @@
-# Stage 1: Prune the monorepo to only include relevant packages
-FROM node:18-alpine AS pruner
-WORKDIR /app
+FROM node:18-alpine AS base
 
-# Copy the entire repository
+FROM base AS builder
+RUN apk update
+RUN apk add --no-cache libc6-compat
+# Set working directory
+WORKDIR /app
+RUN npm i -g turbo@2.0.9
 COPY . .
 
-# Prune the monorepo, include the lockfile in the pruned output
-RUN npx turbo prune --scope=web --docker
+# Generate a partial monorepo with a pruned lockfile for a target workspace.
+# Assuming "web" is the name entered in the project's package.json: { name: "web" }
+RUN turbo prune web --docker
 
-# Stage 2: Install dependencies
-FROM node:18-alpine AS deps
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+RUN apk update
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy the pruned files
-COPY --from=pruner /app/out/full/ .
-
-# Ensure the lockfile is present before running npm ci
-COPY ./package-lock.json ./
-
-# Install dependencies using npm ci
+# First install the dependencies (as they change less often)
+COPY --from=builder /app/out/json/ .
 RUN npm ci
 
-# Stage 3: Build the application
-FROM node:18-alpine AS builder
-WORKDIR /app
-
-# Copy the pruned repo and build the app
-COPY --from=deps /app .
+# Build the project
+COPY --from=builder /app/out/full/ .
 RUN npx turbo run build --filter=web...
 
-# Stage 4: Prepare the production image
-FROM node:18-alpine AS runner
+FROM base AS runner
 WORKDIR /app
 
-# Copy the built application files
-COPY --from=builder /app/apps/web/.next ./.next
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+USER nextjs
 
-# Ensure dependencies are copied over
-COPY --from=deps /app/node_modules ./node_modules
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 
-# Copy package.json to keep consistency
-COPY --from=builder /app/apps/web/package.json ./package.json
-
-EXPOSE 3000
-
-# Set the environment variable and run the Next.js app
-ENV NODE_ENV=production
-CMD ["npm", "run", "start"]
+CMD node apps/web/server.js

@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode, createContext, useEffect, useReducer } from 'react';
 import { RedirectLoginOptions, useAuth0 } from '@auth0/auth0-react';
 import {
@@ -69,19 +71,27 @@ type AuthProviderProps = {
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  console.log('state: ', state);
   const {
     isAuthenticated,
     loginWithRedirect,
     logout: auth0Logout,
     isLoading,
   } = useAuth0();
+  console.log('isAuthenticated: ', isAuthenticated);
+  console.log('isLoading: ', isLoading);
 
-  const { data: user, loading: userLoading } = useMeQuery({
-    skip: !isAuthenticated,
-  });
+  const { data: user, loading: userLoading, error } = useMeQuery();
+
+  console.log('user: ', user);
+  console.log('userLoading: ', userLoading);
+  console.log('error: ', error);
 
   useEffect(() => {
+    console.log('using effect');
     const initialize = async () => {
+      console.log('initializing');
+      console.log('isAuthenticated: ', isAuthenticated);
       try {
         if (isAuthenticated) {
           dispatch({
@@ -99,6 +109,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           });
         }
       } catch (err) {
+        console.error('Error initializing auth:', err);
         dispatch({
           type: Types.init,
           payload: {

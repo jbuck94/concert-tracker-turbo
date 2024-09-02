@@ -20,9 +20,9 @@ import { ConfigProvider } from 'src/components/provider/AppConfigProvider';
 import { Auth0ConfiguredProvider } from 'src/components/provider/Auth0ConfiguredProvider';
 
 // if (__DEV__) {
-// Adds messages only in a dev environment
-loadDevMessages();
-loadErrorMessages();
+// // Adds messages only in a dev environment
+// loadDevMessages();
+// loadErrorMessages();
 // }
 
 const clientSideEmotionCache = createEmotionCache();
