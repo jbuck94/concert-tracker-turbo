@@ -18,6 +18,7 @@ import ApolloProvider from 'apollo/ApolloClient';
 import { InternalEnv } from 'runtime';
 import { ConfigProvider } from 'src/components/provider/AppConfigProvider';
 import { Auth0ConfiguredProvider } from 'src/components/provider/Auth0ConfiguredProvider';
+import Auth0Wrapper from 'src/auth/Auth0Wrapper';
 
 // if (__DEV__) {
 // // Adds messages only in a dev environment
@@ -68,21 +69,23 @@ const CustomApp = ({
       <ConfigProvider
         appConfig={auth0 && appConfig ? { auth0, appConfig } : undefined}
       >
-        <Auth0ConfiguredProvider>
-          <ThemeProvider>
-            <SnackbarProvider>
-              <ApolloProvider>
-                <AuthProvider>
-                  <ThemeSettings>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      {getLayout(<Component {...pageProps} />)}
-                    </LocalizationProvider>
-                  </ThemeSettings>
-                </AuthProvider>
-              </ApolloProvider>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </Auth0ConfiguredProvider>
+        <Auth0Wrapper>
+          <Auth0ConfiguredProvider>
+            <ThemeProvider>
+              <SnackbarProvider>
+                <ApolloProvider>
+                  <AuthProvider>
+                    <ThemeSettings>
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        {getLayout(<Component {...pageProps} />)}
+                      </LocalizationProvider>
+                    </ThemeSettings>
+                  </AuthProvider>
+                </ApolloProvider>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </Auth0ConfiguredProvider>
+        </Auth0Wrapper>
       </ConfigProvider>
     </CacheProvider>
   );

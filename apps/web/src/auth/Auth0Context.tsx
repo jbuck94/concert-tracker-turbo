@@ -1,5 +1,3 @@
-'use client';
-
 import { ReactNode, createContext, useEffect, useReducer } from 'react';
 import { RedirectLoginOptions, useAuth0 } from '@auth0/auth0-react';
 import {
