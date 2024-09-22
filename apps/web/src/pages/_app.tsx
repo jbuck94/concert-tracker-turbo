@@ -61,6 +61,8 @@ const CustomApp = ({
 }: MyAppProps) => {
   const getLayout = Component.getLayout ?? ((page) => page);
 
+  console.log('auth0: ', auth0);
+  console.log('appConfig: ', appConfig);
   return (
     <CacheProvider value={emotionCache}>
       <Head>

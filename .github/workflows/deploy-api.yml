@@ -3,7 +3,7 @@ name: Deploy API
 on:
   push:
     branches:
-      - never
+      - main
 
 jobs:
   build-and-deploy:

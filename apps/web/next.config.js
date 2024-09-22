@@ -5,4 +5,7 @@ module.exports = {
   transpilePackages: ['apollo-hooks'],
   output: 'standalone',
   productionBrowserSourceMaps: true,
+  experimental: {
+    instrumentationHook: true,
+  },
 };
