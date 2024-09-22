@@ -1,13 +1,12 @@
-import builder from '@/src/builder';
-import { SeatGeekClient } from '@/src/lib/seatGeek';
-
-import { getSpotifyClient } from '@/src/lib/spotify';
+import builder from 'src/builder';
+import { SeatGeekClient } from 'src/lib/seatGeek';
+import { getSpotifyClient } from 'src/lib/spotify';
 import {
   ErrorEventExists,
   ErrorInvalidRequest,
   ErrorNotFound,
   ErrorUniqueConstraint,
-} from '@/src/schema/Error/error.model';
+} from 'src/schema/Error/error.model';
 
 const CreateUserEventInput = builder.inputType('CreateUserEventInput', {
   fields: (t) => ({

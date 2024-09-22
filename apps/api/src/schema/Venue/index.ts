@@ -1,3 +1,3 @@
-export * from '@/src/schema/Venue/venue.fields';
-export * from '@/src/schema/Venue/venue.queries';
-export * from '@/src/schema/Venue/venue.mutations';
+import 'src/schema/Venue/venue.fields';
+import 'src/schema/Venue/venue.queries';
+import 'src/schema/Venue/venue.mutations';

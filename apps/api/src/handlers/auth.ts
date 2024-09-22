@@ -1,10 +1,19 @@
-import { getEnhancedDB } from '@/src/db';
-
 import { Request, Response } from 'express';
 import { getOrThrow } from 'runtime';
 
+import { getEnhancedDB } from 'src/db';
+
 export const authHandler = async (req: Request, res: Response) => {
-  const { email, family_name, given_name, user_id } = req.body;
+  // Define a type for the request body
+  interface AuthRequestBody {
+    email: string;
+    family_name: string;
+    given_name: string;
+    user_id: string;
+  }
+
+  const { email, family_name, given_name, user_id } =
+    req.body as AuthRequestBody; // Cast req.body to the defined type
 
   if (req.headers['x-auth0-secret'] !== getOrThrow('AUTH0_HOOK_SECRET')) {
     return res.status(403).json({ message: `You must provide the secret 🤫` });

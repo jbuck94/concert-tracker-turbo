@@ -48,8 +48,8 @@ export default class MyDocument extends Document {
           {(this.props as any).emotionStyleTags}
 
           {/* Meta */}
-          <meta name='description' content='Concert Tracker' />
-          <meta name='author' content='ConcertTracker' />
+          <meta name='description' content='wento' />
+          <meta name='author' content='wento' />
         </Head>
 
         <body>

@@ -1,4 +1,4 @@
-import builder from '@/src/builder';
+import builder from 'src/builder';
 
 builder.mutationFields((t) => ({
   signUp: t.prismaField({

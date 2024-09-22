@@ -1,4 +1,4 @@
-import builder from '@/src/builder';
+import builder from 'src/builder';
 import {
   CustomError,
   ErrorEventExists,
@@ -6,7 +6,7 @@ import {
   ErrorInvalidRequest,
   ErrorNotFound,
   ErrorUniqueConstraint,
-} from '@/src/schema/Error/error.model';
+} from 'src/schema/Error/error.model';
 
 export const BaseError = builder.interfaceType(CustomError, {
   name: 'BaseError',

@@ -1,5 +1,6 @@
-import axios, { Axios } from 'axios';
 import { writeFile } from 'fs';
+
+import axios, { Axios } from 'axios';
 import { getOrThrow } from 'runtime';
 
 type SeatGeekMeta = {
@@ -81,14 +82,17 @@ export class SeatGeekClient {
 
   public searchEvents = async (q: string) => {
     try {
-      const { data } = await this.client.get('/events', {
-        params: {
-          q,
-          'taxonomies.name': 'concert',
-          sort: 'datetime_utc.desc',
-          // 'datetime_utc.lte': '2024-01-01',
-        },
-      });
+      const { data } = await this.client.get<{ events: Array<any> }>(
+        '/events',
+        {
+          params: {
+            q,
+            'taxonomies.name': 'concert',
+            sort: 'datetime_utc.desc',
+            // 'datetime_utc.lte': '2024-01-01',
+          },
+        }
+      );
 
       writeFile(
         './searchResults.json',
@@ -96,8 +100,10 @@ export class SeatGeekClient {
         () => {}
       );
 
+      // eslint-disable-next-line no-console
       console.log('NumEvents', data.events.length);
       data.events.forEach((event: any) =>
+        // eslint-disable-next-line no-console
         console.log(
           event.title,
           '@',
@@ -107,6 +113,7 @@ export class SeatGeekClient {
         )
       );
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   };

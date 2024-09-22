@@ -1,7 +1,8 @@
-import builder from '@/src/builder';
-import { getSpotifyClient } from '@/src/lib/spotify';
 import { resolveOffsetConnection } from '@pothos/plugin-relay';
 import { MaxInt } from '@spotify/web-api-ts-sdk';
+
+import builder from 'src/builder';
+import { getSpotifyClient } from 'src/lib/spotify';
 
 builder.queryField('artist', (t) =>
   t.prismaFieldWithInput({

@@ -1,7 +1,7 @@
-import builder from '@/src/builder';
-import { SeatGeekClient } from '@/src/lib/seatGeek';
-
 import { resolveOffsetConnection } from '@pothos/plugin-relay';
+
+import builder from 'src/builder';
+import { SeatGeekClient } from 'src/lib/seatGeek';
 
 builder.queryFields((t) => ({
   venues: t.prismaConnection({

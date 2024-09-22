@@ -1,4 +1,4 @@
-import builder from '@/src/builder';
+import builder from 'src/builder';
 
 // export const UserEventWhere = builder.prismaWhere('UserEvent', {
 //   fields: (t) => ({

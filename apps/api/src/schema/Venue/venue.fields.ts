@@ -1,5 +1,5 @@
-import builder from '@/src/builder';
-import { IDFilter, StringFilter } from '@/src/schema/Filters';
+import builder from 'src/builder';
+import { IDFilter, StringFilter } from 'src/schema/Filters';
 
 export const VenueWhere = builder.prismaWhere('Venue', {
   fields: (t) => ({

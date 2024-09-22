@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^18.14.2",
     "eslint": "8.57.0",
+    "eslint-config-custom": "*",
     "tsup": "^8.2.3",
     "typescript": "5.5.4"
   },

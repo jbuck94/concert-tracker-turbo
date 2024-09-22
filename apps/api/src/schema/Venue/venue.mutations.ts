@@ -1,11 +1,11 @@
-import builder from '@/src/builder';
-import { handlePrismaError } from '@/src/lib/handlePrismaError';
-import { SeatGeekClient } from '@/src/lib/seatGeek';
+import builder from 'src/builder';
+import { handlePrismaError } from 'src/lib/handlePrismaError';
+import { SeatGeekClient } from 'src/lib/seatGeek';
 import {
   ErrorForbidden,
   ErrorInvalidRequest,
   ErrorNotFound,
-} from '@/src/schema/Error/error.model';
+} from 'src/schema/Error/error.model';
 
 builder.mutationFields((t) => ({
   createVenue: t.prismaField({

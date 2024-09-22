@@ -1,7 +1,7 @@
-import builder from '@/src/builder';
-import { DateTimeFilter, IDFilter, StringFilter } from '@/src/schema/Filters';
-import { EventArtistListFilter } from '../EventArtist';
-import { VenueWhere } from '../Venue';
+import builder from 'src/builder';
+import { EventArtistListFilter } from 'src/schema/EventArtist/eventArtist.fields';
+import { DateTimeFilter, IDFilter, StringFilter } from 'src/schema/Filters';
+import { VenueWhere } from 'src/schema/Venue/venue.fields';
 
 export const EventWhere = builder.prismaWhere('Event', {
   fields: (r) => ({

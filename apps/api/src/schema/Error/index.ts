@@ -1,1 +1,1 @@
-export * from '@/src/schema/Error/error.fields';
+import 'src/schema/Error/error.fields';

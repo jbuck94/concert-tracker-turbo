@@ -1,5 +1,5 @@
-import builder from '@/src/builder';
-import { getSpotifyClient } from '@/src/lib/spotify';
+import builder from 'src/builder';
+import { getSpotifyClient } from 'src/lib/spotify';
 
 export const ArtistFields = builder.prismaObject('Artist', {
   fields: (t) => ({

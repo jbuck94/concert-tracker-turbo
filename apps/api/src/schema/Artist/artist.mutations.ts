@@ -1,10 +1,10 @@
-import builder from '@/src/builder';
-import { getSpotifyClient } from '@/src/lib/spotify';
+import builder from 'src/builder';
+import { getSpotifyClient } from 'src/lib/spotify';
 import {
   ErrorInvalidRequest,
   ErrorNotFound,
   ErrorUniqueConstraint,
-} from '@/src/schema/Error/error.model';
+} from 'src/schema/Error/error.model';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 builder.mutationFields((t) => ({

@@ -1,9 +1,10 @@
+import { Prisma } from '@prisma/client';
+
 import {
   ErrorForbidden,
   ErrorInvalidRequest,
   ErrorUniqueConstraint,
-} from '@/src/schema/Error/error.model';
-import { Prisma } from '@prisma/client';
+} from 'src/schema/Error/error.model';
 
 export const handlePrismaError = (
   e: any,
@@ -11,6 +12,7 @@ export const handlePrismaError = (
   action: string
 ) => {
   if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    // eslint-disable-next-line no-console
     console.error('Error', JSON.stringify(e, null, 2));
     switch (e.code) {
       case 'P2004': {

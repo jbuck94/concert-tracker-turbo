@@ -2,15 +2,9 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -32,6 +26,7 @@ export type Artist = {
   name: Scalars['String'];
   spotifyID: Scalars['String'];
 };
+
 
 export type ArtistEventsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -81,6 +76,7 @@ export type ErrorEventExists = BaseError & {
   possibleEvents: ErrorEventExistsPossibleEventsConnection;
 };
 
+
 export type ErrorEventExistsPossibleEventsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -128,6 +124,7 @@ export type Event = {
   name: Scalars['String'];
   venue: Venue;
 };
+
 
 export type EventArtistsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -202,17 +199,21 @@ export type Mutation = {
   signUp: User;
 };
 
+
 export type MutationCreateArtistArgs = {
   spotifyID: Scalars['String'];
 };
+
 
 export type MutationCreateEventArgs = {
   input: CreateUserEventInput;
 };
 
+
 export type MutationCreateVenueArgs = {
   seatGeekID: Scalars['String'];
 };
+
 
 export type MutationSignUpArgs = {
   avatar: Scalars['String'];
@@ -220,34 +221,21 @@ export type MutationSignUpArgs = {
   name: Scalars['String'];
 };
 
-export type MutationCreateArtistResult =
-  | ErrorInvalidRequest
-  | ErrorNotFound
-  | ErrorUniqueConstraint
-  | MutationCreateArtistSuccess;
+export type MutationCreateArtistResult = ErrorInvalidRequest | ErrorNotFound | ErrorUniqueConstraint | MutationCreateArtistSuccess;
 
 export type MutationCreateArtistSuccess = {
   __typename?: 'MutationCreateArtistSuccess';
   data: Artist;
 };
 
-export type MutationCreateEventResult =
-  | ErrorEventExists
-  | ErrorInvalidRequest
-  | ErrorNotFound
-  | ErrorUniqueConstraint
-  | MutationCreateEventSuccess;
+export type MutationCreateEventResult = ErrorEventExists | ErrorInvalidRequest | ErrorNotFound | ErrorUniqueConstraint | MutationCreateEventSuccess;
 
 export type MutationCreateEventSuccess = {
   __typename?: 'MutationCreateEventSuccess';
   data: UserEvent;
 };
 
-export type MutationCreateVenueResult =
-  | ErrorForbidden
-  | ErrorInvalidRequest
-  | ErrorNotFound
-  | MutationCreateVenueSuccess;
+export type MutationCreateVenueResult = ErrorForbidden | ErrorInvalidRequest | ErrorNotFound | MutationCreateVenueSuccess;
 
 export type MutationCreateVenueSuccess = {
   __typename?: 'MutationCreateVenueSuccess';
@@ -275,9 +263,11 @@ export type Query = {
   venues: QueryVenuesConnection;
 };
 
+
 export type QueryArtistArgs = {
   input: QueryArtistInput;
 };
+
 
 export type QueryArtistAutocompleteArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -287,12 +277,14 @@ export type QueryArtistAutocompleteArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
+
 export type QueryArtistsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type QueryEventsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -301,9 +293,11 @@ export type QueryEventsArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
+
 export type QueryUserArgs = {
   userId: Scalars['Int'];
 };
+
 
 export type QueryUsersArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -312,6 +306,7 @@ export type QueryUsersArgs = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
+
 export type QueryVenueAutocompleteArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -319,6 +314,7 @@ export type QueryVenueAutocompleteArgs = {
   input: VenueAutocompleteInput;
   last?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type QueryVenuesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -426,6 +422,7 @@ export type User = {
   lastName: Scalars['String'];
 };
 
+
 export type UserEventsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -466,6 +463,7 @@ export type Venue = {
   state: Scalars['String'];
   zip: Scalars['String'];
 };
+
 
 export type VenueEventsArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -514,496 +512,147 @@ export type VenueListFilter = {
   some?: InputMaybe<VenueFilter>;
 };
 
-export type ArtistFragment = {
-  __typename?: 'Artist';
-  id: string;
-  spotifyID: string;
-  name: string;
-  image?: string | null;
-  genres: Array<string>;
-};
+export type ArtistFragment = { __typename?: 'Artist', id: string, spotifyID: string, name: string, image?: string | null, genres: Array<string> };
 
-export type ArtistsQueryVariables = Exact<{ [key: string]: never }>;
+export type ArtistsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type ArtistsQuery = {
-  __typename?: 'Query';
-  artists: {
-    __typename?: 'QueryArtistsConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'QueryArtistsConnectionEdge';
-      node: {
-        __typename?: 'Artist';
-        id: string;
-        spotifyID: string;
-        name: string;
-        image?: string | null;
-        genres: Array<string>;
-      };
-    }>;
-  };
-};
 
-export type SpotifyArtistFragment = {
-  __typename?: 'SpotifyArtist';
-  name: string;
-  id: string;
-};
+export type ArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'QueryArtistsConnection', totalCount: number, edges: Array<{ __typename?: 'QueryArtistsConnectionEdge', node: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image?: string | null, genres: Array<string> } }> } };
+
+export type SpotifyArtistFragment = { __typename?: 'SpotifyArtist', name: string, id: string };
 
 export type ArtistAutocompleteQueryVariables = Exact<{
   input: ArtistsAutocompleteInput;
   first?: InputMaybe<Scalars['Int']>;
 }>;
 
-export type ArtistAutocompleteQuery = {
-  __typename?: 'Query';
-  artistAutocomplete: {
-    __typename?: 'QueryArtistAutocompleteConnection';
-    edges: Array<{
-      __typename?: 'QueryArtistAutocompleteConnectionEdge';
-      node: { __typename?: 'SpotifyArtist'; name: string; id: string };
-    }>;
-  };
-};
+
+export type ArtistAutocompleteQuery = { __typename?: 'Query', artistAutocomplete: { __typename?: 'QueryArtistAutocompleteConnection', edges: Array<{ __typename?: 'QueryArtistAutocompleteConnectionEdge', node: { __typename?: 'SpotifyArtist', name: string, id: string } }> } };
 
 export type CreateArtistMutationVariables = Exact<{
   spotifyId: Scalars['String'];
 }>;
 
-export type CreateArtistMutation = {
-  __typename?: 'Mutation';
-  createArtist:
-    | { __typename?: 'ErrorInvalidRequest'; message: string }
-    | { __typename?: 'ErrorNotFound'; message: string }
-    | { __typename?: 'ErrorUniqueConstraint'; message: string }
-    | {
-        __typename?: 'MutationCreateArtistSuccess';
-        data: {
-          __typename?: 'Artist';
-          id: string;
-          spotifyID: string;
-          name: string;
-          image?: string | null;
-          genres: Array<string>;
-        };
-      };
-};
 
-export type EventFragment = {
-  __typename?: 'Event';
-  id: string;
-  name: string;
-  date: Date;
-  venue: {
-    __typename?: 'Venue';
-    id: string;
-    name: string;
-    city: string;
-    state: string;
-  };
-  artists: {
-    __typename?: 'EventArtistsConnection';
-    edges: Array<{
-      __typename?: 'EventArtistsConnectionEdge';
-      node: {
-        __typename?: 'EventArtist';
-        id: string;
-        artist: {
-          __typename?: 'Artist';
-          id: string;
-          name: string;
-          image?: string | null;
-        };
-      };
-    } | null>;
-  };
-};
+export type CreateArtistMutation = { __typename?: 'Mutation', createArtist: { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateArtistSuccess', data: { __typename?: 'Artist', id: string, spotifyID: string, name: string, image?: string | null, genres: Array<string> } } };
 
-export type EventsQueryVariables = Exact<{ [key: string]: never }>;
+export type EventFragment = { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } };
 
-export type EventsQuery = {
-  __typename?: 'Query';
-  events: {
-    __typename?: 'QueryEventsConnection';
-    pageInfo: {
-      __typename?: 'PageInfo';
-      startCursor?: string | null;
-      hasPreviousPage: boolean;
-      hasNextPage: boolean;
-      endCursor?: string | null;
-    };
-    edges: Array<{
-      __typename?: 'QueryEventsConnectionEdge';
-      cursor: string;
-      node: {
-        __typename?: 'Event';
-        id: string;
-        name: string;
-        date: Date;
-        venue: {
-          __typename?: 'Venue';
-          id: string;
-          name: string;
-          city: string;
-          state: string;
-        };
-        artists: {
-          __typename?: 'EventArtistsConnection';
-          edges: Array<{
-            __typename?: 'EventArtistsConnectionEdge';
-            node: {
-              __typename?: 'EventArtist';
-              id: string;
-              artist: {
-                __typename?: 'Artist';
-                id: string;
-                name: string;
-                image?: string | null;
-              };
-            };
-          } | null>;
-        };
-      };
-    }>;
-  };
-};
+export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type MyEventsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MyEventsQuery = {
-  __typename?: 'Query';
-  me?: {
-    __typename?: 'User';
-    events: {
-      __typename?: 'UserEventsConnection';
-      pageInfo: {
-        __typename?: 'PageInfo';
-        startCursor?: string | null;
-        hasPreviousPage: boolean;
-        hasNextPage: boolean;
-        endCursor?: string | null;
-      };
-      edges: Array<{
-        __typename?: 'UserEventsConnectionEdge';
-        cursor: string;
-        node: {
-          __typename?: 'UserEvent';
-          id: string;
-          event: {
-            __typename?: 'Event';
-            id: string;
-            name: string;
-            date: Date;
-            venue: {
-              __typename?: 'Venue';
-              id: string;
-              name: string;
-              city: string;
-              state: string;
-            };
-            artists: {
-              __typename?: 'EventArtistsConnection';
-              edges: Array<{
-                __typename?: 'EventArtistsConnectionEdge';
-                node: {
-                  __typename?: 'EventArtist';
-                  id: string;
-                  artist: {
-                    __typename?: 'Artist';
-                    id: string;
-                    name: string;
-                    image?: string | null;
-                  };
-                };
-              } | null>;
-            };
-          };
-        };
-      }>;
-    };
-  } | null;
-};
+export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'QueryEventsConnectionEdge', cursor: string, node: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } }> } };
+
+export type MyEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyEventsQuery = { __typename?: 'Query', me?: { __typename?: 'User', events: { __typename?: 'UserEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'UserEventsConnectionEdge', cursor: string, node: { __typename?: 'UserEvent', id: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } | null };
 
 export type CreateUserEventMutationVariables = Exact<{
   input: CreateUserEventInput;
 }>;
 
-export type CreateUserEventMutation = {
-  __typename?: 'Mutation';
-  createEvent:
-    | {
-        __typename?: 'ErrorEventExists';
-        message: string;
-        possibleEvents: {
-          __typename?: 'ErrorEventExistsPossibleEventsConnection';
-          edges: Array<{
-            __typename?: 'ErrorEventExistsPossibleEventsConnectionEdge';
-            node: {
-              __typename?: 'Event';
-              id: string;
-              name: string;
-              date: Date;
-              venue: {
-                __typename?: 'Venue';
-                id: string;
-                name: string;
-                city: string;
-                state: string;
-              };
-              artists: {
-                __typename?: 'EventArtistsConnection';
-                edges: Array<{
-                  __typename?: 'EventArtistsConnectionEdge';
-                  node: {
-                    __typename?: 'EventArtist';
-                    id: string;
-                    artist: {
-                      __typename?: 'Artist';
-                      id: string;
-                      name: string;
-                      image?: string | null;
-                    };
-                  };
-                } | null>;
-              };
-            };
-          }>;
-        };
-      }
-    | { __typename?: 'ErrorInvalidRequest'; message: string }
-    | { __typename?: 'ErrorNotFound'; message: string }
-    | { __typename?: 'ErrorUniqueConstraint'; message: string }
-    | {
-        __typename?: 'MutationCreateEventSuccess';
-        data: {
-          __typename?: 'UserEvent';
-          id: string;
-          event: {
-            __typename?: 'Event';
-            id: string;
-            name: string;
-            date: Date;
-            venue: {
-              __typename?: 'Venue';
-              id: string;
-              name: string;
-              city: string;
-              state: string;
-            };
-          };
-          user: {
-            __typename?: 'User';
-            id: string;
-            events: {
-              __typename?: 'UserEventsConnection';
-              edges: Array<{
-                __typename?: 'UserEventsConnectionEdge';
-                node: {
-                  __typename?: 'UserEvent';
-                  event: {
-                    __typename?: 'Event';
-                    id: string;
-                    name: string;
-                    date: Date;
-                    venue: {
-                      __typename?: 'Venue';
-                      id: string;
-                      name: string;
-                      city: string;
-                      state: string;
-                    };
-                    artists: {
-                      __typename?: 'EventArtistsConnection';
-                      edges: Array<{
-                        __typename?: 'EventArtistsConnectionEdge';
-                        node: {
-                          __typename?: 'EventArtist';
-                          id: string;
-                          artist: {
-                            __typename?: 'Artist';
-                            id: string;
-                            name: string;
-                            image?: string | null;
-                          };
-                        };
-                      } | null>;
-                    };
-                  };
-                };
-              }>;
-            };
-          };
-        };
-      };
-};
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type CreateUserEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'ErrorEventExists', message: string, possibleEvents: { __typename?: 'ErrorEventExistsPossibleEventsConnection', edges: Array<{ __typename?: 'ErrorEventExistsPossibleEventsConnectionEdge', node: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } }> } } | { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateEventSuccess', data: { __typename?: 'UserEvent', id: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string } }, user: { __typename?: 'User', id: string, events: { __typename?: 'UserEventsConnection', edges: Array<{ __typename?: 'UserEventsConnectionEdge', node: { __typename?: 'UserEvent', event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } } } };
 
-export type MeQuery = {
-  __typename?: 'Query';
-  me?: {
-    __typename?: 'User';
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-  } | null;
-};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type VenueFragment = {
-  __typename?: 'Venue';
-  id: string;
-  name: string;
-  city: string;
-  state: string;
-  long: number;
-  lat: number;
-};
 
-export type VenuesQueryVariables = Exact<{ [key: string]: never }>;
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, firstName: string, lastName: string, email: string } | null };
 
-export type VenuesQuery = {
-  __typename?: 'Query';
-  venues: {
-    __typename?: 'QueryVenuesConnection';
-    edges: Array<{
-      __typename?: 'QueryVenuesConnectionEdge';
-      node: {
-        __typename?: 'Venue';
-        id: string;
-        name: string;
-        city: string;
-        state: string;
-        long: number;
-        lat: number;
-      };
-    }>;
-  };
-};
+export type VenueFragment = { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number };
 
-export type VenueAutocompleteResultFragment = {
-  __typename?: 'VenueAutocompleteResult';
-  name: string;
-  id: string;
-  addressString: string;
-};
+export type VenuesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type VenuesQuery = { __typename?: 'Query', venues: { __typename?: 'QueryVenuesConnection', edges: Array<{ __typename?: 'QueryVenuesConnectionEdge', node: { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number } }> } };
+
+export type VenueAutocompleteResultFragment = { __typename?: 'VenueAutocompleteResult', name: string, id: string, addressString: string };
 
 export type VenueAutocompleteQueryVariables = Exact<{
   input: VenueAutocompleteInput;
   first?: InputMaybe<Scalars['Int']>;
 }>;
 
-export type VenueAutocompleteQuery = {
-  __typename?: 'Query';
-  venueAutocomplete: {
-    __typename?: 'QueryVenueAutocompleteConnection';
-    edges: Array<{
-      __typename?: 'QueryVenueAutocompleteConnectionEdge';
-      cursor: string;
-      node: {
-        __typename?: 'VenueAutocompleteResult';
-        name: string;
-        id: string;
-        addressString: string;
-      };
-    }>;
-  };
-};
+
+export type VenueAutocompleteQuery = { __typename?: 'Query', venueAutocomplete: { __typename?: 'QueryVenueAutocompleteConnection', edges: Array<{ __typename?: 'QueryVenueAutocompleteConnectionEdge', cursor: string, node: { __typename?: 'VenueAutocompleteResult', name: string, id: string, addressString: string } }> } };
 
 export type CreateVenueMutationVariables = Exact<{
   seatGeekId: Scalars['String'];
 }>;
 
-export type CreateVenueMutation = {
-  __typename?: 'Mutation';
-  createVenue:
-    | { __typename?: 'ErrorForbidden'; message: string }
-    | { __typename?: 'ErrorInvalidRequest'; message: string }
-    | { __typename?: 'ErrorNotFound'; message: string }
-    | {
-        __typename?: 'MutationCreateVenueSuccess';
-        data: {
-          __typename?: 'Venue';
-          id: string;
-          name: string;
-          city: string;
-          state: string;
-          long: number;
-          lat: number;
-        };
-      };
-};
+
+export type CreateVenueMutation = { __typename?: 'Mutation', createVenue: { __typename?: 'ErrorForbidden', message: string } | { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'MutationCreateVenueSuccess', data: { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number } } };
 
 export const ArtistFragmentDoc = gql`
-  fragment Artist on Artist {
-    id
-    spotifyID
-    name
-    image
-    genres
-  }
-`;
+    fragment Artist on Artist {
+  id
+  spotifyID
+  name
+  image
+  genres
+}
+    `;
 export const SpotifyArtistFragmentDoc = gql`
-  fragment SpotifyArtist on SpotifyArtist {
-    name
-    id
-  }
-`;
+    fragment SpotifyArtist on SpotifyArtist {
+  name
+  id
+}
+    `;
 export const EventFragmentDoc = gql`
-  fragment Event on Event {
-    id
-    name
-    venue {
-      id
-      name
-      city
-      state
-    }
-    date
-    artists {
-      edges {
-        node {
-          id
-          artist {
-            id
-            name
-            image
-          }
-        }
-      }
-    }
-  }
-`;
-export const VenueFragmentDoc = gql`
-  fragment Venue on Venue {
+    fragment Event on Event {
+  id
+  name
+  venue {
     id
     name
     city
     state
-    long
-    lat
   }
-`;
-export const VenueAutocompleteResultFragmentDoc = gql`
-  fragment VenueAutocompleteResult on VenueAutocompleteResult {
-    name
-    id
-    addressString
-  }
-`;
-export const ArtistsDocument = gql`
-  query Artists {
-    artists {
-      totalCount
-      edges {
-        node {
-          ...Artist
+  date
+  artists {
+    edges {
+      node {
+        id
+        artist {
+          id
+          name
+          image
         }
       }
     }
   }
-  ${ArtistFragmentDoc}
-`;
+}
+    `;
+export const VenueFragmentDoc = gql`
+    fragment Venue on Venue {
+  id
+  name
+  city
+  state
+  long
+  lat
+}
+    `;
+export const VenueAutocompleteResultFragmentDoc = gql`
+    fragment VenueAutocompleteResult on VenueAutocompleteResult {
+  name
+  id
+  addressString
+}
+    `;
+export const ArtistsDocument = gql`
+    query Artists {
+  artists {
+    totalCount
+    edges {
+      node {
+        ...Artist
+      }
+    }
+  }
+}
+    ${ArtistFragmentDoc}`;
 
 /**
  * __useArtistsQuery__
@@ -1020,42 +669,28 @@ export const ArtistsDocument = gql`
  *   },
  * });
  */
-export function useArtistsQuery(
-  baseOptions?: Apollo.QueryHookOptions<ArtistsQuery, ArtistsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ArtistsQuery, ArtistsQueryVariables>(
-    ArtistsDocument,
-    options
-  );
-}
-export function useArtistsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ArtistsQuery, ArtistsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ArtistsQuery, ArtistsQueryVariables>(
-    ArtistsDocument,
-    options
-  );
-}
+export function useArtistsQuery(baseOptions?: Apollo.QueryHookOptions<ArtistsQuery, ArtistsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ArtistsQuery, ArtistsQueryVariables>(ArtistsDocument, options);
+      }
+export function useArtistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistsQuery, ArtistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ArtistsQuery, ArtistsQueryVariables>(ArtistsDocument, options);
+        }
 export type ArtistsQueryHookResult = ReturnType<typeof useArtistsQuery>;
 export type ArtistsLazyQueryHookResult = ReturnType<typeof useArtistsLazyQuery>;
-export type ArtistsQueryResult = Apollo.QueryResult<
-  ArtistsQuery,
-  ArtistsQueryVariables
->;
+export type ArtistsQueryResult = Apollo.QueryResult<ArtistsQuery, ArtistsQueryVariables>;
 export const ArtistAutocompleteDocument = gql`
-  query ArtistAutocomplete($input: ArtistsAutocompleteInput!, $first: Int) {
-    artistAutocomplete(input: $input, first: $first) {
-      edges {
-        node {
-          ...SpotifyArtist
-        }
+    query ArtistAutocomplete($input: ArtistsAutocompleteInput!, $first: Int) {
+  artistAutocomplete(input: $input, first: $first) {
+    edges {
+      node {
+        ...SpotifyArtist
       }
     }
   }
-  ${SpotifyArtistFragmentDoc}
-`;
+}
+    ${SpotifyArtistFragmentDoc}`;
 
 /**
  * __useArtistAutocompleteQuery__
@@ -1074,65 +709,38 @@ export const ArtistAutocompleteDocument = gql`
  *   },
  * });
  */
-export function useArtistAutocompleteQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    ArtistAutocompleteQuery,
-    ArtistAutocompleteQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    ArtistAutocompleteQuery,
-    ArtistAutocompleteQueryVariables
-  >(ArtistAutocompleteDocument, options);
-}
-export function useArtistAutocompleteLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ArtistAutocompleteQuery,
-    ArtistAutocompleteQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    ArtistAutocompleteQuery,
-    ArtistAutocompleteQueryVariables
-  >(ArtistAutocompleteDocument, options);
-}
-export type ArtistAutocompleteQueryHookResult = ReturnType<
-  typeof useArtistAutocompleteQuery
->;
-export type ArtistAutocompleteLazyQueryHookResult = ReturnType<
-  typeof useArtistAutocompleteLazyQuery
->;
-export type ArtistAutocompleteQueryResult = Apollo.QueryResult<
-  ArtistAutocompleteQuery,
-  ArtistAutocompleteQueryVariables
->;
-export const CreateArtistDocument = gql`
-  mutation CreateArtist($spotifyId: String!) {
-    createArtist(spotifyID: $spotifyId) {
-      ... on MutationCreateArtistSuccess {
-        data {
-          ...Artist
+export function useArtistAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>(ArtistAutocompleteDocument, options);
+      }
+export function useArtistAutocompleteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>(ArtistAutocompleteDocument, options);
         }
-      }
-      ... on ErrorNotFound {
-        message
-      }
-      ... on ErrorUniqueConstraint {
-        message
-      }
-      ... on ErrorInvalidRequest {
-        message
+export type ArtistAutocompleteQueryHookResult = ReturnType<typeof useArtistAutocompleteQuery>;
+export type ArtistAutocompleteLazyQueryHookResult = ReturnType<typeof useArtistAutocompleteLazyQuery>;
+export type ArtistAutocompleteQueryResult = Apollo.QueryResult<ArtistAutocompleteQuery, ArtistAutocompleteQueryVariables>;
+export const CreateArtistDocument = gql`
+    mutation CreateArtist($spotifyId: String!) {
+  createArtist(spotifyID: $spotifyId) {
+    ... on MutationCreateArtistSuccess {
+      data {
+        ...Artist
       }
     }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorUniqueConstraint {
+      message
+    }
+    ... on ErrorInvalidRequest {
+      message
+    }
   }
-  ${ArtistFragmentDoc}
-`;
-export type CreateArtistMutationFn = Apollo.MutationFunction<
-  CreateArtistMutation,
-  CreateArtistMutationVariables
->;
+}
+    ${ArtistFragmentDoc}`;
+export type CreateArtistMutationFn = Apollo.MutationFunction<CreateArtistMutation, CreateArtistMutationVariables>;
 
 /**
  * __useCreateArtistMutation__
@@ -1151,46 +759,31 @@ export type CreateArtistMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateArtistMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateArtistMutation,
-    CreateArtistMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateArtistMutation,
-    CreateArtistMutationVariables
-  >(CreateArtistDocument, options);
-}
-export type CreateArtistMutationHookResult = ReturnType<
-  typeof useCreateArtistMutation
->;
-export type CreateArtistMutationResult =
-  Apollo.MutationResult<CreateArtistMutation>;
-export type CreateArtistMutationOptions = Apollo.BaseMutationOptions<
-  CreateArtistMutation,
-  CreateArtistMutationVariables
->;
-export const EventsDocument = gql`
-  query Events {
-    events {
-      pageInfo {
-        startCursor
-        hasPreviousPage
-        hasNextPage
-        endCursor
+export function useCreateArtistMutation(baseOptions?: Apollo.MutationHookOptions<CreateArtistMutation, CreateArtistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateArtistMutation, CreateArtistMutationVariables>(CreateArtistDocument, options);
       }
-      edges {
-        cursor
-        node {
-          ...Event
-        }
+export type CreateArtistMutationHookResult = ReturnType<typeof useCreateArtistMutation>;
+export type CreateArtistMutationResult = Apollo.MutationResult<CreateArtistMutation>;
+export type CreateArtistMutationOptions = Apollo.BaseMutationOptions<CreateArtistMutation, CreateArtistMutationVariables>;
+export const EventsDocument = gql`
+    query Events {
+  events {
+    pageInfo {
+      startCursor
+      hasPreviousPage
+      hasNextPage
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        ...Event
       }
     }
   }
-  ${EventFragmentDoc}
-`;
+}
+    ${EventFragmentDoc}`;
 
 /**
  * __useEventsQuery__
@@ -1207,54 +800,40 @@ export const EventsDocument = gql`
  *   },
  * });
  */
-export function useEventsQuery(
-  baseOptions?: Apollo.QueryHookOptions<EventsQuery, EventsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<EventsQuery, EventsQueryVariables>(
-    EventsDocument,
-    options
-  );
-}
-export function useEventsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<EventsQuery, EventsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<EventsQuery, EventsQueryVariables>(
-    EventsDocument,
-    options
-  );
-}
+export function useEventsQuery(baseOptions?: Apollo.QueryHookOptions<EventsQuery, EventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EventsQuery, EventsQueryVariables>(EventsDocument, options);
+      }
+export function useEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EventsQuery, EventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EventsQuery, EventsQueryVariables>(EventsDocument, options);
+        }
 export type EventsQueryHookResult = ReturnType<typeof useEventsQuery>;
 export type EventsLazyQueryHookResult = ReturnType<typeof useEventsLazyQuery>;
-export type EventsQueryResult = Apollo.QueryResult<
-  EventsQuery,
-  EventsQueryVariables
->;
+export type EventsQueryResult = Apollo.QueryResult<EventsQuery, EventsQueryVariables>;
 export const MyEventsDocument = gql`
-  query MyEvents {
-    me {
-      events {
-        pageInfo {
-          startCursor
-          hasPreviousPage
-          hasNextPage
-          endCursor
-        }
-        edges {
-          cursor
-          node {
-            id
-            event {
-              ...Event
-            }
+    query MyEvents {
+  me {
+    events {
+      pageInfo {
+        startCursor
+        hasPreviousPage
+        hasNextPage
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          id
+          event {
+            ...Event
           }
         }
       }
     }
   }
-  ${EventFragmentDoc}
-`;
+}
+    ${EventFragmentDoc}`;
 
 /**
  * __useMyEventsQuery__
@@ -1271,79 +850,60 @@ export const MyEventsDocument = gql`
  *   },
  * });
  */
-export function useMyEventsQuery(
-  baseOptions?: Apollo.QueryHookOptions<MyEventsQuery, MyEventsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<MyEventsQuery, MyEventsQueryVariables>(
-    MyEventsDocument,
-    options
-  );
-}
-export function useMyEventsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    MyEventsQuery,
-    MyEventsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<MyEventsQuery, MyEventsQueryVariables>(
-    MyEventsDocument,
-    options
-  );
-}
+export function useMyEventsQuery(baseOptions?: Apollo.QueryHookOptions<MyEventsQuery, MyEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyEventsQuery, MyEventsQueryVariables>(MyEventsDocument, options);
+      }
+export function useMyEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyEventsQuery, MyEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyEventsQuery, MyEventsQueryVariables>(MyEventsDocument, options);
+        }
 export type MyEventsQueryHookResult = ReturnType<typeof useMyEventsQuery>;
-export type MyEventsLazyQueryHookResult = ReturnType<
-  typeof useMyEventsLazyQuery
->;
-export type MyEventsQueryResult = Apollo.QueryResult<
-  MyEventsQuery,
-  MyEventsQueryVariables
->;
+export type MyEventsLazyQueryHookResult = ReturnType<typeof useMyEventsLazyQuery>;
+export type MyEventsQueryResult = Apollo.QueryResult<MyEventsQuery, MyEventsQueryVariables>;
 export const CreateUserEventDocument = gql`
-  mutation CreateUserEvent($input: CreateUserEventInput!) {
-    createEvent(input: $input) {
-      ... on ErrorInvalidRequest {
-        message
-      }
-      ... on ErrorNotFound {
-        message
-      }
-      ... on ErrorUniqueConstraint {
-        message
-      }
-      ... on ErrorEventExists {
-        message
-        possibleEvents {
-          edges {
-            node {
-              ...Event
-            }
+    mutation CreateUserEvent($input: CreateUserEventInput!) {
+  createEvent(input: $input) {
+    ... on ErrorInvalidRequest {
+      message
+    }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorUniqueConstraint {
+      message
+    }
+    ... on ErrorEventExists {
+      message
+      possibleEvents {
+        edges {
+          node {
+            ...Event
           }
         }
       }
-      ... on MutationCreateEventSuccess {
-        data {
+    }
+    ... on MutationCreateEventSuccess {
+      data {
+        id
+        event {
           id
-          event {
+          name
+          date
+          venue {
             id
             name
-            date
-            venue {
-              id
-              name
-              city
-              state
-            }
+            city
+            state
           }
-          user {
-            id
-            events {
-              edges {
-                node {
-                  event {
-                    ...Event
-                  }
+        }
+        user {
+          id
+          events {
+            edges {
+              node {
+                event {
+                  ...Event
                 }
               }
             }
@@ -1352,12 +912,9 @@ export const CreateUserEventDocument = gql`
       }
     }
   }
-  ${EventFragmentDoc}
-`;
-export type CreateUserEventMutationFn = Apollo.MutationFunction<
-  CreateUserEventMutation,
-  CreateUserEventMutationVariables
->;
+}
+    ${EventFragmentDoc}`;
+export type CreateUserEventMutationFn = Apollo.MutationFunction<CreateUserEventMutation, CreateUserEventMutationVariables>;
 
 /**
  * __useCreateUserEventMutation__
@@ -1376,37 +933,23 @@ export type CreateUserEventMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateUserEventMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateUserEventMutation,
-    CreateUserEventMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateUserEventMutation,
-    CreateUserEventMutationVariables
-  >(CreateUserEventDocument, options);
-}
-export type CreateUserEventMutationHookResult = ReturnType<
-  typeof useCreateUserEventMutation
->;
-export type CreateUserEventMutationResult =
-  Apollo.MutationResult<CreateUserEventMutation>;
-export type CreateUserEventMutationOptions = Apollo.BaseMutationOptions<
-  CreateUserEventMutation,
-  CreateUserEventMutationVariables
->;
+export function useCreateUserEventMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserEventMutation, CreateUserEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserEventMutation, CreateUserEventMutationVariables>(CreateUserEventDocument, options);
+      }
+export type CreateUserEventMutationHookResult = ReturnType<typeof useCreateUserEventMutation>;
+export type CreateUserEventMutationResult = Apollo.MutationResult<CreateUserEventMutation>;
+export type CreateUserEventMutationOptions = Apollo.BaseMutationOptions<CreateUserEventMutation, CreateUserEventMutationVariables>;
 export const MeDocument = gql`
-  query Me {
-    me {
-      id
-      firstName
-      lastName
-      email
-    }
+    query Me {
+  me {
+    id
+    firstName
+    lastName
+    email
   }
-`;
+}
+    `;
 
 /**
  * __useMeQuery__
@@ -1423,33 +966,28 @@ export const MeDocument = gql`
  *   },
  * });
  */
-export function useMeQuery(
-  baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
-export function useMeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const VenuesDocument = gql`
-  query Venues {
-    venues {
-      edges {
-        node {
-          ...Venue
-        }
+    query Venues {
+  venues {
+    edges {
+      node {
+        ...Venue
       }
     }
   }
-  ${VenueFragmentDoc}
-`;
+}
+    ${VenueFragmentDoc}`;
 
 /**
  * __useVenuesQuery__
@@ -1466,43 +1004,29 @@ export const VenuesDocument = gql`
  *   },
  * });
  */
-export function useVenuesQuery(
-  baseOptions?: Apollo.QueryHookOptions<VenuesQuery, VenuesQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<VenuesQuery, VenuesQueryVariables>(
-    VenuesDocument,
-    options
-  );
-}
-export function useVenuesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<VenuesQuery, VenuesQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<VenuesQuery, VenuesQueryVariables>(
-    VenuesDocument,
-    options
-  );
-}
+export function useVenuesQuery(baseOptions?: Apollo.QueryHookOptions<VenuesQuery, VenuesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VenuesQuery, VenuesQueryVariables>(VenuesDocument, options);
+      }
+export function useVenuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VenuesQuery, VenuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VenuesQuery, VenuesQueryVariables>(VenuesDocument, options);
+        }
 export type VenuesQueryHookResult = ReturnType<typeof useVenuesQuery>;
 export type VenuesLazyQueryHookResult = ReturnType<typeof useVenuesLazyQuery>;
-export type VenuesQueryResult = Apollo.QueryResult<
-  VenuesQuery,
-  VenuesQueryVariables
->;
+export type VenuesQueryResult = Apollo.QueryResult<VenuesQuery, VenuesQueryVariables>;
 export const VenueAutocompleteDocument = gql`
-  query VenueAutocomplete($input: VenueAutocompleteInput!, $first: Int) {
-    venueAutocomplete(input: $input, first: $first) {
-      edges {
-        cursor
-        node {
-          ...VenueAutocompleteResult
-        }
+    query VenueAutocomplete($input: VenueAutocompleteInput!, $first: Int) {
+  venueAutocomplete(input: $input, first: $first) {
+    edges {
+      cursor
+      node {
+        ...VenueAutocompleteResult
       }
     }
   }
-  ${VenueAutocompleteResultFragmentDoc}
-`;
+}
+    ${VenueAutocompleteResultFragmentDoc}`;
 
 /**
  * __useVenueAutocompleteQuery__
@@ -1521,65 +1045,38 @@ export const VenueAutocompleteDocument = gql`
  *   },
  * });
  */
-export function useVenueAutocompleteQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    VenueAutocompleteQuery,
-    VenueAutocompleteQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    VenueAutocompleteQuery,
-    VenueAutocompleteQueryVariables
-  >(VenueAutocompleteDocument, options);
-}
-export function useVenueAutocompleteLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    VenueAutocompleteQuery,
-    VenueAutocompleteQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    VenueAutocompleteQuery,
-    VenueAutocompleteQueryVariables
-  >(VenueAutocompleteDocument, options);
-}
-export type VenueAutocompleteQueryHookResult = ReturnType<
-  typeof useVenueAutocompleteQuery
->;
-export type VenueAutocompleteLazyQueryHookResult = ReturnType<
-  typeof useVenueAutocompleteLazyQuery
->;
-export type VenueAutocompleteQueryResult = Apollo.QueryResult<
-  VenueAutocompleteQuery,
-  VenueAutocompleteQueryVariables
->;
-export const CreateVenueDocument = gql`
-  mutation CreateVenue($seatGeekId: String!) {
-    createVenue(seatGeekID: $seatGeekId) {
-      ... on MutationCreateVenueSuccess {
-        data {
-          ...Venue
+export function useVenueAutocompleteQuery(baseOptions: Apollo.QueryHookOptions<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>(VenueAutocompleteDocument, options);
+      }
+export function useVenueAutocompleteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>(VenueAutocompleteDocument, options);
         }
-      }
-      ... on ErrorNotFound {
-        message
-      }
-      ... on ErrorForbidden {
-        message
-      }
-      ... on ErrorInvalidRequest {
-        message
+export type VenueAutocompleteQueryHookResult = ReturnType<typeof useVenueAutocompleteQuery>;
+export type VenueAutocompleteLazyQueryHookResult = ReturnType<typeof useVenueAutocompleteLazyQuery>;
+export type VenueAutocompleteQueryResult = Apollo.QueryResult<VenueAutocompleteQuery, VenueAutocompleteQueryVariables>;
+export const CreateVenueDocument = gql`
+    mutation CreateVenue($seatGeekId: String!) {
+  createVenue(seatGeekID: $seatGeekId) {
+    ... on MutationCreateVenueSuccess {
+      data {
+        ...Venue
       }
     }
+    ... on ErrorNotFound {
+      message
+    }
+    ... on ErrorForbidden {
+      message
+    }
+    ... on ErrorInvalidRequest {
+      message
+    }
   }
-  ${VenueFragmentDoc}
-`;
-export type CreateVenueMutationFn = Apollo.MutationFunction<
-  CreateVenueMutation,
-  CreateVenueMutationVariables
->;
+}
+    ${VenueFragmentDoc}`;
+export type CreateVenueMutationFn = Apollo.MutationFunction<CreateVenueMutation, CreateVenueMutationVariables>;
 
 /**
  * __useCreateVenueMutation__
@@ -1598,24 +1095,10 @@ export type CreateVenueMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateVenueMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateVenueMutation,
-    CreateVenueMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateVenueMutation, CreateVenueMutationVariables>(
-    CreateVenueDocument,
-    options
-  );
-}
-export type CreateVenueMutationHookResult = ReturnType<
-  typeof useCreateVenueMutation
->;
-export type CreateVenueMutationResult =
-  Apollo.MutationResult<CreateVenueMutation>;
-export type CreateVenueMutationOptions = Apollo.BaseMutationOptions<
-  CreateVenueMutation,
-  CreateVenueMutationVariables
->;
+export function useCreateVenueMutation(baseOptions?: Apollo.MutationHookOptions<CreateVenueMutation, CreateVenueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateVenueMutation, CreateVenueMutationVariables>(CreateVenueDocument, options);
+      }
+export type CreateVenueMutationHookResult = ReturnType<typeof useCreateVenueMutation>;
+export type CreateVenueMutationResult = Apollo.MutationResult<CreateVenueMutation>;
+export type CreateVenueMutationOptions = Apollo.BaseMutationOptions<CreateVenueMutation, CreateVenueMutationVariables>;

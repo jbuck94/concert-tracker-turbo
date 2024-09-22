@@ -1,3 +1,3 @@
-export * from '@/src/schema/UserEvent/userEvent.fields';
-export * from '@/src/schema/UserEvent/userEvent.queries';
-export * from '@/src/schema/UserEvent/userEvent.mutations';
+import 'src/schema/UserEvent/userEvent.fields';
+import 'src/schema/UserEvent/userEvent.queries';
+import 'src/schema/UserEvent/userEvent.mutations';

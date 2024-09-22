@@ -1,6 +1,6 @@
 import { DateTimeResolver, JSONObjectResolver } from 'graphql-scalars';
 
-import builder from '@/src/builder';
+import builder from 'src/builder';
 
-builder.addScalarType('DateTime', DateTimeResolver, {});
-builder.addScalarType('JSON', JSONObjectResolver, {});
+export const DateTime = builder.addScalarType('DateTime', DateTimeResolver, {});
+export const Json = builder.addScalarType('JSON', JSONObjectResolver, {});

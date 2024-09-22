@@ -20,7 +20,7 @@ function ArtistCreate() {
   return (
     <>
       <Head>
-        <title>Concert Tracker</title>
+        <title>wento</title>
       </Head>
       <Container maxWidth='xl'>
         <CustomBreadcrumbs

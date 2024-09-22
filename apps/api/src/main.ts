@@ -8,10 +8,10 @@ import http from 'http';
 import cors from 'cors';
 import { json } from 'body-parser';
 import { InternalEnv, getInternalEnv, initializeRuntime } from 'runtime';
-import { authHandler } from '@/src/handlers/auth';
+import { authHandler } from 'src/handlers/auth';
 
 import { Context } from './context';
-import { getEnhancedDB } from '@/src/db';
+import { getEnhancedDB } from 'src/db';
 import { schema } from './schema';
 
 const PORT = Number(process.env.PORT) || 8080;

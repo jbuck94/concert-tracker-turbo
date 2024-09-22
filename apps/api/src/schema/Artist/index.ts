@@ -1,3 +1,3 @@
-export * from '@/src/schema/Artist/artist.fields';
-export * from '@/src/schema/Artist/artist.queries';
-export * from '@/src/schema/Artist/artist.mutations';
+import 'src/schema/Artist/artist.fields';
+import 'src/schema/Artist/artist.queries';
+import 'src/schema/Artist/artist.mutations';

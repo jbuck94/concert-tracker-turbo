@@ -24,7 +24,9 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
-    "eslint-config-custom": "latest",
+    "@typescript-eslint/parser": "8.6.0",
+    "eslint": "8.57.0",
+    "eslint-config-custom": "*",
     "prettier": "3.2.4",
     "turbo": "2.0.9",
     "tsx": "4.10.2",

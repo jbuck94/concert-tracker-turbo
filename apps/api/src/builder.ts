@@ -1,16 +1,15 @@
-import PrismaPlugin from '@pothos/plugin-prisma';
 import SchemaBuilder from '@pothos/core';
-import RelayPlugin from '@pothos/plugin-relay';
-import PrismaUtils from '@pothos/plugin-prisma-utils';
+import ErrorsPlugin from '@pothos/plugin-errors';
+import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
+import PrismaUtils from '@pothos/plugin-prisma-utils';
+import RelayPlugin from '@pothos/plugin-relay';
 import SimpleObjectsPlugin from '@pothos/plugin-simple-objects';
 import WithInputPlugin from '@pothos/plugin-with-input';
-
-import { getEnhancedDB } from './db';
-import ErrorsPlugin from '@pothos/plugin-errors';
-
-import { Context } from '@/src/context';
 import { Prisma, PrismaClient } from '@prisma/client';
+
+import { Context } from 'src/context';
+import { getEnhancedDB } from 'src/db';
 
 const client = (): PrismaClient => {
   return getEnhancedDB();

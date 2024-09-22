@@ -1,4 +1,4 @@
-import builder from '@/src/builder';
+import builder from 'src/builder';
 
 export const StringFilter = builder.prismaFilter('String', {
   ops: ['contains', 'equals', 'startsWith', 'not'],

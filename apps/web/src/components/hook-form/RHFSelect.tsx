@@ -144,7 +144,10 @@ export function RHFMultiSelect({
             displayEmpty={!!placeholder}
             labelId={name}
             input={<OutlinedInput fullWidth label={label} error={!!error} />}
-            renderValue={renderValues}
+            renderValue={(value) => {
+                const selectedIds = value as string[]; // Type assertion
+                return renderValues(selectedIds);
+            }}
             MenuProps={{
               PaperProps: {
                 sx: { px: 1, maxHeight: 280 },

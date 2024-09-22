@@ -1,3 +1,3 @@
-export * from '@/src/schema/Event/event.fields';
-export * from '@/src/schema/Event/event.queries';
-export * from '@/src/schema/Event/event.mutations';
+import 'src/schema/Event/event.fields';
+import 'src/schema/Event/event.queries';
+import 'src/schema/Event/event.mutations';
