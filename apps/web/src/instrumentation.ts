@@ -12,7 +12,7 @@ export async function register() {
     //  * Load the next-logger package as quickly as possible so Next's
     //  * default logging methods get overridden with Pino.
     //  */
-    // await require('pino');
+    await require('pino');
     await require('next-logger');
 
     const { initializeRuntime } = await import('runtime');

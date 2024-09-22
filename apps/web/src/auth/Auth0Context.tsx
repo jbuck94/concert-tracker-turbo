@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useEffect, useReducer } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useReducer,
+} from 'react';
 import { RedirectLoginOptions, useAuth0 } from '@auth0/auth0-react';
 import {
   ActionMap,
@@ -6,9 +12,10 @@ import {
   AuthState,
   AuthUser,
 } from 'src/auth/types';
+import { useApolloClient, useLazyQuery, gql } from '@apollo/client';
 
 import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
-import { useMeQuery } from 'apollo-hooks';
+import { useMeLazyQuery } from 'apollo/generated-types';
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -69,58 +76,52 @@ type AuthProviderProps = {
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log('state: ', state);
+
   const {
     isAuthenticated,
     loginWithRedirect,
     logout: auth0Logout,
     isLoading,
+    user,
   } = useAuth0();
-  console.log('isAuthenticated: ', isAuthenticated);
-  console.log('isLoading: ', isLoading);
 
-  const { data: user, loading: userLoading, error } = useMeQuery();
+  const [getMe] = useMeLazyQuery({ fetchPolicy: 'no-cache' });
 
-  console.log('user: ', user);
-  console.log('userLoading: ', userLoading);
-  console.log('error: ', error);
+  const initialize = useCallback(async () => {
+    try {
+      if (isAuthenticated) {
+        const { data } = await getMe();
 
-  useEffect(() => {
-    console.log('using effect');
-    const initialize = async () => {
-      console.log('initializing');
-      console.log('isAuthenticated: ', isAuthenticated);
-      try {
-        if (isAuthenticated) {
-          dispatch({
-            type: Types.init,
-            payload: {
-              isAuthenticated,
-              user: user?.me,
-              isInitialized: !isLoading,
-            },
-          });
-        } else {
-          dispatch({
-            type: Types.init,
-            payload: { isAuthenticated, user: null, isInitialized: !isLoading },
-          });
-        }
-      } catch (err) {
-        console.error('Error initializing auth:', err);
         dispatch({
           type: Types.init,
           payload: {
-            isAuthenticated: false,
-            user: null,
+            isAuthenticated,
+            user: data?.me,
             isInitialized: !isLoading,
           },
         });
+      } else {
+        dispatch({
+          type: Types.init,
+          payload: { isAuthenticated, user: null, isInitialized: !isLoading },
+        });
       }
-    };
+    } catch (err) {
+      console.error('Error initializing auth:', err);
+      dispatch({
+        type: Types.init,
+        payload: {
+          isAuthenticated: false,
+          user: null,
+          isInitialized: !isLoading,
+        },
+      });
+    }
+  }, [getMe, isAuthenticated, isLoading]);
 
+  useEffect(() => {
     initialize();
-  }, [isLoading, isAuthenticated, userLoading, user]);
+  }, [initialize]);
 
   const login = async (options?: RedirectLoginOptions) => {
     await loginWithRedirect(options);

@@ -19,8 +19,17 @@
     "lint": {
       "outputs": []
     },
+    "codegen": {
+      "cache": false,
+      "persistent": true
+    },
     "dev": {
       "dependsOn": ["db:generate"],
+      "cache": false,
+      "persistent": true
+    },
+    "dev:codegen": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },

@@ -1,5 +1,5 @@
 import { Box, Button, Container } from '@mui/material';
-import { useArtistsQuery } from 'apollo-hooks';
+import { useArtistsQuery } from 'apollo/generated-types';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';

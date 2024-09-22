@@ -3,7 +3,7 @@ import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
 import {
   VenueAutocompleteResult,
   useVenueAutocompleteQuery,
-} from 'apollo-hooks';
+} from 'apollo/generated-types';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';

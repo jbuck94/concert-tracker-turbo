@@ -9,7 +9,7 @@ import {
   ToggleButtonGroup,
   Tooltip,
 } from '@mui/material';
-import { EventFragment, useMyEventsQuery } from 'apollo-hooks';
+import { EventFragment, useMyEventsQuery } from 'apollo/generated-types';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import Head from 'next/head';

@@ -9,8 +9,8 @@ import Iconify from 'src/components/iconify/Iconify';
 import usePopover from '@/hooks/usePopover';
 import Image from 'src/components/image/Image';
 import CustomPopover from 'src/components/custom-popover/CustomPopover';
-import { ArtistFragment } from 'apollo-hooks';
 import { Chip } from '@mui/material';
+import { ArtistFragment } from 'apollo/generated-types';
 
 type Props = {
   artist: ArtistFragment;

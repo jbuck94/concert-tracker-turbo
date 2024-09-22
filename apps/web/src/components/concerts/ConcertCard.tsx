@@ -10,7 +10,7 @@ import { fDate } from 'src/utils/formatTime';
 import usePopover from '@/hooks/usePopover';
 import Image from 'src/components/image/Image';
 import CustomPopover from 'src/components/custom-popover/CustomPopover';
-import { EventFragment } from 'apollo-hooks';
+import { EventFragment } from 'apollo/generated-types';
 
 type Props = {
   event: EventFragment;

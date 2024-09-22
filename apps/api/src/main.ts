@@ -50,10 +50,13 @@ server.start().then(async () => {
   app.use(
     '/graphql',
     (req, res, next) => {
-      if (
-        getInternalEnv() === InternalEnv.LOCAL &&
-        (req.body.query as string)?.includes('query IntrospectionQuery')
-      ) {
+      const isLocalEnv = getInternalEnv() === InternalEnv.LOCAL;
+
+      const isIntrospectionQuery = (req.body.query as string)?.includes(
+        'query IntrospectionQuery'
+      );
+
+      if (isLocalEnv && isIntrospectionQuery) {
         return next();
       }
       return checkJwt(req, res, next);

@@ -1,5 +1,5 @@
 import { RedirectLoginOptions } from '@auth0/auth0-react';
-import { MeQueryResult } from 'apollo-hooks';
+import { MeQueryResult } from 'apollo/generated-types';
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined

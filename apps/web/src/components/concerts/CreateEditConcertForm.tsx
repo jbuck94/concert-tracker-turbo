@@ -1,5 +1,5 @@
 import { Button, Card, Grid, List, ListItem, Typography } from '@mui/material';
-import { useCreateUserEventMutation } from 'apollo-hooks';
+import { useCreateUserEventMutation } from 'apollo/generated-types';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -38,8 +38,6 @@ export const CreateEditConcertForm = () => {
 
   const { control, handleSubmit, getValues, watch } = methods;
 
-  console.log('date', watch('date'));
-
   const { append, remove, fields } = useFieldArray({
     control,
     name: 'artists',
@@ -63,7 +61,6 @@ export const CreateEditConcertForm = () => {
         },
       });
 
-      console.log('result.data: ', result.data);
       switch (result.data?.createEvent.__typename) {
         case 'MutationCreateEventSuccess': {
           enqueueSnackbar('Created new event!', { variant: 'success' });

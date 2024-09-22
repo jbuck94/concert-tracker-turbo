@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Iconify from 'src/components/iconify/Iconify';
 import usePopover from '@/hooks/usePopover';
 import CustomPopover from 'src/components/custom-popover/CustomPopover';
-import { VenueFragment } from 'apollo-hooks';
+import { VenueFragment } from 'apollo/generated-types';
 import { MenuItem } from '@mui/material';
 
 type Props = {

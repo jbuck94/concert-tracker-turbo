@@ -5,6 +5,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles",
     "dev": "nodemon --exec \"node -r esbuild-register ./src/main.ts\" -e .ts",
+    "dev:codegen": "npm run dev",
     "start": "node dist/main.js",
     "build": "tsup",
     "lint": "tsc --noEmit && TIMING=1 eslint src --fix",

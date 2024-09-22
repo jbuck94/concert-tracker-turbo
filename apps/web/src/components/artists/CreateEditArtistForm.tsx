@@ -13,7 +13,7 @@ import {
   SpotifyArtistFragment,
   useArtistAutocompleteQuery,
   useCreateArtistMutation,
-} from 'apollo-hooks';
+} from 'apollo/generated-types';
 import NextLink from 'next/link';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';

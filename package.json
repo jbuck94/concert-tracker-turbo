@@ -17,7 +17,8 @@
     "db:seed": "npx turbo run db:seed",
     "db:studio": "npx turbo run db:studio",
     "db:deploy": "npx turbo run db:deploy",
-    "apollo:generate": "npx turbo run generate --filter=apollo-hooks",
+    "dev:codegen": "npx turbo run dev:codegen",
+    "codegen": "npx turbo run codegen",
     "lint": "npx turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

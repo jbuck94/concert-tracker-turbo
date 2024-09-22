@@ -6,7 +6,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { EventFragment } from 'apollo-hooks';
+import { EventFragment } from 'apollo/generated-types';
 import { format } from 'date-fns';
 
 type ConcertsTableProps = {

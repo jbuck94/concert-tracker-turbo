@@ -1,5 +1,5 @@
 import { Box, Button, Container } from '@mui/material';
-import { useVenuesQuery } from 'apollo-hooks';
+import { useVenuesQuery } from 'apollo/generated-types';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
