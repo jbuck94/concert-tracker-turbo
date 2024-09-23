@@ -7,7 +7,7 @@
     "outDir": "./dist",
     "target": "es2020",
     "module": "CommonJS",
-    "types": ["node", "@types/jest"],
+    "types": ["node"],
     "checkJs": false,
     "allowJs": true,
     "sourceMap": true,
