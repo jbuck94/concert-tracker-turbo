@@ -7,7 +7,7 @@ export default function LoginPage() {
   return (
     <>
       <Head>
-        <title> Login | Minimal UI</title>
+        <title> Login | wento</title>
       </Head>
 
       <GuestGuard>
