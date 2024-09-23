@@ -12,18 +12,13 @@ import { InternalEnv } from 'runtime';
 
 import ApolloProvider from 'apollo/ApolloClient';
 import { AuthProvider } from 'src/auth/Auth0Context';
+import MotionLazyContainer from 'src/components/animate/MotionLazyContainer';
 import { ConfigProvider } from 'src/components/provider/AppConfigProvider';
 import { Auth0ConfiguredProvider } from 'src/components/provider/Auth0ConfiguredProvider';
 import ThemeSettings from 'src/components/settings/ThemeSettings';
 import SnackbarProvider from 'src/components/snackbar/SnackbarProvider';
 import ThemeProvider from 'src/theme/index';
 import createEmotionCache from 'src/utils/createEmotionCache';
-
-// if (__DEV__) {
-// // Adds messages only in a dev environment
-// loadDevMessages();
-// loadErrorMessages();
-// }
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -68,21 +63,23 @@ const CustomApp = ({
       <ConfigProvider
         appConfig={auth0 && appConfig ? { auth0, appConfig } : undefined}
       >
-        <Auth0ConfiguredProvider>
-          <ThemeProvider>
-            <SnackbarProvider>
-              <ApolloProvider>
-                <AuthProvider>
-                  <ThemeSettings>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      {getLayout(<Component {...pageProps} />)}
-                    </LocalizationProvider>
-                  </ThemeSettings>
-                </AuthProvider>
-              </ApolloProvider>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </Auth0ConfiguredProvider>
+        <MotionLazyContainer>
+          <Auth0ConfiguredProvider>
+            <ThemeProvider>
+              <SnackbarProvider>
+                <ApolloProvider>
+                  <AuthProvider>
+                    <ThemeSettings>
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        {getLayout(<Component {...pageProps} />)}
+                      </LocalizationProvider>
+                    </ThemeSettings>
+                  </AuthProvider>
+                </ApolloProvider>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </Auth0ConfiguredProvider>
+        </MotionLazyContainer>
       </ConfigProvider>
     </CacheProvider>
   );

@@ -85,7 +85,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     user,
   } = useAuth0();
 
-  const [getMe] = useMeLazyQuery({ fetchPolicy: 'no-cache' });
+  const [getMe, { data }] = useMeLazyQuery({ fetchPolicy: 'no-cache' });
 
   const initialize = useCallback(async () => {
     try {
@@ -126,7 +126,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     await loginWithRedirect(options);
 
     if (isAuthenticated) {
-      dispatch({ type: Types.login, payload: { user: user?.me } });
+      dispatch({ type: Types.login, payload: { user: data?.me } });
     }
   };
 
