@@ -24,4 +24,4 @@ export const ICON = {
 };
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
-export const PATH_AFTER_LOGIN = PATH_DASHBOARD.general.app; // as '/dashboard/app'
+export const PATH_AFTER_LOGIN = PATH_DASHBOARD.user.concerts;

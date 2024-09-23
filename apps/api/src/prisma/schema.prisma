@@ -12,12 +12,18 @@ generator pothos {
     prismaUtils = true
 }
 
+enum UserRole {
+    ADMIN
+    USER
+}
+
 model User {
     id        Int         @id() @default(autoincrement())
     firstName String      @default("")
     lastName  String      @default("")
     email     String      @unique() @default("")
     authId    String      @unique() @default("")
+    role      UserRole    @default(USER)
     events    UserEvent[] @relation("UserEvent_user")
 }
 

@@ -420,6 +420,7 @@ export type User = {
   firstName: Scalars['String'];
   id: Scalars['ID'];
   lastName: Scalars['String'];
+  role: UserRole;
 };
 
 
@@ -448,6 +449,11 @@ export type UserEventsConnectionEdge = {
   cursor: Scalars['String'];
   node: UserEvent;
 };
+
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
 
 export type Venue = {
   __typename?: 'Venue';
@@ -558,7 +564,7 @@ export type CreateUserEventMutation = { __typename?: 'Mutation', createEvent: { 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, firstName: string, lastName: string, email: string } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, firstName: string, lastName: string, email: string, role: UserRole } | null };
 
 export type VenueFragment = { __typename?: 'Venue', id: string, name: string, city: string, state: string, long: number, lat: number };
 
@@ -947,6 +953,7 @@ export const MeDocument = gql`
     firstName
     lastName
     email
+    role
   }
 }
     `;

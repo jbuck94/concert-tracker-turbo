@@ -38,6 +38,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
           width: 40,
           height: 40,
           display: 'inline-flex',
+          transform: 'rotate(180deg)',
           ...sx,
         }}
         {...other}

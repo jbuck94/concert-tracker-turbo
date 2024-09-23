@@ -3,11 +3,12 @@ import { useEffect } from 'react';
 
 import { Box, Drawer, Stack } from '@mui/material';
 
+import { useAuthContext } from 'src/auth/useAuthContext';
 import Logo from 'src/components/logo/Logo';
 import NavSectionVertical from 'src/components/nav-section/vertical/NavSectionVertical';
 import Scrollbar from 'src/components/scrollbar/Scrollbar';
 import useResponsive from 'src/hooks/useResponsive';
-import navConfig from 'src/layouts/dashboard/nav/config-navigation';
+import { getNavConfig } from 'src/layouts/dashboard/nav/config-navigation';
 import NavAccount from 'src/layouts/dashboard/nav/NavAccount';
 import { NAV } from 'src/utils/config-global';
 
@@ -18,6 +19,8 @@ type Props = {
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
   const { pathname } = useRouter();
+
+  const { user } = useAuthContext();
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -53,7 +56,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
         <NavAccount />
       </Stack>
 
-      <NavSectionVertical data={navConfig} />
+      <NavSectionVertical data={getNavConfig(user?.role)} />
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
