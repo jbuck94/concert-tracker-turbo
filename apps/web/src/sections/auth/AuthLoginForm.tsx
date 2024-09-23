@@ -1,4 +1,5 @@
 import { LoadingButton } from '@mui/lab';
+
 import { useAuthContext } from 'src/auth/useAuthContext';
 
 export default function LoginForm() {
@@ -15,9 +16,9 @@ export default function LoginForm() {
   return (
     <LoadingButton
       fullWidth
-      size='large'
+      size="large"
       onClick={onSubmit}
-      variant='contained'
+      variant="contained"
     >
       Login
     </LoadingButton>

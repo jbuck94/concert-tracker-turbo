@@ -1,32 +1,26 @@
-import { useDropzone } from 'react-dropzone';
-// @mui
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useDropzone } from 'react-dropzone';
+
 // assets
 import UploadIllustration from 'src/assets/illustrations/UploadIllustration';
-//
-//
-import { UploadProps } from './types';
-import RejectionFiles from './ErrorsRejectionFiles';
-import MultiFilePreview from './PreviewMultiFile';
-import SingleFilePreview from './PreviewSigleFile';
-import Iconify from '../iconify/Iconify';
-
-// ----------------------------------------------------------------------
+import Iconify from 'src/components/iconify/Iconify';
+import RejectionFiles from 'src/components/upload/ErrorsRejectionFiles';
+import MultiFilePreview from 'src/components/upload/PreviewMultiFile';
+import SingleFilePreview from 'src/components/upload/PreviewSigleFile';
+import { UploadProps } from 'src/components/upload/types';
 
 export default function Upload({
   disabled,
   multiple = false,
   error,
   helperText,
-  //
   file,
   onDelete,
-  //
   files,
   thumbnail,
   onUpload,
@@ -56,17 +50,17 @@ export default function Upload({
   const renderPlaceholder = (
     <Stack
       spacing={3}
-      alignItems='center'
-      justifyContent='center'
-      flexWrap='wrap'
+      alignItems="center"
+      justifyContent="center"
+      flexWrap="wrap"
     >
       <UploadIllustration sx={{ width: 1, maxWidth: 200 }} />
       <Stack spacing={1} sx={{ textAlign: 'center' }}>
-        <Typography variant='h6'>Drop or Select file</Typography>
-        <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+        <Typography variant="h6">Drop or Select file</Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Drop files here or click
           <Box
-            component='span'
+            component="span"
             sx={{
               mx: 0.5,
               color: 'primary.main',
@@ -89,7 +83,7 @@ export default function Upload({
 
   const removeSinglePreview = hasFile && onDelete && (
     <IconButton
-      size='small'
+      size="small"
       onClick={onDelete}
       sx={{
         top: 16,
@@ -103,7 +97,7 @@ export default function Upload({
         },
       }}
     >
-      <Iconify icon='mingcute:close-line' width={18} />
+      <Iconify icon="mingcute:close-line" width={18} />
     </IconButton>
   );
 
@@ -117,12 +111,12 @@ export default function Upload({
         />
       </Box>
 
-      <Stack direction='row' justifyContent='flex-end' spacing={1.5}>
+      <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
         {onRemoveAll && (
           <Button
-            color='inherit'
-            variant='outlined'
-            size='small'
+            color="inherit"
+            variant="outlined"
+            size="small"
             onClick={onRemoveAll}
           >
             Remove All
@@ -131,10 +125,10 @@ export default function Upload({
 
         {onUpload && (
           <Button
-            size='small'
-            variant='contained'
+            size="small"
+            variant="contained"
             onClick={onUpload}
-            startIcon={<Iconify icon='eva:cloud-upload-fill' />}
+            startIcon={<Iconify icon="eva:cloud-upload-fill" />}
           >
             Upload
           </Button>

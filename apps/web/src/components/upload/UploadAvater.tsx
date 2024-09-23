@@ -1,18 +1,13 @@
-import { useDropzone } from 'react-dropzone';
-// @mui
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-//
+import { useDropzone } from 'react-dropzone';
 
-//
-import { UploadProps } from './types';
-import RejectionFiles from './ErrorsRejectionFiles';
-import Iconify from '../iconify/Iconify';
-import Image from '../image/Image';
-
-// ----------------------------------------------------------------------
+import Iconify from 'src/components/iconify/Iconify';
+import Image from 'src/components/image/Image';
+import RejectionFiles from 'src/components/upload/ErrorsRejectionFiles';
+import { UploadProps } from 'src/components/upload/types';
 
 export default function UploadAvatar({
   error,
@@ -45,7 +40,7 @@ export default function UploadAvatar({
 
   const renderPreview = hasFile && (
     <Image
-      alt='avatar'
+      alt="avatar"
       src={imgUrl}
       sx={{
         width: 1,
@@ -57,10 +52,10 @@ export default function UploadAvatar({
 
   const renderPlaceholder = (
     <Stack
-      alignItems='center'
-      justifyContent='center'
+      alignItems="center"
+      justifyContent="center"
       spacing={1}
-      className='upload-placeholder'
+      className="upload-placeholder"
       sx={{
         top: 0,
         left: 0,
@@ -90,9 +85,9 @@ export default function UploadAvatar({
         }),
       }}
     >
-      <Iconify icon='solar:camera-add-bold' width={32} />
+      <Iconify icon="solar:camera-add-bold" width={32} />
 
-      <Typography variant='caption'>
+      <Typography variant="caption">
         {file ? 'Update photo' : 'Upload photo'}
       </Typography>
     </Stack>

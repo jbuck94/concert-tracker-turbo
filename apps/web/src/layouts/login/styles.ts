@@ -1,4 +1,5 @@
 import { alpha, styled } from '@mui/material/styles';
+
 import { bgGradient } from 'src/utils/cssStyles';
 
 export const StyledRoot = styled('main')(() => ({

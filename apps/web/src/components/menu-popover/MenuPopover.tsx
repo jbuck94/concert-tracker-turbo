@@ -1,4 +1,5 @@
 import { Popover, PopoverOrigin } from '@mui/material';
+
 import getPosition from 'src/components/menu-popover/getPosition';
 import { StyledArrow } from 'src/components/menu-popover/styles';
 import { MenuPopoverProps } from 'src/components/menu-popover/types';

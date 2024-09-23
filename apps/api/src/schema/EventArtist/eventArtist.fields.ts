@@ -1,5 +1,5 @@
 import builder from 'src/builder';
-import { IDFilter } from '../Filters';
+import { IDFilter } from 'src/schema/Filters';
 
 export const EventArtistWhere = builder.prismaWhere('EventArtist', {
   fields: (t) => ({

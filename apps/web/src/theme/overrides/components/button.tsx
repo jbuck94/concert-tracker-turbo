@@ -1,9 +1,14 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { ButtonProps, buttonClasses } from '@mui/material/Button';
+import { Theme, alpha } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
-const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 // NEW VARIANT
 declare module '@mui/material/Button' {
@@ -11,8 +16,6 @@ declare module '@mui/material/Button' {
     soft: true;
   }
 }
-
-// ----------------------------------------------------------------------
 
 export default function Button(theme: Theme) {
   const isLight = theme.palette.mode === 'light';
@@ -39,9 +42,13 @@ export default function Button(theme: Theme) {
         // CONTAINED
         ...(containedVariant && {
           color: isLight ? theme.palette.common.white : theme.palette.grey[800],
-          backgroundColor: isLight ? theme.palette.grey[800] : theme.palette.common.white,
+          backgroundColor: isLight
+            ? theme.palette.grey[800]
+            : theme.palette.common.white,
           '&:hover': {
-            backgroundColor: isLight ? theme.palette.grey[700] : theme.palette.grey[400],
+            backgroundColor: isLight
+              ? theme.palette.grey[700]
+              : theme.palette.grey[400],
           },
         }),
         // OUTLINED
@@ -144,7 +151,8 @@ export default function Button(theme: Theme) {
       },
 
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: ButtonProps }) => rootStyles(ownerState),
+        root: ({ ownerState }: { ownerState: ButtonProps }) =>
+          rootStyles(ownerState),
       },
     },
   };

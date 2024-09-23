@@ -1,9 +1,9 @@
 import NextLink from 'next/link';
 
-import { alpha, styled } from '@mui/material/styles';
 import { Box, Link, Typography } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+
 import { useAuthContext } from 'src/auth/useAuthContext';
-import { PATH_DASHBOARD } from 'src/routes/paths';
 import CustomAvatar from 'src/components/custom-avatar/CustomAvatar';
 
 const StyledRoot = styled('div')(({ theme }) => ({
@@ -26,7 +26,7 @@ export default function NavAccount() {
       : user?.email;
 
   return (
-    <Link component={NextLink} href='' underline='none' color='inherit'>
+    <Link component={NextLink} href="" underline="none" color="inherit">
       <StyledRoot>
         <CustomAvatar
           // src={user?.photoURL}
@@ -35,11 +35,11 @@ export default function NavAccount() {
         />
 
         <Box sx={{ ml: 2, minWidth: 0 }}>
-          <Typography variant='subtitle2' noWrap>
+          <Typography variant="subtitle2" noWrap>
             {userName}
           </Typography>
 
-          <Typography variant='body2' noWrap sx={{ color: 'text.secondary' }}>
+          <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
             {user?.email}
           </Typography>
         </Box>

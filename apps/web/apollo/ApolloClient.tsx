@@ -197,7 +197,6 @@ export default function ApolloProvider({
   initialApolloState?: NormalizedCacheObject;
 }): ReactElement {
   // const authContext = useAuthContext();
-  //
 
   const { user, getAccessTokenSilently } = useAuth0();
 

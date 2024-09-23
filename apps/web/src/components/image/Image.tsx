@@ -1,10 +1,11 @@
 import { forwardRef } from 'react';
+
+import Box from '@mui/material/Box';
+import { alpha, useTheme } from '@mui/material/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import { alpha, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import { getRatio } from 'src/components/image/utils';
 import { ImageProps } from 'src/components/image/types';
+import { getRatio } from 'src/components/image/utils';
 
 const Image = forwardRef<HTMLSpanElement, ImageProps>(
   (
@@ -12,7 +13,6 @@ const Image = forwardRef<HTMLSpanElement, ImageProps>(
       ratio,
       overlay,
       disabledEffect = false,
-      //
       alt,
       src,
       afterLoad,
@@ -50,7 +50,6 @@ const Image = forwardRef<HTMLSpanElement, ImageProps>(
     const content = (
       <Box
         component={LazyLoadImage}
-        //
         alt={alt}
         src={src}
         afterLoad={afterLoad}
@@ -68,7 +67,6 @@ const Image = forwardRef<HTMLSpanElement, ImageProps>(
         placeholderSrc={
           disabledEffect ? '/assets/transparent.png' : '/assets/placeholder.svg'
         }
-        //
         sx={{
           width: 1,
           height: 1,
@@ -86,8 +84,8 @@ const Image = forwardRef<HTMLSpanElement, ImageProps>(
     return (
       <Box
         ref={ref}
-        component='span'
-        className='component-image'
+        component="span"
+        className="component-image"
         sx={{
           overflow: 'hidden',
           position: 'relative',

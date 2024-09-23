@@ -1,6 +1,5 @@
-import { LazyLoadImageProps } from 'react-lazy-load-image-component';
-
 import { BoxProps } from '@mui/material/Box';
+import { LazyLoadImageProps } from 'react-lazy-load-image-component';
 
 export type ImageRatio =
   | '4/3'

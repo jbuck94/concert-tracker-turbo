@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
+
 import { AvatarGroup } from '@mui/material';
+
 import { CustomAvatarGroupProps } from 'src/components/custom-avatar/types';
 
 const SIZES = {

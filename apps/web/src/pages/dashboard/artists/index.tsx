@@ -1,9 +1,11 @@
-import { Box, Button, Container } from '@mui/material';
-import { useArtistsQuery } from 'apollo/generated-types';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
+
+import { Box, Button, Container } from '@mui/material';
+
+import { useArtistsQuery } from 'apollo/generated-types';
 import ArtistCard from 'src/components/artists/ArtistCard';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
 import Iconify from 'src/components/iconify/Iconify';
@@ -42,9 +44,9 @@ function Artists() {
       <Head>
         <title>wento</title>
       </Head>
-      <Container maxWidth='xl'>
+      <Container maxWidth="xl">
         <CustomBreadcrumbs
-          heading='Artists'
+          heading="Artists"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {
@@ -57,8 +59,8 @@ function Artists() {
             <Button
               component={NextLink}
               href={PATH_DASHBOARD.artist.create}
-              variant='contained'
-              startIcon={<Iconify icon='mingcute:add-line' />}
+              variant="contained"
+              startIcon={<Iconify icon="mingcute:add-line" />}
             >
               New Artist
             </Button>
@@ -69,7 +71,7 @@ function Artists() {
         />
         <Box
           gap={3}
-          display='grid'
+          display="grid"
           gridTemplateColumns={{
             xs: 'repeat(1, 1fr)',
             sm: 'repeat(2, 1fr)',

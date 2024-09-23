@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
-// @mui
-import { useTheme } from '@mui/material/styles';
+
 import { Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import { StyledLabel } from 'src/components/label/styles';
 import { LabelProps } from 'src/components/label/types';
 
@@ -29,7 +30,7 @@ const Label = forwardRef<HTMLSpanElement, LabelProps>(
     return (
       <StyledLabel
         ref={ref}
-        component='span'
+        component="span"
         ownerState={{ color, variant }}
         sx={{
           ...(startIcon && { pl: 0.75 }),

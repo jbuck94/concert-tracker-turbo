@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
+import { useEffect, useState } from 'react';
+
 import { useAuthContext } from 'src/auth/useAuthContext';
+import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
 import LoginPage from 'src/pages/auth/login';
 
 type AuthGuardProps = {

@@ -1,9 +1,6 @@
-// @mui
 import Box from '@mui/material/Box';
-import Image from '../image/Image';
-//
 
-// ----------------------------------------------------------------------
+import Image from 'src/components/image/Image';
 
 type Props = {
   imgUrl?: string;
@@ -22,7 +19,7 @@ export default function SingleFilePreview({ imgUrl = '' }: Props) {
       }}
     >
       <Image
-        alt='file preview'
+        alt="file preview"
         src={imgUrl}
         sx={{
           width: 1,

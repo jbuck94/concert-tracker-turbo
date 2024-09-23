@@ -1,8 +1,6 @@
 import { Theme } from '@mui/material/styles';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
-// ----------------------------------------------------------------------
-
 export default function Select(theme: Theme) {
   const Icon = (props: SvgIconProps) => (
     <SvgIcon {...props}>

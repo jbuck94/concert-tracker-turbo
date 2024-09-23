@@ -1,6 +1,7 @@
-import { m } from 'framer-motion';
 import { forwardRef } from 'react';
+
 import { Box, IconButton, IconButtonProps } from '@mui/material';
+import { m } from 'framer-motion';
 
 export const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ children, size = 'medium', ...other }, ref) => (
@@ -41,8 +42,8 @@ function AnimateWrap({ size, children }: AnimateWrapProp) {
   return (
     <Box
       component={m.div}
-      whileTap='tap'
-      whileHover='hover'
+      whileTap="tap"
+      whileHover="hover"
       variants={(isSmall && varSmall) || (isLarge && varLarge) || varMedium}
       sx={{
         display: 'inline-flex',

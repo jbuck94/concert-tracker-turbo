@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { m } from 'framer-motion';
-// @mui
-import { alpha, styled } from '@mui/material/styles';
+
 import { Box } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import { m } from 'framer-motion';
+
 import Logo from 'src/components/logo/Logo';
-//
 
 const StyledRoot = styled('div')(({ theme }) => ({
   right: 0,

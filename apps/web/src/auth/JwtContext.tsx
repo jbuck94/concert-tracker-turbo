@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   createContext,
   useCallback,
@@ -6,6 +5,9 @@ import {
   useMemo,
   useReducer,
 } from 'react';
+
+import axios from 'axios';
+
 import {
   ActionMapType,
   AuthStateType,
@@ -13,7 +15,6 @@ import {
   JWTContextType,
 } from 'src/auth/types';
 import { isValidToken, setSession } from 'src/auth/utils';
-
 import localStorageAvailable from 'src/utils/localStorageAvailable';
 
 // NOTE:
@@ -122,7 +123,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
       }
     } catch (error) {
-      console.error(error);
       dispatch({
         type: Types.INITIAL,
         payload: {

@@ -1,6 +1,8 @@
+import NextLink from 'next/link';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import NextLink from 'next/link';
+
 import { BreadcrumbsLinkProps } from 'src/components/custom-breadcrumbs/types';
 
 type Props = {
@@ -29,7 +31,7 @@ export default function BreadcrumbsLink({ link, activeLast, disabled }: Props) {
     <>
       {icon && (
         <Box
-          component='span'
+          component="span"
           sx={{
             mr: 1,
             display: 'inherit',

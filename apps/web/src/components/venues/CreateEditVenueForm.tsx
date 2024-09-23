@@ -1,5 +1,8 @@
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {
   Autocomplete,
   Box,
@@ -9,18 +12,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useSnackbar } from 'notistack';
 
+import { useDebouncedState } from '@/hooks/useDebouncedState';
 import {
   VenueAutocompleteResult,
   useCreateVenueMutation,
   useVenueAutocompleteQuery,
 } from 'apollo/generated-types';
-import NextLink from 'next/link';
-import { useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
 import { PATH_DASHBOARD } from 'src/routes/paths';
-import { useDebouncedState } from '@/hooks/useDebouncedState';
 
 export const CreateEditVenueForm = () => {
   const [value, setValue] = useState<VenueAutocompleteResult | null>(null);
@@ -101,7 +101,7 @@ export const CreateEditVenueForm = () => {
       }}
     >
       <Typography
-        variant='overline'
+        variant="overline"
         sx={{ display: 'block', color: 'text.secondary' }}
       >
         Section Name
@@ -125,12 +125,12 @@ export const CreateEditVenueForm = () => {
             }
             options={searchResults}
             renderInput={(params) => (
-              <TextField {...params} label='Add a location' {...params} />
+              <TextField {...params} label="Add a location" {...params} />
             )}
             renderOption={(props, option) => {
               return (
                 <li {...props} key={option.id}>
-                  <Grid container alignItems='center'>
+                  <Grid container alignItems="center">
                     <Grid item sx={{ display: 'flex', width: 44 }}>
                       <LocationOnIcon sx={{ color: 'text.secondary' }} />
                     </Grid>
@@ -142,7 +142,7 @@ export const CreateEditVenueForm = () => {
                       }}
                     >
                       <Box
-                        component='span'
+                        component="span"
                         sx={{
                           fontWeight: 'bold',
                         }}
@@ -150,7 +150,7 @@ export const CreateEditVenueForm = () => {
                         {option.name}
                       </Box>
 
-                      <Typography variant='body2' color='text.secondary'>
+                      <Typography variant="body2" color="text.secondary">
                         {option.addressString}
                       </Typography>
                     </Grid>
@@ -164,7 +164,7 @@ export const CreateEditVenueForm = () => {
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Button
-                variant='soft'
+                variant="soft"
                 LinkComponent={NextLink}
                 href={PATH_DASHBOARD.artist.root}
                 fullWidth
@@ -174,8 +174,8 @@ export const CreateEditVenueForm = () => {
             </Grid>
             <Grid item xs={6}>
               <Button
-                variant='soft'
-                color='primary'
+                variant="soft"
+                color="primary"
                 disabled={!value}
                 fullWidth
                 onClick={onSubmit}

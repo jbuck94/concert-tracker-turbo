@@ -1,13 +1,11 @@
-import { Theme, alpha } from '@mui/material/styles';
-import { listClasses } from '@mui/material/List';
-import { paperClasses } from '@mui/material/Paper';
 import { buttonClasses } from '@mui/material/Button';
+import { listClasses } from '@mui/material/List';
 import { listItemIconClasses } from '@mui/material/ListItemIcon';
+import { paperClasses } from '@mui/material/Paper';
+import { Theme, alpha } from '@mui/material/styles';
 import { tablePaginationClasses } from '@mui/material/TablePagination';
-//
-import { paper } from '../../css';
 
-// ----------------------------------------------------------------------
+import { paper } from 'src/theme/css';
 
 export default function DataGrid(theme: Theme) {
   const paperStyles = paper({ theme, dropdown: true });

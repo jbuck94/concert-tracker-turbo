@@ -1,9 +1,7 @@
-import { Theme } from '@mui/material/styles';
 import { listClasses } from '@mui/material/List';
-//
-import { paper } from '../../css';
+import { Theme } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
+import { paper } from 'src/theme/css';
 
 export default function Popover(theme: Theme) {
   return {

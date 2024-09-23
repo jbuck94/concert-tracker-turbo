@@ -5,17 +5,17 @@ import {
   useEffect,
   useReducer,
 } from 'react';
+
 import { RedirectLoginOptions, useAuth0 } from '@auth0/auth0-react';
+
+import { useMeLazyQuery } from 'apollo/generated-types';
 import {
   ActionMap,
   Auth0ContextType,
   AuthState,
   AuthUser,
 } from 'src/auth/types';
-import { useApolloClient, useLazyQuery, gql } from '@apollo/client';
-
 import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
-import { useMeLazyQuery } from 'apollo/generated-types';
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -107,7 +107,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         });
       }
     } catch (err) {
-      console.error('Error initializing auth:', err);
       dispatch({
         type: Types.init,
         payload: {

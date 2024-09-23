@@ -1,14 +1,16 @@
-import Link from '@mui/material/Link';
 import NextLink from 'next/link';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
-import Iconify from 'src/components/iconify/Iconify';
-import usePopover from '@/hooks/usePopover';
-import CustomPopover from 'src/components/custom-popover/CustomPopover';
-import { VenueFragment } from 'apollo/generated-types';
+
 import { MenuItem } from '@mui/material';
+import Card from '@mui/material/Card';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import ListItemText from '@mui/material/ListItemText';
+import Stack from '@mui/material/Stack';
+
+import usePopover from '@/hooks/usePopover';
+import { VenueFragment } from 'apollo/generated-types';
+import CustomPopover from 'src/components/custom-popover/CustomPopover';
+import Iconify from 'src/components/iconify/Iconify';
 
 type Props = {
   venue: VenueFragment;
@@ -28,7 +30,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
             p: (theme) => theme.spacing(2, 2.5, 2, 2.5),
           }}
           secondary={
-            <Link component={NextLink} href={'TODO:'} color='inherit'>
+            <Link component={NextLink} href={'TODO:'} color="inherit">
               {venue.name}
             </Link>
           }
@@ -56,7 +58,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
             onClick={popover.onOpen}
             sx={{ position: 'absolute', bottom: 20, right: 8 }}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
 
           {[
@@ -64,7 +66,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
               label: `${venue.city}, ${venue.state}`,
               icon: (
                 <Iconify
-                  icon='mingcute:location-fill'
+                  icon="mingcute:location-fill"
                   sx={{ color: 'error.main' }}
                 />
               ),
@@ -73,8 +75,8 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
             <Stack
               key={item.label}
               spacing={1}
-              direction='row'
-              alignItems='center'
+              direction="row"
+              alignItems="center"
               sx={{ typography: 'body2' }}
             >
               {item.icon}
@@ -87,7 +89,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
       <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
-        arrow='right-top'
+        arrow="right-top"
         sx={{ width: 140 }}
       >
         <MenuItem
@@ -96,7 +98,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
             onView();
           }}
         >
-          <Iconify icon='solar:eye-bold' />
+          <Iconify icon="solar:eye-bold" />
           View
         </MenuItem>
 
@@ -106,7 +108,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
             onEdit();
           }}
         >
-          <Iconify icon='solar:pen-bold' />
+          <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
 
@@ -117,7 +119,7 @@ export default function VenueCard({ venue, onView, onEdit, onDelete }: Props) {
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='solar:trash-bin-trash-bold' />
+          <Iconify icon="solar:trash-bin-trash-bold" />
           Delete
         </MenuItem>
       </CustomPopover>

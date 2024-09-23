@@ -1,10 +1,19 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { AvatarProps } from '@mui/material/Avatar';
-import { AvatarGroupProps, avatarGroupClasses } from '@mui/material/AvatarGroup';
+import {
+  AvatarGroupProps,
+  avatarGroupClasses,
+} from '@mui/material/AvatarGroup';
+import { Theme, alpha } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const colorByName = (name: string) => {
   const charAt = name.charAt(0);
@@ -24,8 +33,6 @@ declare module '@mui/material/AvatarGroup' {
     compact: true;
   }
 }
-
-// ----------------------------------------------------------------------
 
 export default function Avatar(theme: Theme) {
   return {

@@ -1,3 +1,11 @@
+import Head from 'next/head';
+import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useCallback, useState } from 'react';
+
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
   Button,
@@ -9,20 +17,14 @@ import {
   ToggleButtonGroup,
   Tooltip,
 } from '@mui/material';
+
 import { useEventsQuery } from 'apollo/generated-types';
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import Head from 'next/head';
-import NextLink from 'next/link';
-import SearchIcon from '@mui/icons-material/Search';
-import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
 import ConcertCard from 'src/components/concerts/ConcertCard';
+import { ConcertsTable } from 'src/components/concerts/ConcertsTable';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
 import Iconify from 'src/components/iconify/Iconify';
 import DashboardLayout from 'src/layouts/dashboard/DashboardLayout';
 import { PATH_DASHBOARD } from 'src/routes/paths';
-import { ConcertsTable } from 'src/components/concerts/ConcertsTable';
 
 App.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -73,9 +75,9 @@ function App() {
       <Head>
         <title>wento</title>
       </Head>
-      <Container maxWidth='xl'>
+      <Container maxWidth="xl">
         <CustomBreadcrumbs
-          heading='Concerts'
+          heading="Concerts"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {
@@ -88,8 +90,8 @@ function App() {
             <Button
               component={NextLink}
               href={PATH_DASHBOARD.concert.create}
-              variant='contained'
-              startIcon={<Iconify icon='mingcute:add-line' />}
+              variant="contained"
+              startIcon={<Iconify icon="mingcute:add-line" />}
             >
               New Concert
             </Button>
@@ -102,17 +104,17 @@ function App() {
         <Stack
           flexDirection={'row'}
           spacing={3}
-          alignItems='center'
+          alignItems="center"
           marginY={3}
         >
           <TextField
             fullWidth
-            placeholder='Search'
+            placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             InputProps={{
               startAdornment: (
-                <InputAdornment position='start'>
+                <InputAdornment position="start">
                   <SearchIcon />
                 </InputAdornment>
               ),
@@ -123,12 +125,12 @@ function App() {
             exclusive
             onChange={handleChangeViewMode}
           >
-            <Tooltip title='List View'>
+            <Tooltip title="List View">
               <ToggleButton value={ViewMode.GRID}>
                 <GridViewOutlinedIcon />
               </ToggleButton>
             </Tooltip>
-            <Tooltip title='Grid View'>
+            <Tooltip title="Grid View">
               <ToggleButton value={ViewMode.LIST}>
                 <MenuOutlinedIcon />
               </ToggleButton>
@@ -147,7 +149,7 @@ function App() {
         {viewMode === ViewMode.GRID && (
           <Box
             gap={3}
-            display='grid'
+            display="grid"
             gridTemplateColumns={{
               xs: 'repeat(1, 1fr)',
               sm: 'repeat(2, 1fr)',

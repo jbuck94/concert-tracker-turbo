@@ -1,9 +1,11 @@
-import { Box, Button, Container } from '@mui/material';
-import { useVenuesQuery } from 'apollo/generated-types';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
+
+import { Box, Button, Container } from '@mui/material';
+
+import { useVenuesQuery } from 'apollo/generated-types';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
 import Iconify from 'src/components/iconify/Iconify';
 import VenueCard from 'src/components/venues/VenueCard';
@@ -42,9 +44,9 @@ function Venues() {
       <Head>
         <title>wento</title>
       </Head>
-      <Container maxWidth='xl'>
+      <Container maxWidth="xl">
         <CustomBreadcrumbs
-          heading='Venues'
+          heading="Venues"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {
@@ -57,8 +59,8 @@ function Venues() {
             <Button
               component={NextLink}
               href={PATH_DASHBOARD.venue.create}
-              variant='contained'
-              startIcon={<Iconify icon='mingcute:add-line' />}
+              variant="contained"
+              startIcon={<Iconify icon="mingcute:add-line" />}
             >
               New Venue
             </Button>
@@ -69,7 +71,7 @@ function Venues() {
         />
         <Box
           gap={3}
-          display='grid'
+          display="grid"
           gridTemplateColumns={{
             xs: 'repeat(1, 1fr)',
             sm: 'repeat(2, 1fr)',

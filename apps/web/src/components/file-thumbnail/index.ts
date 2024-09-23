@@ -1,5 +1,5 @@
-export * from './utils';
+export * from 'src/components/file-thumbnail/utils';
 
-export { default } from './FileThumbnail';
+export { default } from 'src/components/file-thumbnail/FileThumbnail';
 
-export { default as DownloadButton } from './DownloadButton';
+export { default as DownloadButton } from 'src/components/file-thumbnail/DownloadButton';

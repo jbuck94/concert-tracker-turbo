@@ -1,19 +1,14 @@
-import { AnimatePresence, m } from 'framer-motion';
-// @mui
-import { alpha } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
-// utils
-import { fData } from 'src/utils/formatNumber';
-//
-import FileThumbnail, { fileData } from '../file-thumbnail';
-//
-import { UploadProps } from './types';
-import Iconify from '../iconify/Iconify';
-import { varFade } from '../animate/variants/fade';
+import Stack from '@mui/material/Stack';
+import { alpha } from '@mui/material/styles';
+import { AnimatePresence, m } from 'framer-motion';
 
-// ----------------------------------------------------------------------
+import { varFade } from 'src/components/animate/variants/fade';
+import FileThumbnail, { fileData } from 'src/components/file-thumbnail';
+import Iconify from 'src/components/iconify/Iconify';
+import { UploadProps } from 'src/components/upload/types';
+import { fData } from 'src/utils/formatNumber';
 
 export default function MultiFilePreview({
   thumbnail,
@@ -34,9 +29,9 @@ export default function MultiFilePreview({
               key={key}
               component={m.div}
               {...varFade().inUp}
-              alignItems='center'
-              display='inline-flex'
-              justifyContent='center'
+              alignItems="center"
+              display="inline-flex"
+              justifyContent="center"
               sx={{
                 m: 0.5,
                 width: 80,
@@ -59,7 +54,7 @@ export default function MultiFilePreview({
 
               {onRemove && (
                 <IconButton
-                  size='small'
+                  size="small"
                   onClick={() => onRemove(file)}
                   sx={{
                     p: 0.5,
@@ -73,7 +68,7 @@ export default function MultiFilePreview({
                     },
                   }}
                 >
-                  <Iconify icon='mingcute:close-line' width={14} />
+                  <Iconify icon="mingcute:close-line" width={14} />
                 </IconButton>
               )}
             </Stack>
@@ -86,8 +81,8 @@ export default function MultiFilePreview({
             component={m.div}
             {...varFade().inUp}
             spacing={2}
-            direction='row'
-            alignItems='center'
+            direction="row"
+            alignItems="center"
             sx={{
               my: 1,
               py: 1,
@@ -110,8 +105,8 @@ export default function MultiFilePreview({
             />
 
             {onRemove && (
-              <IconButton size='small' onClick={() => onRemove(file)}>
-                <Iconify icon='mingcute:close-line' width={16} />
+              <IconButton size="small" onClick={() => onRemove(file)}>
+                <Iconify icon="mingcute:close-line" width={16} />
               </IconButton>
             )}
           </Stack>

@@ -1,8 +1,7 @@
-// @mui
-import { Theme, alpha, styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
+import { Theme, alpha, styled } from '@mui/material/styles';
+
 import { LabelColor, LabelVariant } from 'src/components/label/types';
-//
 
 export const StyledLabel = styled(Box)(({
   theme,

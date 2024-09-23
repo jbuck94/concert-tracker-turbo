@@ -7,9 +7,9 @@ import Logo from 'src/components/logo/Logo';
 import NavSectionVertical from 'src/components/nav-section/vertical/NavSectionVertical';
 import Scrollbar from 'src/components/scrollbar/Scrollbar';
 import useResponsive from 'src/hooks/useResponsive';
-import { NAV } from 'src/utils/config-global';
 import navConfig from 'src/layouts/dashboard/nav/config-navigation';
 import NavAccount from 'src/layouts/dashboard/nav/NavAccount';
+import { NAV } from 'src/utils/config-global';
 
 type Props = {
   openNav: boolean;
@@ -61,7 +61,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
 
   return (
     <Box
-      component='nav'
+      component="nav"
       sx={{
         flexShrink: { lg: 0 },
         width: { lg: NAV.W_DASHBOARD },
@@ -70,7 +70,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       {isDesktop ? (
         <Drawer
           open
-          variant='permanent'
+          variant="permanent"
           PaperProps={{
             sx: {
               zIndex: 0,

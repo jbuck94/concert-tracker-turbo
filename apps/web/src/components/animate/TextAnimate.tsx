@@ -1,6 +1,6 @@
-import { MotionProps, m } from 'framer-motion';
-// @mui
 import { Box, BoxProps } from '@mui/material';
+import { MotionProps, m } from 'framer-motion';
+
 import { varFade } from 'src/components/animate/variants/fade';
 
 type Props = BoxProps & MotionProps;

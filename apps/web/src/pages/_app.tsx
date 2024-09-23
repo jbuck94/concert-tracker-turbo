@@ -1,23 +1,23 @@
 import 'simplebar-react/dist/simplebar.min.css';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
-import createEmotionCache from 'src/utils/createEmotionCache';
-import { NextPage } from 'next';
+import Head from 'next/head';
+
 import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import Head from 'next/head';
-import ThemeProvider from 'src/theme/index';
-import { AuthProvider } from 'src/auth/Auth0Context';
-import ThemeSettings from 'src/components/settings/ThemeSettings';
-import SnackbarProvider from 'src/components/snackbar/SnackbarProvider';
-
-import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev';
-import ApolloProvider from 'apollo/ApolloClient';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { NextPage } from 'next';
 import { InternalEnv } from 'runtime';
+
+import ApolloProvider from 'apollo/ApolloClient';
+import { AuthProvider } from 'src/auth/Auth0Context';
 import { ConfigProvider } from 'src/components/provider/AppConfigProvider';
 import { Auth0ConfiguredProvider } from 'src/components/provider/Auth0ConfiguredProvider';
+import ThemeSettings from 'src/components/settings/ThemeSettings';
+import SnackbarProvider from 'src/components/snackbar/SnackbarProvider';
+import ThemeProvider from 'src/theme/index';
+import createEmotionCache from 'src/utils/createEmotionCache';
 
 // if (__DEV__) {
 // // Adds messages only in a dev environment
@@ -63,7 +63,7 @@ const CustomApp = ({
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ConfigProvider
         appConfig={auth0 && appConfig ? { auth0, appConfig } : undefined}

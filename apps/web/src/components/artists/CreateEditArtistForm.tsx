@@ -1,4 +1,6 @@
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 import {
   Autocomplete,
@@ -8,17 +10,16 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
+import { useDebouncedState } from '@/hooks/useDebouncedState';
 import {
   ArtistsDocument,
   SpotifyArtistFragment,
   useArtistAutocompleteQuery,
   useCreateArtistMutation,
 } from 'apollo/generated-types';
-import NextLink from 'next/link';
-import { useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
 import { PATH_DASHBOARD } from 'src/routes/paths';
-import { useDebouncedState } from '@/hooks/useDebouncedState';
 
 export const CreateEditArtistForm = () => {
   const [value, setValue] = useState<SpotifyArtistFragment | null>(null);
@@ -102,7 +103,7 @@ export const CreateEditArtistForm = () => {
       }}
     >
       <Typography
-        variant='overline'
+        variant="overline"
         sx={{ display: 'block', color: 'text.secondary' }}
       >
         Section Name
@@ -126,7 +127,7 @@ export const CreateEditArtistForm = () => {
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Button
-                variant='soft'
+                variant="soft"
                 LinkComponent={NextLink}
                 href={PATH_DASHBOARD.artist.root}
                 fullWidth
@@ -136,8 +137,8 @@ export const CreateEditArtistForm = () => {
             </Grid>
             <Grid item xs={6}>
               <Button
-                variant='soft'
-                color='primary'
+                variant="soft"
+                color="primary"
                 disabled={!value}
                 fullWidth
                 onClick={onSubmit}

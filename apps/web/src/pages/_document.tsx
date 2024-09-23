@@ -10,9 +10,9 @@ import createEmotionCache from 'src/utils/createEmotionCache';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang='en' className={primaryFont.className}>
+      <Html lang="en" className={primaryFont.className}>
         <Head>
-          <meta charSet='utf-8' />
+          <meta charSet="utf-8" />
           {/* <script
             type='text/javascript'
             dangerouslySetInnerHTML={{
@@ -22,34 +22,34 @@ export default class MyDocument extends Document {
           {/* <link rel='manifest' href='/manifest.json' /> */}
 
           {/* PWA primary color */}
-          <meta name='theme-color' content='#0682ff' />
+          <meta name="theme-color" content="#0682ff" />
 
           {/* Favicon */}
           <link
-            rel='apple-touch-icon'
-            sizes='180x180'
-            href='/favicon/apple-touch-icon.png'
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/favicon/apple-touch-icon.png"
           />
           <link
-            rel='icon'
-            type='image/png'
-            sizes='32x32'
-            href='/favicon/favicon-32x32.png'
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon/favicon-32x32.png"
           />
           <link
-            rel='icon'
-            type='image/png'
-            sizes='16x16'
-            href='/favicon/favicon-16x16.png'
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon/favicon-16x16.png"
           />
 
           {/* Emotion */}
-          <meta name='emotion-insertion-point' content='' />
+          <meta name="emotion-insertion-point" content="" />
           {(this.props as any).emotionStyleTags}
 
           {/* Meta */}
-          <meta name='description' content='wento' />
-          <meta name='author' content='wento' />
+          <meta name="description" content="wento" />
+          <meta name="author" content="wento" />
         </Head>
 
         <body>

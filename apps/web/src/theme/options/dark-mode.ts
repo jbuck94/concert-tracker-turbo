@@ -1,8 +1,6 @@
-import { palette } from '../palette';
-import { shadows } from '../shadows';
-import { customShadows } from '../custom-shadows';
-
-// ----------------------------------------------------------------------
+import { customShadows } from 'src/theme/custom-shadows';
+import { palette } from 'src/theme/palette';
+import { shadows } from 'src/theme/shadows';
 
 export function darkMode(mode: 'light' | 'dark') {
   const theme = {

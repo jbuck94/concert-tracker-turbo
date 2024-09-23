@@ -1,7 +1,5 @@
-import { palette } from '../palette';
-import { customShadows } from '../custom-shadows';
-
-// ----------------------------------------------------------------------
+import { customShadows } from 'src/theme/custom-shadows';
+import { palette } from 'src/theme/palette';
 
 export function contrast(contrastBold: boolean, mode: 'light' | 'dark') {
   const theme = {

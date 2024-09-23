@@ -1,16 +1,18 @@
-import Link from '@mui/material/Link';
 import NextLink from 'next/link';
+
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import ListItemText from '@mui/material/ListItemText';
-import Iconify from 'src/components/iconify/Iconify';
-import { fDate } from 'src/utils/formatTime';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+
 import usePopover from '@/hooks/usePopover';
-import Image from 'src/components/image/Image';
-import CustomPopover from 'src/components/custom-popover/CustomPopover';
 import { EventFragment } from 'apollo/generated-types';
+import CustomPopover from 'src/components/custom-popover/CustomPopover';
+import Iconify from 'src/components/iconify/Iconify';
+import Image from 'src/components/image/Image';
+import { fDate } from 'src/utils/formatTime';
 
 type Props = {
   event: EventFragment;
@@ -42,7 +44,7 @@ export default function ConcertCard({
       <Card>
         <Stack
           spacing={0.5}
-          direction='row'
+          direction="row"
           sx={{
             p: (theme) => theme.spacing(1, 1, 0, 1),
           }}
@@ -52,7 +54,7 @@ export default function ConcertCard({
               <Image
                 alt={images[0]}
                 src={images[0]}
-                ratio='16/9'
+                ratio="16/9"
                 sx={{ borderRadius: 1, height: 1, width: 1 }}
               />
             </Stack>
@@ -81,7 +83,7 @@ export default function ConcertCard({
           }}
           // primary={`Posted date: ${fDateTime(createdAt)}`}
           secondary={
-            <Link component={NextLink} href={'TODO:'} color='inherit'>
+            <Link component={NextLink} href={'TODO:'} color="inherit">
               {name}
             </Link>
           }
@@ -109,7 +111,7 @@ export default function ConcertCard({
             onClick={popover.onOpen}
             sx={{ position: 'absolute', bottom: 20, right: 8 }}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
 
           {[
@@ -117,7 +119,7 @@ export default function ConcertCard({
               label: artists.join(', '),
               icon: (
                 <Iconify
-                  icon='solar:users-group-rounded-bold'
+                  icon="solar:users-group-rounded-bold"
                   sx={{ color: 'primary.main' }}
                 />
               ),
@@ -126,7 +128,7 @@ export default function ConcertCard({
               label: fDate(event.date),
               icon: (
                 <Iconify
-                  icon='solar:clock-circle-bold'
+                  icon="solar:clock-circle-bold"
                   sx={{ color: 'info.main' }}
                 />
               ),
@@ -135,7 +137,7 @@ export default function ConcertCard({
               label: destination,
               icon: (
                 <Iconify
-                  icon='mingcute:location-fill'
+                  icon="mingcute:location-fill"
                   sx={{ color: 'error.main' }}
                 />
               ),
@@ -144,8 +146,8 @@ export default function ConcertCard({
             <Stack
               key={item.label}
               spacing={1}
-              direction='row'
-              alignItems='center'
+              direction="row"
+              alignItems="center"
               sx={{ typography: 'body2' }}
             >
               {item.icon}
@@ -158,7 +160,7 @@ export default function ConcertCard({
       <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
-        arrow='right-top'
+        arrow="right-top"
         sx={{ width: 140 }}
       >
         <MenuItem
@@ -167,7 +169,7 @@ export default function ConcertCard({
             onView();
           }}
         >
-          <Iconify icon='solar:eye-bold' />
+          <Iconify icon="solar:eye-bold" />
           View
         </MenuItem>
 
@@ -177,7 +179,7 @@ export default function ConcertCard({
             onEdit();
           }}
         >
-          <Iconify icon='solar:pen-bold' />
+          <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
 
@@ -188,7 +190,7 @@ export default function ConcertCard({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='solar:trash-bin-trash-bold' />
+          <Iconify icon="solar:trash-bin-trash-bold" />
           Delete
         </MenuItem>
       </CustomPopover>

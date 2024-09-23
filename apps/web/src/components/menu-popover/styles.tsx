@@ -1,4 +1,5 @@
 import { alpha, styled } from '@mui/material/styles';
+
 import { MenuPopoverArrowValue } from 'src/components/menu-popover/types';
 
 export const StyledArrow = styled('span')<{ arrow: MenuPopoverArrowValue }>(({

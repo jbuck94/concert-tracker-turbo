@@ -1,8 +1,6 @@
 import { Theme, alpha } from '@mui/material/styles';
 import { SwitchProps, switchClasses } from '@mui/material/Switch';
 
-// ----------------------------------------------------------------------
-
 export default function Switch(theme: Theme) {
   const isLight = theme.palette.mode === 'light';
 
@@ -59,7 +57,8 @@ export default function Switch(theme: Theme) {
   return {
     MuiSwitch: {
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: SwitchProps }) => rootStyles(ownerState),
+        root: ({ ownerState }: { ownerState: SwitchProps }) =>
+          rootStyles(ownerState),
       },
     },
   };

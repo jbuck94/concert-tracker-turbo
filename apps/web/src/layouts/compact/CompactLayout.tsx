@@ -1,8 +1,9 @@
 import dynamic from 'next/dynamic';
 
 import { Container, Stack } from '@mui/material';
-import { HEADER } from 'src/utils/config-global';
+
 import useOffSetTop from '@/hooks/useOffsetTop';
+import { HEADER } from 'src/utils/config-global';
 
 const Header = dynamic(() => import('src/layouts/compact/Header'), {
   ssr: false,
@@ -18,7 +19,7 @@ export default function CompactLayout({ children }: Props) {
   return (
     <>
       <Header isOffset={isOffset} />
-      <Container component='main'>
+      <Container component="main">
         <Stack
           sx={{
             py: 12,

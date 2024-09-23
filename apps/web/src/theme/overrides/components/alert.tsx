@@ -1,13 +1,10 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { AlertProps, alertClasses } from '@mui/material/Alert';
+import { Theme, alpha } from '@mui/material/styles';
+
 import Iconify from 'src/components/iconify/Iconify';
 // components
 
-// ----------------------------------------------------------------------
-
 const COLORS = ['info', 'success', 'warning', 'error'] as const;
-
-// ----------------------------------------------------------------------
 
 export default function Alert(theme: Theme) {
   const isLight = theme.palette.mode === 'light';
@@ -53,10 +50,10 @@ export default function Alert(theme: Theme) {
     MuiAlert: {
       defaultProps: {
         iconMapping: {
-          error: <Iconify icon='solar:danger-bold' width={24} />,
-          info: <Iconify icon='eva:info-fill' width={24} />,
-          success: <Iconify icon='eva:checkmark-circle-2-fill' width={24} />,
-          warning: <Iconify icon='eva:alert-triangle-fill' width={24} />,
+          error: <Iconify icon="solar:danger-bold" width={24} />,
+          info: <Iconify icon="eva:info-fill" width={24} />,
+          success: <Iconify icon="eva:checkmark-circle-2-fill" width={24} />,
+          warning: <Iconify icon="eva:alert-triangle-fill" width={24} />,
         },
       },
 

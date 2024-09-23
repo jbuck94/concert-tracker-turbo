@@ -1,0 +1,12 @@
+{
+  "folders": [
+    { "name": "api", "path": "../apps/api" },
+    { "name": "web", "path": "../apps/web" },
+    {
+      "name": "eslint-config-custom",
+      "path": "../packages/eslint-config-custom",
+    },
+    { "name": "runtime", "path": "../packages/runtime" },
+    { "name": "tsconfig-custom", "path": "../packages/tsconfig-custom" },
+  ],
+}

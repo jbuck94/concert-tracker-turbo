@@ -1,9 +1,7 @@
-import { Theme } from '@mui/material/styles';
-import { typographyClasses } from '@mui/material/Typography';
 import { accordionClasses } from '@mui/material/Accordion';
 import { accordionSummaryClasses } from '@mui/material/AccordionSummary';
-
-// ----------------------------------------------------------------------
+import { Theme } from '@mui/material/styles';
+import { typographyClasses } from '@mui/material/Typography';
 
 export default function Accordion(theme: Theme) {
   return {

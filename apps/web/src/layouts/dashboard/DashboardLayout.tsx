@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { Box } from '@mui/material';
-import Main from 'src/layouts/dashboard/Main';
 
-import NavVertical from 'src/layouts/dashboard/nav/NavVertical';
 import AuthGuard from 'src/auth/AuthGuard';
 import Header from 'src/layouts/dashboard/header/Header';
+import Main from 'src/layouts/dashboard/Main';
+import NavVertical from 'src/layouts/dashboard/nav/NavVertical';
 
 type Props = {
   children?: React.ReactNode;

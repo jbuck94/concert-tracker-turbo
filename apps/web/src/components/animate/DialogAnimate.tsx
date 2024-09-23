@@ -1,5 +1,6 @@
-import { AnimatePresence, m } from 'framer-motion';
 import { Box, Dialog, DialogProps, Paper } from '@mui/material';
+import { AnimatePresence, m } from 'framer-motion';
+
 import { varFade } from 'src/components/animate/variants/fade';
 
 export interface Props extends DialogProps {
@@ -20,7 +21,7 @@ export default function DialogAnimate({
       {open && (
         <Dialog
           fullWidth
-          maxWidth='xs'
+          maxWidth="xs"
           open={open}
           onClose={onClose}
           PaperComponent={(props) => (

@@ -1,7 +1,5 @@
 import { Barlow, Public_Sans } from 'next/font/google';
 
-// ----------------------------------------------------------------------
-
 export function remToPx(value: string) {
   return Math.round(parseFloat(value) * 16);
 }
@@ -10,7 +8,15 @@ export function pxToRem(value: number) {
   return `${value / 16}rem`;
 }
 
-export function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg: number }) {
+export function responsiveFontSizes({
+  sm,
+  md,
+  lg,
+}: {
+  sm: number;
+  md: number;
+  lg: number;
+}) {
   return {
     '@media (min-width:600px)': {
       fontSize: pxToRem(sm),
@@ -42,8 +48,6 @@ export const secondaryFont = Barlow({
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
 });
-
-// ----------------------------------------------------------------------
 
 // LEARN MORE
 // https://nextjs.org/docs/basic-features/font-optimization#google-fonts

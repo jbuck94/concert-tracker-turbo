@@ -1,5 +1,7 @@
-import { Container } from '@mui/material';
 import Head from 'next/head';
+
+import { Container } from '@mui/material';
+
 import { CreateEditConcertForm } from 'src/components/concerts/CreateEditConcertForm';
 // import { CreateEditConcertForm } from 'src/components/concerts/CreateEditConcertForm';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
@@ -16,9 +18,9 @@ function ConcertCreate() {
       <Head>
         <title>wento</title>
       </Head>
-      <Container maxWidth='xl'>
+      <Container maxWidth="xl">
         <CustomBreadcrumbs
-          heading='New Concert'
+          heading="New Concert"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {

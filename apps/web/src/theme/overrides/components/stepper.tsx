@@ -1,7 +1,5 @@
 import { Theme } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
 export default function Stepper(theme: Theme) {
   return {
     MuiStepConnector: {

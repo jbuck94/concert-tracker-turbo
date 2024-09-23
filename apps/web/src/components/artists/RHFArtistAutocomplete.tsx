@@ -1,12 +1,14 @@
-import { useDebouncedState } from '@/hooks/useDebouncedState';
+import { useEffect, useState } from 'react';
+
 import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { Controller, useFormContext } from 'react-hook-form';
+
+import { useDebouncedState } from '@/hooks/useDebouncedState';
 import {
   SpotifyArtistFragment,
   useArtistAutocompleteQuery,
 } from 'apollo/generated-types';
-import { useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props<
   T,

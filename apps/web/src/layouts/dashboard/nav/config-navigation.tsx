@@ -1,6 +1,7 @@
 import GroupTwoToneIcon from '@mui/icons-material/GroupTwoTone';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import PlaceIcon from '@mui/icons-material/Place';
+
 import { PATH_DASHBOARD } from 'src/routes/paths';
 
 const navConfig = [

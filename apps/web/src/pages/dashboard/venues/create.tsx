@@ -1,6 +1,8 @@
-import { Container } from '@mui/material';
 import Head from 'next/head';
 import { useState } from 'react';
+
+import { Container } from '@mui/material';
+
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
 import { CreateEditVenueForm } from 'src/components/venues/CreateEditVenueForm';
 import DashboardLayout from 'src/layouts/dashboard/DashboardLayout';
@@ -22,9 +24,9 @@ function ArtistCreate() {
       <Head>
         <title>wento</title>
       </Head>
-      <Container maxWidth='xl'>
+      <Container maxWidth="xl">
         <CustomBreadcrumbs
-          heading='New Artist'
+          heading="New Artist"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {

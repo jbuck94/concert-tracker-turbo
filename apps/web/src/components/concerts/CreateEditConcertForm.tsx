@@ -1,16 +1,18 @@
-import { Button, Card, Grid, List, ListItem, Typography } from '@mui/material';
-import { useCreateUserEventMutation } from 'apollo/generated-types';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import FormProvider from 'src/components/hook-form/FormProvider';
-import RHFArtistAutocomplete from 'src/components/artists/RHFArtistAutocomplete';
-import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
-import { PATH_DASHBOARD } from 'src/routes/paths';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { LoadingButton } from '@mui/lab';
-import RHFVenueAutoComplete from '../venues/RHFVenueAutocomplete';
-import RHFDatePicker from '../hook-form/RHFDatePicker';
+import { Button, Card, Grid, List, ListItem, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useFieldArray, useForm } from 'react-hook-form';
+import * as z from 'zod';
+
+import { useCreateUserEventMutation } from 'apollo/generated-types';
+import RHFArtistAutocomplete from 'src/components/artists/RHFArtistAutocomplete';
+import FormProvider from 'src/components/hook-form/FormProvider';
+import RHFDatePicker from 'src/components/hook-form/RHFDatePicker';
+import RHFVenueAutoComplete from 'src/components/venues/RHFVenueAutocomplete';
+import { PATH_DASHBOARD } from 'src/routes/paths';
 
 const schema = z.object({
   venue: z.object({ id: z.string(), name: z.string() }),
@@ -98,7 +100,7 @@ export const CreateEditConcertForm = () => {
     >
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Typography
-          variant='overline'
+          variant="overline"
           sx={{ display: 'block', color: 'text.secondary', mb: 2 }}
         >
           Section Name
@@ -107,15 +109,15 @@ export const CreateEditConcertForm = () => {
         <Grid container spacing={3}>
           <Grid item xs={6}>
             {/* <RHFTextField name='venue' label='Venue' /> */}
-            <RHFVenueAutoComplete name='venue' label='Venue' />
+            <RHFVenueAutoComplete name="venue" label="Venue" />
           </Grid>
           <Grid item xs={6}>
-            <RHFDatePicker name='date' label='Date' />
+            <RHFDatePicker name="date" label="Date" />
           </Grid>
 
           <Grid item xs={12}>
             <Typography
-              variant='overline'
+              variant="overline"
               sx={{ display: 'block', color: 'text.secondary' }}
             >
               Artists
@@ -130,8 +132,8 @@ export const CreateEditConcertForm = () => {
                     />
                     <Button
                       sx={{ ml: 3 }}
-                      variant='outlined'
-                      color='error'
+                      variant="outlined"
+                      color="error"
                       // @ts-ignore
                       onClick={() => remove(index)}
                     >
@@ -144,8 +146,8 @@ export const CreateEditConcertForm = () => {
           </Grid>
           <Grid item xs={12} display={'flex'}>
             <Button
-              variant='outlined'
-              color='info'
+              variant="outlined"
+              color="info"
               // @ts-ignore
               onClick={() => append(undefined)}
             >
@@ -153,7 +155,7 @@ export const CreateEditConcertForm = () => {
             </Button>
           </Grid>
           <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
-            <LoadingButton type='submit' loading={createEventLoading}>
+            <LoadingButton type="submit" loading={createEventLoading}>
               Submit
             </LoadingButton>
           </Grid>

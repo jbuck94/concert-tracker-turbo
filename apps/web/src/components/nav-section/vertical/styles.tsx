@@ -1,5 +1,6 @@
-import { alpha, styled } from '@mui/material/styles';
 import { ListItemButton, ListItemIcon, ListSubheader } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+
 import { NavItemProps } from 'src/components/nav-section/types';
 import { ICON, NAV } from 'src/utils/config-global';
 
@@ -74,8 +75,6 @@ export const StyledItem = styled(ListItemButton, {
   };
 });
 
-// ----------------------------------------------------------------------
-
 export const StyledIcon = styled(ListItemIcon)({
   display: 'flex',
   alignItems: 'center',
@@ -83,8 +82,6 @@ export const StyledIcon = styled(ListItemIcon)({
   width: ICON.NAV_ITEM,
   height: ICON.NAV_ITEM,
 });
-
-// ----------------------------------------------------------------------
 
 type StyledDotIconProps = {
   active?: boolean;
@@ -105,8 +102,6 @@ export const StyledDotIcon = styled('span', {
     backgroundColor: theme.palette.primary.main,
   }),
 }));
-
-// ----------------------------------------------------------------------
 
 export const StyledSubheader = styled(ListSubheader)(({ theme }) => ({
   ...theme.typography.overline,

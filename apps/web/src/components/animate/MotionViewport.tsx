@@ -1,6 +1,5 @@
-import { MotionProps, m } from 'framer-motion';
-// @mui
 import { Box, BoxProps } from '@mui/material';
+import { MotionProps, m } from 'framer-motion';
 
 import useResponsive from '@/hooks/useResponsive';
 import { varContainer } from 'src/components/animate/variants/container';
@@ -26,8 +25,8 @@ export default function MotionViewport({
   return (
     <Box
       component={m.div}
-      initial='initial'
-      whileInView='animate'
+      initial="initial"
+      whileInView="animate"
       viewport={{ once: true, amount: 0.3 }}
       variants={varContainer()}
       {...other}

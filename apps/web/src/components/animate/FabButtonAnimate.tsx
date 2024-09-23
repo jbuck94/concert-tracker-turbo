@@ -1,6 +1,7 @@
-import { m } from 'framer-motion';
 import { forwardRef } from 'react';
+
 import { Box, Fab, FabProps, SxProps } from '@mui/material';
+import { m } from 'framer-motion';
 
 export interface FabButtonAnimateProps extends FabProps {
   sxWrap?: SxProps;
@@ -48,8 +49,8 @@ function AnimateWrap({ size, children, sxWrap }: AnimateWrapProp) {
   return (
     <Box
       component={m.div}
-      whileTap='tap'
-      whileHover='hover'
+      whileTap="tap"
+      whileHover="hover"
       variants={(isSmall && varSmall) || (isLarge && varLarge) || varMedium}
       sx={{
         display: 'inline-flex',

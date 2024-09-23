@@ -1,9 +1,9 @@
-import { useTheme } from '@mui/material/styles';
 import { AppBar, IconButton, Stack, Toolbar } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import useResponsive from '@/hooks/useResponsive';
 import Iconify from 'src/components/iconify/Iconify';
 import AccountPopover from 'src/layouts/dashboard/header/AccountPopover';
-
 import { HEADER, NAV } from 'src/utils/config-global';
 import { bgBlur } from 'src/utils/cssStyles';
 
@@ -20,15 +20,15 @@ export default function Header({ onOpenNav }: Props) {
     <>
       {!isDesktop && (
         <IconButton onClick={onOpenNav} sx={{ mr: 1, color: 'text.primary' }}>
-          <Iconify icon='eva:menu-2-fill' />
+          <Iconify icon="eva:menu-2-fill" />
         </IconButton>
       )}
 
       <Stack
         flexGrow={1}
-        direction='row'
-        alignItems='center'
-        justifyContent='flex-end'
+        direction="row"
+        alignItems="center"
+        justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
         <AccountPopover />

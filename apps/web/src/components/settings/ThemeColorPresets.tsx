@@ -1,4 +1,3 @@
-
 import {
   PaletteOptions,
   ThemeProvider,

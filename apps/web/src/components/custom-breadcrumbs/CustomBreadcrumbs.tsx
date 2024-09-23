@@ -1,10 +1,11 @@
 import Box from '@mui/material/Box';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { CustomBreadcrumbsProps } from 'src/components/custom-breadcrumbs/types';
+
 import BreadcrumbsLink from 'src/components/custom-breadcrumbs/LinkItem';
+import { CustomBreadcrumbsProps } from 'src/components/custom-breadcrumbs/types';
 
 export default function CustomBreadcrumbs({
   links,
@@ -19,11 +20,11 @@ export default function CustomBreadcrumbs({
 
   return (
     <Box sx={{ ...sx }}>
-      <Stack direction='row' alignItems='center'>
+      <Stack direction="row" alignItems="center">
         <Box sx={{ flexGrow: 1 }}>
           {/* HEADING */}
           {heading && (
-            <Typography variant='h4' gutterBottom>
+            <Typography variant="h4" gutterBottom>
               {heading}
             </Typography>
           )}
@@ -53,9 +54,9 @@ export default function CustomBreadcrumbs({
             <Link
               key={href}
               href={href}
-              variant='body2'
-              target='_blank'
-              rel='noopener'
+              variant="body2"
+              target="_blank"
+              rel="noopener"
               sx={{ display: 'table' }}
             >
               {href}
@@ -67,12 +68,10 @@ export default function CustomBreadcrumbs({
   );
 }
 
-// ----------------------------------------------------------------------
-
 function Separator() {
   return (
     <Box
-      component='span'
+      component="span"
       sx={{
         width: 4,
         height: 4,

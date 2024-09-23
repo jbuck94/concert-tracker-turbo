@@ -1,7 +1,5 @@
 import { Theme } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
 export default function Card(theme: Theme) {
   return {
     MuiCard: {
@@ -17,7 +15,10 @@ export default function Card(theme: Theme) {
     MuiCardHeader: {
       defaultProps: {
         titleTypographyProps: { variant: 'h6' },
-        subheaderTypographyProps: { variant: 'body2', marginTop: theme.spacing(0.5) },
+        subheaderTypographyProps: {
+          variant: 'body2',
+          marginTop: theme.spacing(0.5),
+        },
       },
       styleOverrides: {
         root: {

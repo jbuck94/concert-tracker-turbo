@@ -1,14 +1,15 @@
 import NextLink from 'next/link';
 
 import { Box, Link, ListItemText, Tooltip } from '@mui/material';
+
 import RoleBasedGuard from 'src/auth/RoleBasedGuard';
 import Iconify from 'src/components/iconify/Iconify';
+import { NavItemProps } from 'src/components/nav-section/types';
 import {
+  StyledDotIcon,
   StyledIcon,
   StyledItem,
 } from 'src/components/nav-section/vertical/styles';
-import { NavItemProps } from 'src/components/nav-section/types';
-import { StyledDotIcon } from 'src/components/nav-section/vertical/styles';
 
 export default function NavItem({
   item,
@@ -42,7 +43,7 @@ export default function NavItem({
         primary={title}
         secondary={
           caption && (
-            <Tooltip title={caption} placement='top-start'>
+            <Tooltip title={caption} placement="top-start">
               <span>{caption}</span>
             </Tooltip>
           )
@@ -59,7 +60,7 @@ export default function NavItem({
       />
 
       {info && (
-        <Box component='span' sx={{ lineHeight: 0 }}>
+        <Box component="span" sx={{ lineHeight: 0 }}>
           {info}
         </Box>
       )}
@@ -80,7 +81,7 @@ export default function NavItem({
     // ExternalLink
     if (isExternalLink)
       return (
-        <Link href={path} target='_blank' rel='noopener' underline='none'>
+        <Link href={path} target="_blank" rel="noopener" underline="none">
           {renderContent}
         </Link>
       );
@@ -92,7 +93,7 @@ export default function NavItem({
 
     // Default
     return (
-      <Link component={NextLink} href={path} underline='none'>
+      <Link component={NextLink} href={path} underline="none">
         {renderContent}
       </Link>
     );

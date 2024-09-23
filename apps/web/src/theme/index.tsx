@@ -1,30 +1,23 @@
-'use client';
-
-import merge from 'lodash/merge';
 import { useMemo } from 'react';
-// @mui
+
 import CssBaseline from '@mui/material/CssBaseline';
 import {
   ThemeProvider as MuiThemeProvider,
   ThemeOptions,
   createTheme,
 } from '@mui/material/styles';
+import merge from 'lodash/merge';
 
 // system
-import { palette } from './palette';
-import { shadows } from './shadows';
-import { typography } from './typography';
-import { customShadows } from './custom-shadows';
-import { componentsOverrides } from './overrides';
-// options
-import { presets } from './options/presets';
-import { darkMode } from './options/dark-mode';
-import { contrast } from './options/contrast';
-
-//
-import { NextAppDirEmotionCacheProvider } from './next-emotion-cache';
-
-// ----------------------------------------------------------------------
+import { customShadows } from 'src/theme/custom-shadows';
+import { NextAppDirEmotionCacheProvider } from 'src/theme/next-emotion-cache';
+import { contrast } from 'src/theme/options/contrast';
+import { darkMode } from 'src/theme/options/dark-mode';
+import { presets } from 'src/theme/options/presets';
+import { componentsOverrides } from 'src/theme/overrides';
+import { palette } from 'src/theme/palette';
+import { shadows } from 'src/theme/shadows';
+import { typography } from 'src/theme/typography';
 
 type Props = {
   children: React.ReactNode;

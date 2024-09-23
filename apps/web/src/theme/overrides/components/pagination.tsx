@@ -1,10 +1,15 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { PaginationProps } from '@mui/material/Pagination';
 import { paginationItemClasses } from '@mui/material/PaginationItem';
+import { Theme, alpha } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
-const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 // NEW VARIANT
 declare module '@mui/material/Pagination' {
@@ -19,8 +24,6 @@ declare module '@mui/material/Pagination' {
     error: true;
   }
 }
-
-// ----------------------------------------------------------------------
 
 export default function Pagination(theme: Theme) {
   const isLight = theme.palette.mode === 'light';
@@ -49,10 +52,14 @@ export default function Pagination(theme: Theme) {
           ...(defaultColor && {
             backgroundColor: alpha(theme.palette.grey[500], 0.08),
             ...(filledVariant && {
-              color: isLight ? theme.palette.common.white : theme.palette.grey[800],
+              color: isLight
+                ? theme.palette.common.white
+                : theme.palette.grey[800],
               backgroundColor: theme.palette.text.primary,
               '&:hover': {
-                backgroundColor: isLight ? theme.palette.grey[700] : theme.palette.grey[100],
+                backgroundColor: isLight
+                  ? theme.palette.grey[700]
+                  : theme.palette.grey[100],
               },
             }),
           }),
@@ -85,7 +92,8 @@ export default function Pagination(theme: Theme) {
   return {
     MuiPagination: {
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: PaginationProps }) => rootStyles(ownerState),
+        root: ({ ownerState }: { ownerState: PaginationProps }) =>
+          rootStyles(ownerState),
       },
     },
   };

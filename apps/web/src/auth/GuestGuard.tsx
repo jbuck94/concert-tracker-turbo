@@ -1,9 +1,8 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { useRouter } from 'next/router';
-
-import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
 import { useAuthContext } from 'src/auth/useAuthContext';
+import LoadingScreen from 'src/components/loading-screen/LoadingScreen';
 
 type GuestGuardProps = {
   children: React.ReactNode;

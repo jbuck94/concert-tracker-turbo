@@ -1,8 +1,6 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { ratingClasses } from '@mui/material/Rating';
+import { Theme, alpha } from '@mui/material/styles';
 import SvgIcon, { SvgIconProps, svgIconClasses } from '@mui/material/SvgIcon';
-
-// ----------------------------------------------------------------------
 
 const Icon = (props: SvgIconProps) => (
   <SvgIcon {...props}>

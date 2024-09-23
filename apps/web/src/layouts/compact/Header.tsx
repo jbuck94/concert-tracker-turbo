@@ -13,7 +13,7 @@ export default function Header({ isOffset }: Props) {
   const theme = useTheme();
 
   return (
-    <AppBar color='transparent' sx={{ boxShadow: 0 }}>
+    <AppBar color="transparent" sx={{ boxShadow: 0 }}>
       <Toolbar
         sx={{
           justifyContent: 'space-between',

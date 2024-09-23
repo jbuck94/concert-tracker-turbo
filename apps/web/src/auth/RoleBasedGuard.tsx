@@ -1,6 +1,7 @@
-import ForbiddenIllustration from '@/assets/illustrations/ForbiddenIllustration';
 import { Container, Typography } from '@mui/material';
 import { m } from 'framer-motion';
+
+import ForbiddenIllustration from '@/assets/illustrations/ForbiddenIllustration';
 import { useAuthContext } from 'src/auth/useAuthContext';
 import MotionContainer from 'src/components/animate/MotionContainer';
 import { varBounce } from 'src/components/animate/variants/bounce';
@@ -26,7 +27,7 @@ export default function RoleBasedGuard({
     return hasContent ? (
       <Container component={MotionContainer} sx={{ textAlign: 'center' }}>
         <m.div variants={varBounce().in}>
-          <Typography variant='h3' paragraph>
+          <Typography variant="h3" paragraph>
             Permission Denied
           </Typography>
         </m.div>

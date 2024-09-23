@@ -1,7 +1,4 @@
-//
-import { ExtendFile } from './types';
-
-// ----------------------------------------------------------------------
+import { ExtendFile } from 'src/components/file-thumbnail/types';
 
 // Define more types here
 const FORMAT_PDF = ['pdf'];
@@ -17,8 +14,6 @@ const FORMAT_IMG = ['jpg', 'jpeg', 'gif', 'bmp', 'png', 'svg'];
 const FORMAT_VIDEO = ['m4v', 'avi', 'mpg', 'mp4', 'webm'];
 
 const iconUrl = (icon: string) => `/assets/icons/files/${icon}.svg`;
-
-// ----------------------------------------------------------------------
 
 export function fileFormat(fileUrl: string | undefined) {
   let format;
@@ -63,8 +58,6 @@ export function fileFormat(fileUrl: string | undefined) {
 
   return format;
 }
-
-// ----------------------------------------------------------------------
 
 export function fileThumb(fileUrl: string) {
   let thumb;
@@ -112,19 +105,13 @@ export function fileThumb(fileUrl: string) {
   return thumb;
 }
 
-// ----------------------------------------------------------------------
-
 export function fileTypeByUrl(fileUrl = '') {
   return (fileUrl && fileUrl.split('.').pop()) || '';
 }
 
-// ----------------------------------------------------------------------
-
 export function fileNameByUrl(fileUrl: string) {
   return fileUrl.split('/').pop();
 }
-
-// ----------------------------------------------------------------------
 
 export function fileData(file: ExtendFile | string) {
   // Url

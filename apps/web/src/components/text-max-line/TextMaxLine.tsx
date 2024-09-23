@@ -1,11 +1,8 @@
 import { forwardRef } from 'react';
-import { TypographyProps } from '@mui/material/Typography';
-import { Variant } from '@mui/material/styles/createTypography';
-import { LinkProps } from '@mui/material/Link';
 
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-//
+import Link, { LinkProps } from '@mui/material/Link';
+import { Variant } from '@mui/material/styles/createTypography';
+import Typography, { TypographyProps } from '@mui/material/Typography';
 
 import useTypography from '@/hooks/useTypography';
 
@@ -49,7 +46,7 @@ const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(
     if (asLink) {
       return (
         <Link
-          color='inherit'
+          color="inherit"
           ref={ref}
           variant={variant}
           sx={{ ...styles }}

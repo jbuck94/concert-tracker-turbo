@@ -1,16 +1,18 @@
-import Link from '@mui/material/Link';
 import NextLink from 'next/link';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
-import Iconify from 'src/components/iconify/Iconify';
-import usePopover from '@/hooks/usePopover';
-import Image from 'src/components/image/Image';
-import CustomPopover from 'src/components/custom-popover/CustomPopover';
+
 import { Chip } from '@mui/material';
+import Card from '@mui/material/Card';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+
+import usePopover from '@/hooks/usePopover';
 import { ArtistFragment } from 'apollo/generated-types';
+import CustomPopover from 'src/components/custom-popover/CustomPopover';
+import Iconify from 'src/components/iconify/Iconify';
+import Image from 'src/components/image/Image';
 
 type Props = {
   artist: ArtistFragment;
@@ -33,14 +35,14 @@ export default function ArtistCard({
         {artist.image && (
           <Stack
             spacing={0.5}
-            direction='row'
+            direction="row"
             sx={{
               p: (theme) => theme.spacing(1, 1, 0, 1),
             }}
           >
             <Stack flexGrow={1} sx={{ position: 'relative' }}>
               <Image
-                ratio='16/9'
+                ratio="16/9"
                 alt={artist.image}
                 src={artist.image}
                 sx={{ borderRadius: 1, height: 1, width: 1 }}
@@ -54,7 +56,7 @@ export default function ArtistCard({
             p: (theme) => theme.spacing(2.5, 2.5, 2, 2.5),
           }}
           secondary={
-            <Link component={NextLink} href={'TODO:'} color='inherit'>
+            <Link component={NextLink} href={'TODO:'} color="inherit">
               {artist.name}
             </Link>
           }
@@ -82,15 +84,15 @@ export default function ArtistCard({
             onClick={popover.onOpen}
             sx={{ position: 'absolute', bottom: 20, right: 8 }}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
 
-          <Stack spacing={1} direction='row' alignItems='center'>
+          <Stack spacing={1} direction="row" alignItems="center">
             {artist.genres.slice(0, 2).map((genre) => (
               <Chip
                 key={genre}
                 label={`#${genre.replaceAll(' ', '-')}`}
-                size='small'
+                size="small"
                 onClick={() => {}}
               />
             ))}
@@ -101,7 +103,7 @@ export default function ArtistCard({
       <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
-        arrow='right-top'
+        arrow="right-top"
         sx={{ width: 140 }}
       >
         <MenuItem
@@ -110,7 +112,7 @@ export default function ArtistCard({
             onView();
           }}
         >
-          <Iconify icon='solar:eye-bold' />
+          <Iconify icon="solar:eye-bold" />
           View
         </MenuItem>
 
@@ -120,7 +122,7 @@ export default function ArtistCard({
             onEdit();
           }}
         >
-          <Iconify icon='solar:pen-bold' />
+          <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
 
@@ -131,7 +133,7 @@ export default function ArtistCard({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='solar:trash-bin-trash-bold' />
+          <Iconify icon="solar:trash-bin-trash-bold" />
           Delete
         </MenuItem>
       </CustomPopover>

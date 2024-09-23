@@ -1,9 +1,14 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { FabProps, fabClasses } from '@mui/material/Fab';
+import { Theme, alpha } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
-const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 // NEW VARIANT
 declare module '@mui/material/Fab' {
@@ -14,8 +19,6 @@ declare module '@mui/material/Fab' {
     softExtended: true;
   }
 }
-
-// ----------------------------------------------------------------------
 
 export default function Fab(theme: Theme) {
   const isLight = theme.palette.mode === 'light';
@@ -50,7 +53,9 @@ export default function Fab(theme: Theme) {
           backgroundColor: theme.palette.text.primary,
           color: isLight ? theme.palette.common.white : theme.palette.grey[800],
           '&:hover': {
-            backgroundColor: isLight ? theme.palette.grey[700] : theme.palette.grey[400],
+            backgroundColor: isLight
+              ? theme.palette.grey[700]
+              : theme.palette.grey[400],
           },
         }),
       }),
@@ -130,7 +135,9 @@ export default function Fab(theme: Theme) {
     };
 
     const size = {
-      ...((extendedVariant || outlinedExtendedVariant || softExtendedVariant) && {
+      ...((extendedVariant ||
+        outlinedExtendedVariant ||
+        softExtendedVariant) && {
         width: 'auto',
         '& svg': {
           marginRight: theme.spacing(1),
@@ -166,7 +173,8 @@ export default function Fab(theme: Theme) {
       },
 
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: FabProps }) => rootStyles(ownerState),
+        root: ({ ownerState }: { ownerState: FabProps }) =>
+          rootStyles(ownerState),
       },
     },
   };

@@ -8,7 +8,7 @@
     "start": "next start",
     "codegen": "graphql-code-generator --config ./codegen.ts",
     "dev:codegen": "start-server-and-test \"npm run dev\" 'http-get://localhost:8080/health' codegen",
-    "lint": "next lint"
+    "lint": "next lint --fix"
   },
   "dependencies": {
     "@apollo/client": "3.8.8",

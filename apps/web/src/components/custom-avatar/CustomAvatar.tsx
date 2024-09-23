@@ -1,6 +1,8 @@
 import { forwardRef } from 'react';
-import { useTheme } from '@mui/material/styles';
+
 import { Avatar, Badge } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import { CustomAvatarProps } from 'src/components/custom-avatar/types';
 
 const getCharAtName = (name: string) => name && name.charAt(0).toUpperCase();
@@ -48,7 +50,7 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
 
     return BadgeProps ? (
       <Badge
-        overlap='circular'
+        overlap="circular"
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         {...BadgeProps}
       >

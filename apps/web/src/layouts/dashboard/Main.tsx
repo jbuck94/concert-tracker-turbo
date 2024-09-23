@@ -1,5 +1,6 @@
-import useResponsive from '@/hooks/useResponsive';
 import { Box, BoxProps } from '@mui/material';
+
+import useResponsive from '@/hooks/useResponsive';
 import { HEADER, NAV } from 'src/utils/config-global';
 
 const SPACING = 8;
@@ -9,7 +10,7 @@ export default function Main({ children, sx, ...other }: BoxProps) {
 
   return (
     <Box
-      component='main'
+      component="main"
       sx={{
         flexGrow: 1,
         py: `${HEADER.H_MOBILE + SPACING}px`,

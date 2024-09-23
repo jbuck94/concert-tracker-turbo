@@ -1,15 +1,15 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { useRouter } from 'next/router';
-
-import { alpha } from '@mui/material/styles';
 import { Box, Divider, MenuItem, Stack, Typography } from '@mui/material';
-import { useAuthContext } from 'src/auth/useAuthContext';
-import { PATH_AUTH, PATH_DASHBOARD } from 'src/routes/paths';
+import { alpha } from '@mui/material/styles';
 import { useSnackbar } from 'notistack';
-import MenuPopover from 'src/components/menu-popover/MenuPopover';
-import CustomAvatar from 'src/components/custom-avatar/CustomAvatar';
+
+import { useAuthContext } from 'src/auth/useAuthContext';
 import { IconButtonAnimate } from 'src/components/animate/IconButtonAnimate';
+import CustomAvatar from 'src/components/custom-avatar/CustomAvatar';
+import MenuPopover from 'src/components/menu-popover/MenuPopover';
+import { PATH_AUTH } from 'src/routes/paths';
 
 const OPTIONS = [
   {
@@ -84,11 +84,11 @@ export default function AccountPopover() {
         sx={{ width: 200, p: 0 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant='subtitle2' noWrap>
+          <Typography variant="subtitle2" noWrap>
             {userName}
           </Typography>
 
-          <Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {user?.email}
           </Typography>
         </Box>

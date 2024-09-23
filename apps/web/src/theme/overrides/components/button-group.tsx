@@ -1,9 +1,17 @@
+import {
+  ButtonGroupProps,
+  buttonGroupClasses,
+} from '@mui/material/ButtonGroup';
 import { Theme, alpha } from '@mui/material/styles';
-import { ButtonGroupProps, buttonGroupClasses } from '@mui/material/ButtonGroup';
 
-// ----------------------------------------------------------------------
-
-const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 // NEW VARIANT
 declare module '@mui/material/ButtonGroup' {
@@ -11,8 +19,6 @@ declare module '@mui/material/ButtonGroup' {
     soft: true;
   }
 }
-
-// ----------------------------------------------------------------------
 
 export default function ButtonGroup(theme: Theme) {
   const rootStyles = (ownerState: ButtonGroupProps) => {
@@ -94,7 +100,8 @@ export default function ButtonGroup(theme: Theme) {
       },
 
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: ButtonGroupProps }) => rootStyles(ownerState),
+        root: ({ ownerState }: { ownerState: ButtonGroupProps }) =>
+          rootStyles(ownerState),
       },
     },
   };

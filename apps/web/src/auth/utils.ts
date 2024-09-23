@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { PATH_AUTH } from 'src/routes/paths';
 
 function jwtDecode(token: string) {

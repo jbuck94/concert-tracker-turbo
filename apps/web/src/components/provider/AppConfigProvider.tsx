@@ -1,5 +1,6 @@
-import { AppConfig, Auth0Config } from '@/pages/_app';
 import { ReactNode, createContext, useState } from 'react';
+
+import { AppConfig, Auth0Config } from '@/pages/_app';
 
 export interface Config {
   auth0: Auth0Config;

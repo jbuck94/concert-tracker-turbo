@@ -1,10 +1,8 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
+import { Theme, alpha } from '@mui/material/styles';
 import SvgIcon, { SvgIconProps, svgIconClasses } from '@mui/material/SvgIcon';
-//
-import { menuItem, paper } from '../../css';
 
-// ----------------------------------------------------------------------
+import { menuItem, paper } from 'src/theme/css';
 
 export default function Autocomplete(theme: Theme) {
   const Icon = (props: SvgIconProps) => (

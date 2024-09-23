@@ -1,5 +1,6 @@
-import { MotionProps, m } from 'framer-motion';
 import { Box, BoxProps } from '@mui/material';
+import { MotionProps, m } from 'framer-motion';
+
 import { varContainer } from 'src/components/animate/variants/container';
 
 type IProps = BoxProps & MotionProps;
@@ -32,9 +33,9 @@ export default function MotionContainer({
   return (
     <Box
       component={m.div}
-      initial='initial'
-      animate='animate'
-      exit='exit'
+      initial="initial"
+      animate="animate"
+      exit="exit"
       variants={varContainer()}
       {...other}
     >

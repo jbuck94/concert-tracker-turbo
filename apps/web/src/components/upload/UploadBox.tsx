@@ -1,14 +1,9 @@
-import { useDropzone } from 'react-dropzone';
-// @mui
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-//
+import { alpha } from '@mui/material/styles';
+import { useDropzone } from 'react-dropzone';
 
-//
-import { UploadProps } from './types';
-import Iconify from '../iconify/Iconify';
-
-// ----------------------------------------------------------------------
+import Iconify from 'src/components/iconify/Iconify';
+import { UploadProps } from 'src/components/upload/types';
 
 export default function UploadBox({
   placeholder,
@@ -61,7 +56,7 @@ export default function UploadBox({
     >
       <input {...getInputProps()} />
 
-      {placeholder || <Iconify icon='eva:cloud-upload-fill' width={28} />}
+      {placeholder || <Iconify icon="eva:cloud-upload-fill" width={28} />}
     </Box>
   );
 }

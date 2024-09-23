@@ -1,8 +1,7 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { ChipProps, chipClasses } from '@mui/material/Chip';
-import Iconify from 'src/components/iconify/Iconify';
+import { Theme, alpha } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
+import Iconify from 'src/components/iconify/Iconify';
 
 const COLORS = [
   'primary',
@@ -19,8 +18,6 @@ declare module '@mui/material/Chip' {
     soft: true;
   }
 }
-
-// ----------------------------------------------------------------------
 
 export default function Chip(theme: Theme) {
   const isLight = theme.palette.mode === 'light';
@@ -135,7 +132,7 @@ export default function Chip(theme: Theme) {
   return {
     MuiChip: {
       defaultProps: {
-        deleteIcon: <Iconify icon='solar:close-circle-bold' />,
+        deleteIcon: <Iconify icon="solar:close-circle-bold" />,
       },
 
       styleOverrides: {
