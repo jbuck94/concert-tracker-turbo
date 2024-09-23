@@ -2,7 +2,6 @@ import NextLink from 'next/link';
 
 import { Chip } from '@mui/material';
 import Card from '@mui/material/Card';
-import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
@@ -80,12 +79,12 @@ export default function ArtistCard({
             p: (theme) => theme.spacing(0, 2.5, 2.5, 2.5),
           }}
         >
-          <IconButton
+          {/* <IconButton
             onClick={popover.onOpen}
             sx={{ position: 'absolute', bottom: 20, right: 8 }}
           >
             <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
+          </IconButton> */}
 
           <Stack spacing={1} direction="row" alignItems="center">
             {artist.genres.slice(0, 2).map((genre) => (
