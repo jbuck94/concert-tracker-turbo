@@ -5,7 +5,6 @@
     "source.fixAll": "explicit"
   },
   "eslint.validate": ["typescript"],
-  "prettier.singleQuote": true,
   "eslint.workingDirectories": [
     "apps/api",
     "apps/web",
@@ -13,5 +12,10 @@
     "packages/runtime",
     "packages/tsconfig",
     "packages/tsconfig-custom"
-  ]
+  ],
+  "prettier.singleQuote": true,
+  "prisma.fileWatcher": true,
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  }
 }
