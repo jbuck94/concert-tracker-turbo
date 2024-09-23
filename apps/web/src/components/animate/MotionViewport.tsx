@@ -1,8 +1,8 @@
 import { Box, BoxProps } from '@mui/material';
 import { MotionProps, m } from 'framer-motion';
 
-import useResponsive from '@/hooks/useResponsive';
 import { varContainer } from 'src/components/animate/variants/container';
+import useResponsive from 'src/hooks/useResponsive';
 
 type IProps = BoxProps & MotionProps;
 

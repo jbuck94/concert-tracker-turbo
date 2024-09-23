@@ -4,11 +4,11 @@ import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { useDebouncedState } from '@/hooks/useDebouncedState';
 import {
   VenueAutocompleteResult,
   useVenueAutocompleteQuery,
 } from 'apollo/generated-types';
+import { useDebouncedState } from 'src/hooks/useDebouncedState';
 
 interface Props<
   T,

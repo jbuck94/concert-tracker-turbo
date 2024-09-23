@@ -1,8 +1,8 @@
 import { AppBar, IconButton, Stack, Toolbar } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-import useResponsive from '@/hooks/useResponsive';
 import Iconify from 'src/components/iconify/Iconify';
+import useResponsive from 'src/hooks/useResponsive';
 import AccountPopover from 'src/layouts/dashboard/header/AccountPopover';
 import { HEADER, NAV } from 'src/utils/config-global';
 import { bgBlur } from 'src/utils/cssStyles';

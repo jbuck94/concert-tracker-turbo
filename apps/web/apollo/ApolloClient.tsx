@@ -13,7 +13,7 @@ import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
 import { Auth0ContextInterface, useAuth0 } from '@auth0/auth0-react';
-import { useConfig } from '@/hooks/useConfig';
+import { useConfig } from 'src/hooks/useConfig';
 import { InternalEnv } from 'runtime';
 // import { useAuthContext } from 'src/auth/useAuthContext';
 

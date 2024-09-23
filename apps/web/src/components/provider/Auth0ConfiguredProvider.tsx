@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Auth0Provider } from '@auth0/auth0-react';
 
-import { useConfig } from '@/hooks/useConfig';
+import { useConfig } from 'src/hooks/useConfig';
 
 interface Auth0ConfiguredProviderProps {
   children: ReactNode;

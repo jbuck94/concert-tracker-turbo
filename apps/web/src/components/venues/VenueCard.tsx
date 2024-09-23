@@ -7,10 +7,10 @@ import Link from '@mui/material/Link';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 
-import usePopover from '@/hooks/usePopover';
 import { VenueFragment } from 'apollo/generated-types';
 import CustomPopover from 'src/components/custom-popover/CustomPopover';
 import Iconify from 'src/components/iconify/Iconify';
+import usePopover from 'src/hooks/usePopover';
 
 type Props = {
   venue: VenueFragment;

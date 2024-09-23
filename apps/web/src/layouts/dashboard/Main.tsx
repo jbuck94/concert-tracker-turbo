@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@mui/material';
 
-import useResponsive from '@/hooks/useResponsive';
+import useResponsive from 'src/hooks/useResponsive';
 import { HEADER, NAV } from 'src/utils/config-global';
 
 const SPACING = 8;

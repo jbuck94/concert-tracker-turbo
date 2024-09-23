@@ -4,7 +4,7 @@ import Link, { LinkProps } from '@mui/material/Link';
 import { Variant } from '@mui/material/styles/createTypography';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 
-import useTypography from '@/hooks/useTypography';
+import useTypography from 'src/hooks/useTypography';
 
 type IProps = TypographyProps & LinkProps;
 

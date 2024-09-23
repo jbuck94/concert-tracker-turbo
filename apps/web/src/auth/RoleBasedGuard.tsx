@@ -1,7 +1,7 @@
 import { Container, Typography } from '@mui/material';
 import { m } from 'framer-motion';
 
-import ForbiddenIllustration from '@/assets/illustrations/ForbiddenIllustration';
+import ForbiddenIllustration from 'src/assets/illustrations/ForbiddenIllustration';
 import { useAuthContext } from 'src/auth/useAuthContext';
 import MotionContainer from 'src/components/animate/MotionContainer';
 import { varBounce } from 'src/components/animate/variants/bounce';

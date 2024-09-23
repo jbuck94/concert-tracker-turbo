@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 
 import { Container, Stack } from '@mui/material';
 
-import useOffSetTop from '@/hooks/useOffsetTop';
+import useOffSetTop from 'src/hooks/useOffsetTop';
 import { HEADER } from 'src/utils/config-global';
 
 const Header = dynamic(() => import('src/layouts/compact/Header'), {

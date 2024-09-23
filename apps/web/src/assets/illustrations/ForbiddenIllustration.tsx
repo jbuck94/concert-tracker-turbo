@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Box, BoxProps } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-import BackgroundIllustration from '@/assets/illustrations/BackgroundIllustration';
+import BackgroundIllustration from 'src/assets/illustrations/BackgroundIllustration';
 
 function ForbiddenIllustration({ ...other }: BoxProps) {
   const theme = useTheme();

@@ -12,13 +12,13 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
-import { useDebouncedState } from '@/hooks/useDebouncedState';
 import {
   ArtistsDocument,
   SpotifyArtistFragment,
   useArtistAutocompleteQuery,
   useCreateArtistMutation,
 } from 'apollo/generated-types';
+import { useDebouncedState } from 'src/hooks/useDebouncedState';
 import { PATH_DASHBOARD } from 'src/routes/paths';
 
 export const CreateEditArtistForm = () => {
