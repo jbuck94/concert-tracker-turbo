@@ -59,6 +59,7 @@ export type CreateUserEventInput = {
   artistSpotifyIds: Array<Scalars['String']>;
   date: Scalars['DateTime'];
   forceCreateEvent?: InputMaybe<Scalars['Boolean']>;
+  notes?: InputMaybe<Scalars['String']>;
   venueSeatGeekId: Scalars['String'];
 };
 
@@ -435,6 +436,7 @@ export type UserEvent = {
   __typename?: 'UserEvent';
   event: Event;
   id: Scalars['ID'];
+  notes: Scalars['String'];
   user: User;
 };
 
@@ -552,14 +554,14 @@ export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryE
 export type MyEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyEventsQuery = { __typename?: 'Query', me?: { __typename?: 'User', events: { __typename?: 'UserEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'UserEventsConnectionEdge', cursor: string, node: { __typename?: 'UserEvent', id: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } | null };
+export type MyEventsQuery = { __typename?: 'Query', me?: { __typename?: 'User', events: { __typename?: 'UserEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'UserEventsConnectionEdge', cursor: string, node: { __typename?: 'UserEvent', id: string, notes: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } | null };
 
 export type CreateUserEventMutationVariables = Exact<{
   input: CreateUserEventInput;
 }>;
 
 
-export type CreateUserEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'ErrorEventExists', message: string, possibleEvents: { __typename?: 'ErrorEventExistsPossibleEventsConnection', edges: Array<{ __typename?: 'ErrorEventExistsPossibleEventsConnectionEdge', node: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } }> } } | { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateEventSuccess', data: { __typename?: 'UserEvent', id: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string } }, user: { __typename?: 'User', id: string, events: { __typename?: 'UserEventsConnection', edges: Array<{ __typename?: 'UserEventsConnectionEdge', node: { __typename?: 'UserEvent', event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } } } };
+export type CreateUserEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'ErrorEventExists', message: string, possibleEvents: { __typename?: 'ErrorEventExistsPossibleEventsConnection', edges: Array<{ __typename?: 'ErrorEventExistsPossibleEventsConnectionEdge', node: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } }> } } | { __typename?: 'ErrorInvalidRequest', message: string } | { __typename?: 'ErrorNotFound', message: string } | { __typename?: 'ErrorUniqueConstraint', message: string } | { __typename?: 'MutationCreateEventSuccess', data: { __typename?: 'UserEvent', id: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string } }, user: { __typename?: 'User', id: string, events: { __typename?: 'UserEventsConnection', edges: Array<{ __typename?: 'UserEventsConnectionEdge', node: { __typename?: 'UserEvent', notes: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -609,13 +611,13 @@ export const EventFragmentDoc = gql`
     fragment Event on Event {
   id
   name
+  date
   venue {
     id
     name
     city
     state
   }
-  date
   artists {
     edges {
       node {
@@ -834,6 +836,7 @@ export const MyEventsDocument = gql`
           event {
             ...Event
           }
+          notes
         }
       }
     }
@@ -911,6 +914,7 @@ export const CreateUserEventDocument = gql`
                 event {
                   ...Event
                 }
+                notes
               }
             }
           }

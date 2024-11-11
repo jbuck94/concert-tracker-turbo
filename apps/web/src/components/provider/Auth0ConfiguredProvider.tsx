@@ -18,7 +18,7 @@ export const Auth0ConfiguredProvider = ({
       domain={auth0.domain}
       clientId={auth0.clientId}
       authorizationParams={{
-        audience: 'concert-tracker-api',
+        audience: 'wento-api',
         redirect_uri:
           typeof window === 'undefined'
             ? ''

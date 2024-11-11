@@ -1,22 +1,37 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+// next
+import Head from 'next/head';
 
-import { PATH_AFTER_LOGIN } from 'src/utils/config-global';
+import { Box } from '@mui/material';
 
-export default function Index() {
-  const { pathname, replace, prefetch } = useRouter();
+import ScrollProgress from 'src/components/scrollbar/ScrollProgress';
+import MainLayout from 'src/layouts/Main';
+import HomeHero from 'src/sections/home/HomeHero';
+import HomeMinimal from 'src/sections/home/HomeMinimal';
 
-  useEffect(() => {
-    if (pathname === '/') {
-      replace(PATH_AFTER_LOGIN);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+HomePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout> {page} </MainLayout>
+);
 
-  useEffect(() => {
-    prefetch(PATH_AFTER_LOGIN);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+export default function HomePage() {
+  return (
+    <>
+      <Head>
+        <title> The starting point for your next project | Minimal UI</title>
+      </Head>
 
-  return null;
+      <ScrollProgress />
+
+      <HomeHero />
+
+      <Box
+        sx={{
+          overflow: 'hidden',
+          position: 'relative',
+          bgcolor: 'background.default',
+        }}
+      >
+        <HomeMinimal />
+      </Box>
+    </>
+  );
 }

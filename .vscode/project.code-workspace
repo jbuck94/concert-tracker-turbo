@@ -1,5 +1,6 @@
 {
   "folders": [
+    { "name": "concert-tracker-turbo", "path": "../" },
     { "name": "api", "path": "../apps/api" },
     { "name": "web", "path": "../apps/web" },
     {

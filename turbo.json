@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["INTERNAL_ENV", "NEXT_RUNTIME"],
+  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["db:generate", "^build"],

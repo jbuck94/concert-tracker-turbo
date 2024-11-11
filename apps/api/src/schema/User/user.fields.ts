@@ -24,6 +24,13 @@ export const User = builder.prismaObject('User', {
       cursor: 'id',
       nodeNullable: false,
       edgesNullable: false,
+      query: {
+        orderBy: {
+          event: {
+            date: 'desc',
+          },
+        },
+      },
     }),
   }),
 });

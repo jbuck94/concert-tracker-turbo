@@ -29,8 +29,8 @@ const server = new ApolloServer<Context>({
 });
 
 const checkJwt = auth({
-  audience: ['concert-tracker-api', 'https://jamiewbuck.auth0.com/userinfo'],
-  issuerBaseURL: 'https://jamiewbuck.auth0.com/',
+  audience: ['wento-api', 'https://wento.auth0.com/userinfo'],
+  issuerBaseURL: 'https://wento.us.auth0.com/',
 });
 
 server.start().then(async () => {

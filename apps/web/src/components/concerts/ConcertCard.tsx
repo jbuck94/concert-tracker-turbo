@@ -38,6 +38,8 @@ export default function ConcertCard({
 
   const destination = `${event.venue.name} (${event.venue.city}, ${event.venue.state})`;
 
+  const [coverImage, ...rest] = images;
+
   return (
     <>
       <Card>
@@ -48,32 +50,32 @@ export default function ConcertCard({
             p: (theme) => theme.spacing(1, 1, 0, 1),
           }}
         >
-          {images[0] && (
+          {coverImage && (
+            // <CardActionArea href={PATH_DASHBOARD.root}>
             <Stack flexGrow={1} sx={{ position: 'relative' }}>
               <Image
-                alt={images[0]}
-                src={images[0]}
+                alt={coverImage}
+                src={coverImage}
                 ratio="16/9"
                 sx={{ borderRadius: 1, height: 1, width: 1 }}
               />
             </Stack>
+            // </CardActionArea>
           )}
-          {/* {artists.length > 1 && (
-            <Stack spacing={0.5}>
-              <Image
-                alt={images[1]}
-                src={images[1]}
-                ratio='1/1'
-                sx={{ borderRadius: 1, width: 80 }}
-              />
-              <Image
-                alt={images[2]}
-                src={images[2]}
-                ratio='1/1'
-                sx={{ borderRadius: 1, width: 80 }}
-              />
-            </Stack>
-          )} */}
+          {/* <Stack spacing={0.5}>
+            {rest.map(
+              (image, index) =>
+                image &&
+                index <= 2 && (
+                  <Image
+                    alt={image}
+                    src={image}
+                    ratio="1/1"
+                    sx={{ borderRadius: 1, width: 80 }}
+                  />
+                )
+            )}
+          </Stack> */}
         </Stack>
 
         <ListItemText

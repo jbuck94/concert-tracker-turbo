@@ -9,7 +9,7 @@ import { useAuthContext } from 'src/auth/useAuthContext';
 import { IconButtonAnimate } from 'src/components/animate/IconButtonAnimate';
 import CustomAvatar from 'src/components/custom-avatar/CustomAvatar';
 import MenuPopover from 'src/components/menu-popover/MenuPopover';
-import { PATH_AUTH } from 'src/routes/paths';
+import { PATH_PAGE } from 'src/routes/paths';
 
 const OPTIONS = [
   {
@@ -40,10 +40,10 @@ export default function AccountPopover() {
     setOpenPopover(null);
   };
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
       logout();
-      replace(PATH_AUTH.login);
+      replace(PATH_PAGE.home);
       handleClosePopover();
     } catch (error) {
       console.error(error);

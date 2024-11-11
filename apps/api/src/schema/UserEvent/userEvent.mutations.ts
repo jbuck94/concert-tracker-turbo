@@ -13,6 +13,7 @@ const CreateUserEventInput = builder.inputType('CreateUserEventInput', {
     venueSeatGeekId: t.string({ required: true }),
     artistSpotifyIds: t.field({ type: ['String'], required: true }),
     date: t.field({ type: 'DateTime', required: true }),
+    notes: t.string({ required: false }),
     forceCreateEvent: t.boolean({ required: false, defaultValue: false }),
   }),
 });
@@ -148,6 +149,7 @@ builder.mutationFields((t) => ({
         create: {
           userId: context.user.id,
           eventId: event.id,
+          notes: args.input.notes || undefined, // dont set empty string
         },
         update: {},
       });

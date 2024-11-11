@@ -17,5 +17,6 @@ builder.prismaObject('UserEvent', {
     id: t.exposeID('id'),
     user: t.relation('user'),
     event: t.relation('event'),
+    notes: t.exposeString('notes'),
   }),
 });

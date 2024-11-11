@@ -11,13 +11,18 @@ import { useCreateUserEventMutation } from 'apollo/generated-types';
 import RHFArtistAutocomplete from 'src/components/artists/RHFArtistAutocomplete';
 import FormProvider from 'src/components/hook-form/FormProvider';
 import RHFDatePicker from 'src/components/hook-form/RHFDatePicker';
+import RHFTextField from 'src/components/hook-form/RHFTextField';
+import Iconify from 'src/components/iconify/Iconify';
 import RHFVenueAutoComplete from 'src/components/venues/RHFVenueAutocomplete';
 import { PATH_DASHBOARD } from 'src/routes/paths';
 
 const schema = z.object({
   venue: z.object({ id: z.string(), name: z.string() }),
   date: z.date(),
-  artists: z.array(z.object({ id: z.string(), name: z.string() })),
+  notes: z.string({}).nullable(),
+  artists: z
+    .array(z.object({ id: z.string(), name: z.string() }))
+    .min(1, 'You must include at least one artist'),
 });
 
 type Artist = {
@@ -31,14 +36,16 @@ export const CreateEditConcertForm = () => {
 
   const methods = useForm({
     resolver: zodResolver(schema),
+    reValidateMode: 'onBlur',
     defaultValues: {
       venue: {} as z.infer<typeof schema>['venue'],
+      notes: '',
       date: new Date(),
       artists: [] as Artist[],
     },
   });
 
-  const { control, handleSubmit, getValues, watch } = methods;
+  const { control, handleSubmit, getValues, formState, watch } = methods;
 
   const { append, remove, fields } = useFieldArray({
     control,
@@ -59,6 +66,7 @@ export const CreateEditConcertForm = () => {
             date: data.date,
             artistSpotifyIds: data.artists.map((artist) => artist.id),
             venueSeatGeekId: data.venue.id,
+            notes: data.notes,
           },
         },
       });
@@ -66,7 +74,7 @@ export const CreateEditConcertForm = () => {
       switch (result.data?.createEvent.__typename) {
         case 'MutationCreateEventSuccess': {
           enqueueSnackbar('Created new event!', { variant: 'success' });
-          push(PATH_DASHBOARD.concert.root);
+          push(PATH_DASHBOARD.user.concerts);
           break;
         }
         case 'ErrorEventExists': {
@@ -144,15 +152,25 @@ export const CreateEditConcertForm = () => {
               })}
             </List>
           </Grid>
+
           <Grid item xs={12} display={'flex'}>
             <Button
               variant="outlined"
-              color="info"
+              color={formState?.errors?.artists?.message ? 'warning' : 'info'}
               // @ts-ignore
-              onClick={() => append(undefined)}
+              startIcon={<Iconify icon="mingcute:add-line" />}
+              onClick={() => append({} as Artist)}
+              sx={{
+                transition: '.3s',
+              }}
             >
-              Add Artist
+              {formState?.errors?.artists?.message
+                ? 'Click to add an artist'
+                : 'Add Artist'}
             </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <RHFTextField name="notes" label="Notes" multiline minRows={3} />
           </Grid>
           <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton type="submit" loading={createEventLoading}>
