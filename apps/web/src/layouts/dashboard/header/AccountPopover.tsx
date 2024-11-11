@@ -42,9 +42,9 @@ export default function AccountPopover() {
 
   const handleLogout = () => {
     try {
-      logout();
       replace(PATH_PAGE.home);
       handleClosePopover();
+      logout();
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Unable to logout!', { variant: 'error' });

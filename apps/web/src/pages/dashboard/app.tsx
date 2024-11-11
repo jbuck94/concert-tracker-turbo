@@ -12,7 +12,7 @@ function App() {
   const { replace } = useRouter();
 
   useEffect(() => {
-    replace(PATH_DASHBOARD.artist.root);
+    replace(PATH_DASHBOARD.user.concerts);
   }, [replace]);
 }
 

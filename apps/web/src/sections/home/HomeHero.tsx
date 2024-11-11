@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material';
-import { alpha, styled, useTheme } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import { m, useScroll } from 'framer-motion';
 
 import MotionContainer from 'src/components/animate/MotionContainer';
@@ -11,7 +11,6 @@ import Iconify from 'src/components/iconify/Iconify';
 import useResponsive from 'src/hooks/useResponsive';
 import { PATH_AUTH } from 'src/routes/paths';
 import { secondaryFont } from 'src/theme/typography';
-import { HEADER } from 'src/utils/config-global';
 import { bgGradient, textGradient } from 'src/utils/cssStyles';
 
 const StyledRoot = styled('div')(({ theme }) => ({
@@ -61,30 +60,6 @@ const StyledGradientText = styled(m.h1)(({ theme }) => ({
   },
 }));
 
-const StyledEllipseTop = styled('div')(({ theme }) => ({
-  position: 'absolute',
-  width: 480,
-  height: 480,
-  top: -80,
-  right: -80,
-  borderRadius: '50%',
-  filter: 'blur(100px)',
-  WebkitFilter: 'blur(100px)',
-  backgroundColor: alpha(theme.palette.primary.darker, 0.12),
-}));
-
-const StyledEllipseBottom = styled('div')(({ theme }) => ({
-  position: 'absolute',
-  height: 400,
-  bottom: -200,
-  left: '10%',
-  right: '10%',
-  borderRadius: '50%',
-  filter: 'blur(100px)',
-  WebkitFilter: 'blur(100px)',
-  backgroundColor: alpha(theme.palette.primary.darker, 0.08),
-}));
-
 export default function HomeHero() {
   const isDesktop = useResponsive('up', 'md');
 
@@ -114,10 +89,6 @@ export default function HomeHero() {
             </Grid>
           </Grid>
         </Container>
-
-        {isDesktop && <StyledEllipseTop />}
-
-        <StyledEllipseBottom />
       </StyledRoot>
 
       <Box sx={{ height: { md: '100vh' } }} />
@@ -162,6 +133,14 @@ function Description() {
               size="large"
               variant="contained"
               startIcon={<Iconify icon="eva:music-fill" width={24} />}
+              sx={{
+                bgcolor: 'text.primary',
+                color: (theme) =>
+                  theme.palette.mode === 'light' ? 'common.white' : 'grey.800',
+                '&:hover': {
+                  bgcolor: 'text.primary',
+                },
+              }}
             >
               Get Started For Free
             </Button>
@@ -169,54 +148,5 @@ function Description() {
         </Stack>
       </m.div>
     </StyledDescription>
-  );
-}
-
-function Content() {
-  const theme = useTheme();
-
-  const isLight = theme.palette.mode === 'light';
-
-  const transition = {
-    repeatType: 'loop',
-    ease: 'linear',
-    duration: 60 * 4,
-    repeat: Infinity,
-  } as const;
-
-  return (
-    <Stack
-      direction="row"
-      alignItems="flex-start"
-      sx={{
-        height: 1,
-        overflow: 'hidden',
-        position: 'absolute',
-        mt: `${HEADER.H_MAIN_DESKTOP}px`,
-      }}
-    >
-      <Stack
-        component={m.div}
-        variants={varFade().in}
-        sx={{ width: 720, position: 'relative', ml: -2 }}
-      >
-        <Box
-          component={m.img}
-          animate={{ y: ['100%', '0%'] }}
-          transition={transition}
-          alt={`hero_${isLight ? 'light' : 'dark'}_2`}
-          src={`/assets/images/home/hero_${isLight ? 'light' : 'dark'}_2.png`}
-          sx={{ position: 'absolute' }}
-        />
-        <Box
-          component={m.img}
-          animate={{ y: ['0%', '-100%'] }}
-          transition={transition}
-          alt={`hero_${isLight ? 'light' : 'dark'}_2`}
-          src={`/assets/images/home/hero_${isLight ? 'light' : 'dark'}_2.png`}
-          sx={{ position: 'absolute' }}
-        />
-      </Stack>
-    </Stack>
   );
 }
