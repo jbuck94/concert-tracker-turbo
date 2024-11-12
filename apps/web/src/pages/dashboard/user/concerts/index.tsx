@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   Container,
+  Grid,
   InputAdornment,
   Stack,
   TextField,
@@ -19,6 +20,7 @@ import {
 } from '@mui/material';
 
 import { EventFragment, useMyEventsQuery } from 'apollo/generated-types';
+import AnalyticsWidgetSummary from 'src/components/AnalyticsWidgetSummary';
 import ConcertCard from 'src/components/concerts/ConcertCard';
 import { ConcertsTable } from 'src/components/concerts/ConcertsTable';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/CustomBreadcrumbs';
@@ -105,6 +107,43 @@ function App() {
             mb: { xs: 3, md: 5 },
           }}
         />
+
+        <Grid container spacing={3}>
+          <Grid item xs={6} sm={3}>
+            <AnalyticsWidgetSummary
+              title="Artists Seen"
+              value={data?.me?.totalArtistCount?.toString() ?? '...'}
+              icon={<Iconify icon="fluent:people-16-filled" width={'100%'} />}
+            />
+          </Grid>
+
+          <Grid item xs={6} sm={3}>
+            <AnalyticsWidgetSummary
+              title="Top Artist"
+              value={data?.me?.topArtist?.name ?? '...'}
+              color="warning"
+              icon={
+                <Iconify icon="fluent:people-star-16-filled" width={'100%'} />
+              }
+            />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <AnalyticsWidgetSummary
+              title="Venues Visited"
+              value={data?.me?.totalVenueCount?.toString() ?? '...'}
+              color="info"
+              icon={<Iconify icon="tabler:theater" width={'100%'} />}
+            />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <AnalyticsWidgetSummary
+              title="Top Venue"
+              value={data?.me?.topVenue?.name ?? '...'}
+              color="error"
+              icon={<Iconify icon="tabler:location-star" width={'100%'} />}
+            />
+          </Grid>
+        </Grid>
 
         <Stack
           flexDirection={'row'}

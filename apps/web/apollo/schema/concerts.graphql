@@ -42,6 +42,16 @@ query Events {
 
 query MyEvents {
   me {
+    totalVenueCount
+    totalArtistCount
+    topVenue {
+      id
+      name
+    }
+    topArtist {
+      id
+      name
+    }
     events {
       pageInfo {
         startCursor

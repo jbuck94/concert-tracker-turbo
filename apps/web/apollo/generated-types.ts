@@ -422,6 +422,10 @@ export type User = {
   id: Scalars['ID'];
   lastName: Scalars['String'];
   role: UserRole;
+  topArtist?: Maybe<Artist>;
+  topVenue?: Maybe<Venue>;
+  totalArtistCount: Scalars['Int'];
+  totalVenueCount: Scalars['Int'];
 };
 
 
@@ -554,7 +558,7 @@ export type EventsQuery = { __typename?: 'Query', events: { __typename?: 'QueryE
 export type MyEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyEventsQuery = { __typename?: 'Query', me?: { __typename?: 'User', events: { __typename?: 'UserEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'UserEventsConnectionEdge', cursor: string, node: { __typename?: 'UserEvent', id: string, notes: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } | null };
+export type MyEventsQuery = { __typename?: 'Query', me?: { __typename?: 'User', totalVenueCount: number, totalArtistCount: number, topVenue?: { __typename?: 'Venue', id: string, name: string } | null, topArtist?: { __typename?: 'Artist', id: string, name: string } | null, events: { __typename?: 'UserEventsConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, hasPreviousPage: boolean, hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'UserEventsConnectionEdge', cursor: string, node: { __typename?: 'UserEvent', id: string, notes: string, event: { __typename?: 'Event', id: string, name: string, date: Date, venue: { __typename?: 'Venue', id: string, name: string, city: string, state: string }, artists: { __typename?: 'EventArtistsConnection', edges: Array<{ __typename?: 'EventArtistsConnectionEdge', node: { __typename?: 'EventArtist', id: string, artist: { __typename?: 'Artist', id: string, name: string, image?: string | null } } } | null> } } } }> } } | null };
 
 export type CreateUserEventMutationVariables = Exact<{
   input: CreateUserEventInput;
@@ -822,6 +826,16 @@ export type EventsQueryResult = Apollo.QueryResult<EventsQuery, EventsQueryVaria
 export const MyEventsDocument = gql`
     query MyEvents {
   me {
+    totalVenueCount
+    totalArtistCount
+    topVenue {
+      id
+      name
+    }
+    topArtist {
+      id
+      name
+    }
     events {
       pageInfo {
         startCursor
