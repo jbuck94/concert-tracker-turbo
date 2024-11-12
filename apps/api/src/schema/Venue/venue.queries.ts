@@ -47,7 +47,7 @@ builder.queryFields((t) => ({
     nullable: false,
     nodeNullable: false,
     edgesNullable: false,
-    resolve: async (parent, args, context) => {
+    resolve: (parent, args, context) => {
       return resolveOffsetConnection({ args }, async ({ limit, offset }) => {
         const client = new SeatGeekClient();
 

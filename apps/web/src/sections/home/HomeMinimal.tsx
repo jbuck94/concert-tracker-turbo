@@ -1,4 +1,8 @@
-import { Group, MusicNote, RateReview } from '@mui/icons-material';
+import {
+  BarChartTwoTone,
+  GroupTwoTone,
+  MusicNoteTwoTone,
+} from '@mui/icons-material';
 import { Box, Card, Chip, Container, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { m } from 'framer-motion';
@@ -8,23 +12,24 @@ import { varFade } from 'src/components/animate/variants/fade';
 
 const CARDS = [
   {
-    icon: <Group fontSize="large" color="primary" />,
-    title: 'Connect with Fans',
-    comingSoon: true,
-    description: 'Find and follow other music enthusiasts.',
+    icon: <BarChartTwoTone fontSize="large" color="primary" />,
+    title: 'Statistics',
+    comingSoon: false,
+    description: 'View stats of your top artists and venues.',
   },
+
   {
-    icon: <MusicNote fontSize="large" color="primary" />,
+    icon: <MusicNoteTwoTone fontSize="large" color="primary" />,
     title: 'Track Concerts',
     comingSoon: false,
     description:
       'Keep a detailed record of all the concerts you have attended.',
   },
   {
-    icon: <RateReview fontSize="large" color="primary" />,
-    title: 'Rate Performances',
+    icon: <GroupTwoTone fontSize="large" color="primary" />,
+    title: 'Connect with Friends',
     comingSoon: true,
-    description: 'Share your thoughts and read reviews from others.',
+    description: 'Find and follow other music enthusiasts.',
   },
 ];
 
